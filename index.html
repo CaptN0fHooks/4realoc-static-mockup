@@ -167,13 +167,187 @@
   }
 
   /* Property search teaser */
-  .search-teaser form, .contact form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .search-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: var(--pad);
+    align-items: start;
+  }
+  
+  @media (max-width: 900px) {
+    .search-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .search-filters { 
+    display: grid; 
+    gap: 12px; 
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+  }
+  
   .field { display: grid; gap: 6px; }
   .input, select, textarea {
     padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(31,61,91,0.15);
     background: rgba(255,255,255,0.9);
   }
   textarea { min-height: 120px; }
+  
+  /* Mock Map Styling */
+  .map-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(31,61,91,0.1);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba(31,61,91,0.1);
+  }
+  
+  .map-controls {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .map-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(31,61,91,0.2);
+    background: white;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .map-btn:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  
+  .map-location {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+  
+  .map-content {
+    height: 280px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .map-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 25%, rgba(255,255,255,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 45% 35%, rgba(255,255,255,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 30% 75%, rgba(255,255,255,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 80% 45%, rgba(255,255,255,0.3) 2px, transparent 2px);
+    background-size: 100px 100px, 120px 120px, 80px 80px, 90px 90px, 110px 110px;
+  }
+  
+  .map-pins {
+    position: absolute;
+    inset: 0;
+  }
+  
+  .map-pin {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(31,61,91,0.3);
+  }
+  
+  .map-pin::after {
+    content: attr(data-price);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    background: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  
+  .map-pin:hover {
+    transform: rotate(-45deg) scale(1.2);
+    box-shadow: 0 4px 16px rgba(31,61,91,0.4);
+  }
+  
+  .map-pin:hover::after {
+    opacity: 1;
+  }
+  
+  .map-legend {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.95);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(31,61,91,0.1);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  
+  .legend-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  
+  .legend-dot.active {
+    background: var(--accent);
+  }
+  
+  .legend-dot.pending {
+    background: #f59e0b;
+  }
+  
+  .legend-dot.sold {
+    background: #10b981;
+  }
 
   /* Results grid */
   .grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
@@ -215,6 +389,9 @@
     display: block;
     opacity: 0;
     animation: profileFadeIn 1.2s ease-out 0.3s forwards;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    backface-visibility: hidden;
   }
   
   .profile-overlay {
@@ -440,42 +617,81 @@
   <section class="search-teaser" aria-label="Property Search">
     <h2 class="section-title">Property Search</h2>
     <p class="section-sub">Filter by city, ZIP, price, beds, and more. Your inputs pass to the full search page.</p>
-    <form id="miniSearch" class="glass">
-      <div class="field">
-        <label>City</label>
-        <input class="input" name="city" placeholder="Newport Beach" />
+    
+    <div class="search-container glass">
+      <form id="miniSearch" class="search-filters">
+        <div class="field">
+          <label>City</label>
+          <input class="input" name="city" placeholder="Newport Beach" />
+        </div>
+        <div class="field">
+          <label>ZIP</label>
+          <input class="input" name="zip" placeholder="92660" />
+        </div>
+        <div class="field">
+          <label>Price (Min)</label>
+          <input class="input" name="price_min" type="number" placeholder="500000" />
+        </div>
+        <div class="field">
+          <label>Price (Max)</label>
+          <input class="input" name="price_max" type="number" placeholder="3000000" />
+        </div>
+        <div class="field">
+          <label>Beds (Min)</label>
+          <input class="input" name="beds_min" type="number" min="0" max="10" />
+        </div>
+        <div class="field">
+          <label>Sq Ft (Min)</label>
+          <input class="input" name="sqft_min" type="number" min="0" />
+        </div>
+        <div class="field">
+          <label>Property Type</label>
+          <select name="ptype">
+            <option value="">Any</option>
+            <option>SFR</option><option>Condo</option><option>Townhouse</option><option>Manufactured</option><option>Multi‑Family</option>
+          </select>
+        </div>
+        <div class="field" style="align-self:end">
+          <button class="btn" type="submit">See Results</button>
+        </div>
+      </form>
+      
+      <div class="map-container">
+        <div class="map-header">
+          <div class="map-controls">
+            <button class="map-btn" aria-label="Zoom In">+</button>
+            <button class="map-btn" aria-label="Zoom Out">−</button>
+            <button class="map-btn" aria-label="Full Screen">⛶</button>
+          </div>
+          <div class="map-location">Orange County, CA</div>
+        </div>
+        <div class="map-content">
+          <div class="map-overlay">
+            <div class="map-pins">
+              <div class="map-pin" style="top: 25%; left: 20%;" data-price="$1,299,000"></div>
+              <div class="map-pin" style="top: 35%; left: 45%;" data-price="$2,195,000"></div>
+              <div class="map-pin" style="top: 60%; left: 70%;" data-price="$8,995,000"></div>
+              <div class="map-pin" style="top: 75%; left: 30%;" data-price="$3,295,000"></div>
+              <div class="map-pin" style="top: 45%; left: 80%;" data-price="$4,995,000"></div>
+            </div>
+            <div class="map-legend">
+              <div class="legend-item">
+                <span class="legend-dot active"></span>
+                <span>Active Listings</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot pending"></span>
+                <span>Pending</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot sold"></span>
+                <span>Recently Sold</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="field">
-        <label>ZIP</label>
-        <input class="input" name="zip" placeholder="92660" />
-      </div>
-      <div class="field">
-        <label>Price (Min)</label>
-        <input class="input" name="price_min" type="number" placeholder="500000" />
-      </div>
-      <div class="field">
-        <label>Price (Max)</label>
-        <input class="input" name="price_max" type="number" placeholder="3000000" />
-      </div>
-      <div class="field">
-        <label>Beds (Min)</label>
-        <input class="input" name="beds_min" type="number" min="0" max="10" />
-      </div>
-      <div class="field">
-        <label>Sq Ft (Min)</label>
-        <input class="input" name="sqft_min" type="number" min="0" />
-      </div>
-      <div class="field">
-        <label>Property Type</label>
-        <select name="ptype">
-          <option value="">Any</option>
-          <option>SFR</option><option>Condo</option><option>Townhouse</option><option>Manufactured</option><option>Multi‑Family</option>
-        </select>
-      </div>
-      <div class="field" style="align-self:end">
-        <button class="btn" type="submit">See Results</button>
-      </div>
-    </form>
+    </div>
   </section>
 
   <section aria-label="Results">
@@ -496,7 +712,7 @@
       <div class="profile-container">
         <div class="profile-frame">
           <img 
-            src="https://live.staticflickr.com/65535/54747645745_b62595701c_t.jpg" 
+            src="https://live.staticflickr.com/65535/54747645745_b62595701c_b.jpg" 
             alt="Michael R. Jacquez - Professional Headshot" 
             class="profile-image"
           />
