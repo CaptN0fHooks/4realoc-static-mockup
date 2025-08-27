@@ -244,7 +244,7 @@
     z-index: 999;
   }
 
-  /* Premium Hero Section with Dynamic Text Animation */
+  /* EXTREME LUXURY HERO SECTION */
   .hero {
     position: relative; 
     min-height: 100vh; 
@@ -409,6 +409,260 @@
   
 
 
+  /* LUXURY TEXT CONTAINER */
+  .luxury-hero-container {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 40px;
+  }
+  
+  /* MAIN TEXT ANIMATION - MASSIVE & BOLD */
+  .luxury-main-text {
+    position: relative;
+    height: clamp(200px, 40vw, 500px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    margin-bottom: 40px;
+  }
+  
+  .text-line {
+    position: relative;
+    height: clamp(100px, 20vw, 250px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .text-line-1 {
+    margin-bottom: -20px;
+  }
+  
+  .text-line-2 {
+    margin-top: -20px;
+  }
+  
+  .luxury-text {
+    font-size: clamp(80px, 18vw, 300px);
+    font-weight: 900;
+    line-height: 0.85;
+    color: var(--ink);
+    text-shadow: 
+      0 8px 32px rgba(255,255,255,0.9),
+      0 16px 64px rgba(255,255,255,0.6);
+    letter-spacing: -0.02em;
+    position: relative;
+    opacity: 0;
+    transform: translateY(100px) scale(0.5);
+    transition: all 2s var(--ease-smooth);
+    white-space: nowrap;
+    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
+    text-transform: uppercase;
+    overflow: visible;
+  }
+  
+  .luxury-text.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  .luxury-text.animate-out {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.1);
+  }
+  
+  /* SUBTITLE ANIMATION */
+  .luxury-subtitle {
+    margin: 60px 0 40px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 2.5s var(--ease-smooth) 6s;
+  }
+  
+  .luxury-subtitle.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .subtitle-text {
+    font-size: clamp(24px, 4vw, 48px);
+    font-weight: 300;
+    color: var(--ink-light);
+    text-shadow: 0 4px 20px rgba(255,255,255,0.8);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
+  }
+  
+  /* TAGLINE ANIMATION */
+  .luxury-tagline {
+    margin: 40px 0 80px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 2.5s var(--ease-smooth) 8s;
+  }
+  
+  .luxury-tagline.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .tagline-text {
+    font-size: clamp(20px, 3vw, 36px);
+    font-size: clamp(20px, 3vw, 36px);
+    font-weight: 400;
+    color: var(--accent);
+    text-shadow: 0 2px 10px rgba(139, 115, 85, 0.3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
+  }
+  
+  /* LUXURY ACTION BUTTONS */
+  .luxury-actions {
+    margin-top: 80px;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 3s var(--ease-smooth) 10s;
+  }
+  
+  .luxury-actions.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .luxury-btn {
+    position: relative;
+    padding: 28px 56px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+    background: rgba(255,255,255,0.98);
+    border: 3px solid rgba(255,255,255,0.9);
+    border-radius: 60px;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow: 
+      0 16px 64px rgba(139, 115, 85, 0.2),
+      0 32px 128px rgba(139, 115, 85, 0.1);
+    transition: all 1s var(--ease-smooth);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 280px;
+  }
+  
+  .luxury-btn:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 24px 96px rgba(139, 115, 85, 0.3),
+      0 48px 192px rgba(139, 115, 85, 0.15);
+    background: rgba(255,255,255,1);
+    border-color: var(--accent);
+  }
+  
+  .luxury-btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: white;
+    border-color: var(--accent);
+  }
+  
+  .luxury-btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 100%);
+    transform: translateY(-8px) scale(1.05);
+  }
+  
+  .btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .btn-main {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  
+  .btn-sub {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  
+  .btn-accent-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.8s var(--ease-smooth);
+  }
+  
+  .luxury-btn:hover .btn-accent-line {
+    width: 80%;
+  }
+  
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 1200px) {
+    .luxury-actions {
+      gap: 30px;
+    }
+    
+    .luxury-btn {
+      padding: 24px 48px;
+      min-width: 260px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .luxury-hero-container {
+      padding: 0 20px;
+    }
+    
+    .luxury-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .luxury-btn {
+      padding: 20px 40px;
+      min-width: 240px;
+      font-size: 16px;
+    }
+    
+    .text-line {
+      height: clamp(80px, 15vw, 150px);
+    }
+    
+    .luxury-text {
+      font-size: clamp(60px, 14vw, 200px);
+    }
+  }
+  
   .cta-row { 
     margin-top: 32px; 
     display: flex; 
@@ -1349,25 +1603,44 @@
       style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; transform: scale(1.1); object-fit: cover;"
     ></iframe>
     <div class="hero-overlay">
-      <!-- Dynamic Text Animation Container -->
-      <div class="hero-text-container">
-        <div class="hero-main-text">
-          <span class="text-cycle" data-text="Real OC">Real OC</span>
+      <!-- LUXURY DYNAMIC TEXT ANIMATION -->
+      <div class="luxury-hero-container">
+        <!-- Main Text Animation -->
+        <div class="luxury-main-text">
+          <div class="text-line text-line-1">
+            <span class="luxury-text" data-text="REAL">REAL</span>
+          </div>
+          <div class="text-line text-line-2">
+            <span class="luxury-text" data-text="OC">OC</span>
+          </div>
         </div>
-        <div class="hero-sub-text">
-          <span class="text-shelf">Representing Orange County</span>
+        
+        <!-- Subtitle Animation -->
+        <div class="luxury-subtitle">
+          <span class="subtitle-text">REPRESENTING ORANGE COUNTY</span>
+        </div>
+        
+        <!-- Tagline Animation -->
+        <div class="luxury-tagline">
+          <span class="tagline-text">COASTAL & LUXURY HOMES</span>
         </div>
       </div>
       
-      <!-- Action Buttons (Hidden initially) -->
-      <div class="hero-actions">
-        <a href="buyers.html" class="hero-btn hero-btn-primary">
-          <span class="btn-text">Buy with Clarity</span>
-          <span class="btn-accent"></span>
+      <!-- LUXURY ACTION BUTTONS -->
+      <div class="luxury-actions">
+        <a href="buyers.html" class="luxury-btn luxury-btn-primary">
+          <div class="btn-content">
+            <span class="btn-main">BUY WITH CLARITY</span>
+            <span class="btn-sub">Exclusive Properties</span>
+          </div>
+          <div class="btn-accent-line"></div>
         </a>
-        <a href="sellers.html" class="hero-btn hero-btn-secondary">
-          <span class="btn-text">Sell with Confidence</span>
-          <span class="btn-accent"></span>
+        <a href="sellers.html" class="luxury-btn luxury-btn-secondary">
+          <div class="btn-content">
+            <span class="btn-main">SELL WITH CONFIDENCE</span>
+            <span class="btn-sub">Maximum Value</span>
+          </div>
+          <div class="btn-accent-line"></div>
         </a>
       </div>
     </div>
@@ -1668,58 +1941,66 @@
         }
       });
       
-      // HERO TEXT ANIMATION SEQUENCE
-      const textCycle = document.querySelector('.text-cycle');
-      const heroSubText = document.querySelector('.hero-sub-text');
-      const heroActions = document.querySelector('.hero-actions');
+      // EPIC LUXURY TEXT ANIMATION SEQUENCE
+      const luxuryTexts = document.querySelectorAll('.luxury-text');
+      const luxurySubtitle = document.querySelector('.luxury-subtitle');
+      const luxuryTagline = document.querySelector('.luxury-tagline');
+      const luxuryActions = document.querySelector('.luxury-actions');
       
-      if (textCycle && heroSubText && heroActions) {
-        const textSequence = [
-          { text: 'Real OC', duration: 1000 },
-          { text: 'Real Estate', duration: 1000 },
-          { text: 'For Real People', duration: 1000 },
-          { text: 'Real OC', duration: 2000 }
+      if (luxuryTexts.length > 0 && luxurySubtitle && luxuryTagline && luxuryActions) {
+        // LUXURY ANIMATION TIMELINE
+        const luxuryTimeline = [
+          { element: luxuryTexts[0], delay: 1.5, duration: 3, text: 'REAL' },
+          { element: luxuryTexts[1], delay: 5.5, duration: 3, text: 'OC' },
+          { element: luxurySubtitle, delay: 9.5, duration: 2.5, action: 'show' },
+          { element: luxuryTagline, delay: 12.5, duration: 2.5, action: 'show' },
+          { element: luxuryActions, delay: 15.5, duration: 3, action: 'show' }
         ];
         
-        let currentIndex = 0;
-        
-        function animateText() {
-          if (currentIndex >= textSequence.length) {
-            // Show subtext and buttons
-            setTimeout(() => {
-              heroSubText.classList.add('show');
-            }, 500);
-            
-            setTimeout(() => {
-              heroActions.classList.add('show');
-            }, 1000);
-            return;
-          }
-          
-          const currentText = textSequence[currentIndex];
-          
-          // Exit current text
-          if (currentIndex > 0) {
-            textCycle.classList.add('exit');
-            setTimeout(() => {
-              textCycle.classList.remove('exit');
-              textCycle.textContent = currentText.text;
-              textCycle.classList.add('active');
-            }, 400);
-          } else {
-            // First text appears
-            textCycle.classList.add('active');
-          }
-          
-          // Schedule next text
+        // ANIMATE EACH ELEMENT
+        luxuryTimeline.forEach((item, index) => {
           setTimeout(() => {
-            currentIndex++;
-            animateText();
-          }, currentText.duration);
-        }
+            if (item.action === 'show') {
+              item.element.classList.add('show');
+            } else {
+              // Text animation
+              item.element.textContent = item.text;
+              item.element.classList.add('animate-in');
+              
+              // Exit animation after duration
+              setTimeout(() => {
+                item.element.classList.remove('animate-in');
+                item.element.classList.add('animate-out');
+              }, item.duration * 1000 - 500);
+            }
+          }, item.delay * 1000);
+        });
         
-        // Start animation after a brief delay
-        setTimeout(animateText, 800);
+        // SPECIAL EFFECT: Text morphing sequence
+        setTimeout(() => {
+          // Morph REAL to REAL ESTATE
+          luxuryTexts[0].textContent = 'REAL';
+          luxuryTexts[1].textContent = 'ESTATE';
+          luxuryTexts[0].classList.add('animate-in');
+          luxuryTexts[1].classList.add('animate-in');
+          
+          setTimeout(() => {
+            luxuryTexts[0].classList.remove('animate-in');
+            luxuryTexts[1].classList.remove('animate-in');
+            luxuryTexts[0].classList.add('animate-out');
+            luxuryTexts[1].classList.add('animate-out');
+          }, 3000);
+        }, 8000);
+        
+        // Final landing on REAL OC
+        setTimeout(() => {
+          luxuryTexts[0].textContent = 'REAL';
+          luxuryTexts[1].textContent = 'OC';
+          luxuryTexts[0].classList.remove('animate-out');
+          luxuryTexts[1].classList.remove('animate-out');
+          luxuryTexts[0].classList.add('animate-in');
+          luxuryTexts[1].classList.add('animate-in');
+        }, 12000);
       }
       
       // Performance monitoring
