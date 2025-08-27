@@ -64,7 +64,7 @@
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* Premium Glassmorphism system */
+  /* Premium Glassmorphism system with Canvas Texture */
   .glass {
     background: var(--glass);
     backdrop-filter: blur(20px);
@@ -81,7 +81,9 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    background: 
+      linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%),
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
     border-radius: inherit;
     opacity: 0;
     transition: opacity 0.6s var(--ease-smooth);
@@ -241,9 +243,6 @@
     overflow: hidden;
     display: grid; 
     place-items: center;
-    background: 
-      linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(166, 124, 82, 0.2) 100%),
-      url('https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg') center/cover;
   }
   
   .hero::before {
@@ -393,10 +392,70 @@
     border-color: var(--accent);
   }
 
-  /* Premium Sections */
+  /* Premium Sections with Background Images */
   section { 
     padding: var(--section) clamp(20px, 8vw, 80px); 
     position: relative;
+    transition: all 0.8s var(--ease-smooth);
+  }
+  
+  /* Smooth background transitions */
+  section {
+    background-size: 120% 120%;
+    background-position: center;
+    transition: background-size 0.8s var(--ease-smooth);
+  }
+  
+  section:hover {
+    background-size: 110% 110%;
+  }
+  
+  /* Hero Section Background */
+  section.hero {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(166, 124, 82, 0.2) 100%),
+      url('https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg') center/cover;
+    background-attachment: fixed;
+  }
+  
+  /* Featured Listings Section Background */
+  section#featured {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      url('https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg') center/cover;
+    background-attachment: fixed;
+  }
+  
+  /* Search Section Background */
+  section.search-teaser {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      url('https://i.postimg.cc/FYFVSnBy/pexels-eunjin-baek-787544003-20989043.jpg') center/cover;
+    background-attachment: fixed;
+  }
+  
+  /* Results Section Background */
+  section[aria-label="Results"] {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      url('https://i.postimg.cc/Xpkgp0QN/pexels-kindelmedia-8352369.jpg') center/cover;
+    background-attachment: fixed;
+  }
+  
+  /* About Section Background */
+  section[aria-label="About"] {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      url('https://i.postimg.cc/DW8Qj4Fm/pexels-makai-castle-3851938-6253628.jpg') center/cover;
+    background-attachment: fixed;
+  }
+  
+  /* Contact Section Background */
+  section.contact {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      url('https://i.postimg.cc/WqPM19ZJ/pexels-peacefullens-2365363.jpg') center/cover;
+    background-attachment: fixed;
   }
   
   section::before {
@@ -447,10 +506,7 @@
   /* Premium Featured Listings Carousel */
   .carousel { 
     position: relative; 
-    background: 
-      linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%),
-      url('https://i.postimg.cc/Xpkgp0QN/pexels-kindelmedia-8352369.jpg') center/cover;
-    background-blend-mode: soft-light;
+    background: rgba(255,255,255,0.05);
     border-radius: var(--radius);
     padding: 4px;
     backdrop-filter: blur(20px);
@@ -650,10 +706,7 @@
     gap: 32px;
     padding: var(--pad);
     align-items: start;
-    background: 
-      linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%),
-      url('https://i.postimg.cc/DW8Qj4Fm/pexels-makai-castle-3851938-6253628.jpg') center/cover;
-    background-blend-mode: soft-light;
+    background: rgba(255,255,255,0.05);
     border-radius: var(--radius);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -713,10 +766,7 @@
   
   /* Premium Mock Map Styling */
   .map-container {
-    background: 
-      linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%),
-      url('https://i.postimg.cc/7Gz3Dv5k/pexels-rdne-8783123.jpg') center/cover;
-    background-blend-mode: soft-light;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
     border-radius: var(--radius-small);
     overflow: hidden;
     border: 1px solid rgba(139, 115, 85, 0.15);
@@ -900,12 +950,6 @@
     transition: all 0.6s var(--ease-smooth);
     position: relative;
     overflow: hidden;
-    background: 
-      linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%),
-      url('https://i.postimg.cc/dD82xYMR/pexels-rdne-5637721.jpg') center/cover;
-    background-blend-mode: soft-light;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
   }
   
   .grid-3 > div:hover {
@@ -934,10 +978,7 @@
     display: grid; 
     gap: 20px; 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    background: 
-      linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%),
-      url('https://i.postimg.cc/N27R918C/pexels-rdne-8438211.jpg') center/cover;
-    background-blend-mode: soft-light;
+    background: rgba(255,255,255,0.05);
     border-radius: var(--radius);
     padding: var(--pad);
     backdrop-filter: blur(20px);
@@ -959,10 +1000,7 @@
     gap: 40px; 
     grid-template-columns: 1.1fr 0.9fr; 
     align-items: center; 
-    background: 
-      linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%),
-      url('https://i.postimg.cc/WqPM19ZJ/pexels-peacefullens-2365363.jpg') center/cover;
-    background-blend-mode: soft-light;
+    background: rgba(255,255,255,0.05);
     border-radius: var(--radius);
     padding: var(--pad);
     backdrop-filter: blur(20px);
