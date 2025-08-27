@@ -244,13 +244,153 @@
     z-index: 999;
   }
 
-  /* Premium Hero Section */
+  /* Premium Hero Section with Dynamic Text Animation */
   .hero {
     position: relative; 
     min-height: 100vh; 
     overflow: hidden;
     display: grid; 
     place-items: center;
+  }
+  
+  /* Hero Text Container */
+  .hero-text-container {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+  }
+  
+  /* Main Text Animation */
+  .hero-main-text {
+    position: relative;
+    height: clamp(80px, 15vw, 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .text-cycle {
+    font-size: clamp(60px, 12vw, 140px);
+    font-weight: 700;
+    line-height: 0.9;
+    color: var(--ink);
+    text-shadow: 0 4px 20px rgba(255,255,255,0.9);
+    letter-spacing: -0.03em;
+    position: absolute;
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+    transition: all 0.8s var(--ease-smooth);
+    white-space: nowrap;
+  }
+  
+  .text-cycle.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  .text-cycle.exit {
+    opacity: 0;
+    transform: translateY(-40px) scale(1.1);
+  }
+  
+  /* Sub Text Shelf */
+  .hero-sub-text {
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s var(--ease-smooth) 3.5s;
+  }
+  
+  .hero-sub-text.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .text-shelf {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 400;
+    color: var(--ink-light);
+    text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  
+  /* Hero Action Buttons */
+  .hero-actions {
+    margin-top: 60px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s var(--ease-smooth) 4s;
+  }
+  
+  .hero-actions.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .hero-btn {
+    position: relative;
+    padding: 18px 36px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+    background: rgba(255,255,255,0.95);
+    border: 2px solid rgba(255,255,255,0.8);
+    border-radius: 50px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(139, 115, 85, 0.15);
+    transition: all 0.6s var(--ease-smooth);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .hero-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(139, 115, 85, 0.25);
+    background: rgba(255,255,255,0.98);
+    border-color: var(--accent);
+  }
+  
+  .hero-btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    color: white;
+    border-color: var(--accent);
+  }
+  
+  .hero-btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 100%);
+    transform: translateY(-4px) scale(1.05);
+  }
+  
+  .btn-accent {
+    width: 8px;
+    height: 8px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .hero-btn {
+      padding: 16px 32px;
+      font-size: 15px;
+    }
   }
   
 
@@ -267,83 +407,7 @@
     opacity: 1;
   }
   
-  .hero-overlay {
-    position: relative; 
-    z-index: 2; 
-    text-align: center; 
-    padding: var(--pad);
-    animation: heroFadeIn 1.2s var(--ease-smooth) forwards;
-  }
-  
-  .hero-badge {
-    display: inline-block; 
-    padding: 12px 24px; 
-    font-size: 13px; 
-    letter-spacing: 1.2px;
-    text-transform: uppercase; 
-    color: var(--ink); 
-    background: rgba(255,255,255,0.95);
-    border: 1px solid rgba(255,255,255,0.8); 
-    border-radius: 999px;
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    transform: translateY(20px);
-    opacity: 0;
-    animation: heroBadgeSlide 1s var(--ease-bounce) 0.3s forwards;
-  }
-  
-  .hero h1 {
-    margin: 20px auto 16px; 
-    font-size: clamp(42px, 7vw, 88px); 
-    line-height: 1.02;
-    color: var(--ink); 
-    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    transform: translateY(30px);
-    opacity: 0;
-    animation: heroTitleSlide 1.2s var(--ease-smooth) 0.6s forwards;
-  }
-  
-  .hero p.sub {
-    margin: 0 auto; 
-    max-width: 800px; 
-    color: var(--ink-light); 
-    font-size: clamp(16px, 1.8vw, 20px);
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: heroSubSlide 1s var(--ease-smooth) 0.9s forwards;
-  }
-  
-  @keyframes heroFadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes heroBadgeSlide {
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes heroTitleSlide {
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes heroSubSlide {
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
+
 
   .cta-row { 
     margin-top: 32px; 
@@ -1285,12 +1349,26 @@
       style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; transform: scale(1.1); object-fit: cover;"
     ></iframe>
     <div class="hero-overlay">
-      <span class="hero-badge">Orange County</span>
-      <h1 id="heroText">Real Estate</h1>
-      <p class="sub">Representing Orange County</p>
-      <div class="cta-row">
-        <a class="btn" href="search.html">Start your search</a>
-        <a class="btn" href="contact.html">Get in touch</a>
+      <!-- Dynamic Text Animation Container -->
+      <div class="hero-text-container">
+        <div class="hero-main-text">
+          <span class="text-cycle" data-text="Real OC">Real OC</span>
+        </div>
+        <div class="hero-sub-text">
+          <span class="text-shelf">Representing Orange County</span>
+        </div>
+      </div>
+      
+      <!-- Action Buttons (Hidden initially) -->
+      <div class="hero-actions">
+        <a href="buyers.html" class="hero-btn hero-btn-primary">
+          <span class="btn-text">Buy with Clarity</span>
+          <span class="btn-accent"></span>
+        </a>
+        <a href="sellers.html" class="hero-btn hero-btn-secondary">
+          <span class="btn-text">Sell with Confidence</span>
+          <span class="btn-accent"></span>
+        </a>
       </div>
     </div>
   </section>
@@ -1567,23 +1645,18 @@
 </footer>
 
   <script>
-    // Ultra high-quality local background image optimization
+    // EPIC Dynamic Text Animation for Hero Section
     document.addEventListener('DOMContentLoaded', function() {
-      // Force maximum quality rendering
+      // Background image optimization
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
-        // Add loading class for enhanced quality
         section.classList.add('loading');
-        
-        // Force hardware acceleration and repaint
         section.style.transform = 'translate3d(0, 0, 0)';
         section.style.willChange = 'transform';
         section.style.webkitTransform = 'translate3d(0, 0, 0)';
         
-        // Optimize image loading
         const bgImage = section.style.backgroundImage;
         if (bgImage && bgImage.includes('assets/backgrounds/')) {
-          // Preload local images for maximum quality
           const img = new Image();
           img.src = bgImage.replace(/url\(['"]?([^'"]+)['"]?\)/, '$1');
           img.onload = () => {
@@ -1591,11 +1664,63 @@
             section.classList.remove('loading');
           };
         } else {
-          setTimeout(() => {
-            section.classList.remove('loading');
-          }, 100);
+          setTimeout(() => section.classList.remove('loading'), 100);
         }
       });
+      
+      // HERO TEXT ANIMATION SEQUENCE
+      const textCycle = document.querySelector('.text-cycle');
+      const heroSubText = document.querySelector('.hero-sub-text');
+      const heroActions = document.querySelector('.hero-actions');
+      
+      if (textCycle && heroSubText && heroActions) {
+        const textSequence = [
+          { text: 'Real OC', duration: 1000 },
+          { text: 'Real Estate', duration: 1000 },
+          { text: 'For Real People', duration: 1000 },
+          { text: 'Real OC', duration: 2000 }
+        ];
+        
+        let currentIndex = 0;
+        
+        function animateText() {
+          if (currentIndex >= textSequence.length) {
+            // Show subtext and buttons
+            setTimeout(() => {
+              heroSubText.classList.add('show');
+            }, 500);
+            
+            setTimeout(() => {
+              heroActions.classList.add('show');
+            }, 1000);
+            return;
+          }
+          
+          const currentText = textSequence[currentIndex];
+          
+          // Exit current text
+          if (currentIndex > 0) {
+            textCycle.classList.add('exit');
+            setTimeout(() => {
+              textCycle.classList.remove('exit');
+              textCycle.textContent = currentText.text;
+              textCycle.classList.add('active');
+            }, 400);
+          } else {
+            // First text appears
+            textCycle.classList.add('active');
+          }
+          
+          // Schedule next text
+          setTimeout(() => {
+            currentIndex++;
+            animateText();
+          }, currentText.duration);
+        }
+        
+        // Start animation after a brief delay
+        setTimeout(animateText, 800);
+      }
       
       // Performance monitoring
       if ('performance' in window) {
