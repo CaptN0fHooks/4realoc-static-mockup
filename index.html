@@ -471,11 +471,32 @@
     border-radius: var(--radius-small);
     transition: all 0.6s var(--ease-smooth);
     position: relative;
+    cursor: pointer;
+  }
+  
+  .carousel .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-smooth);
+    z-index: 1;
+  }
+  
+  .carousel .card:hover::before {
+    opacity: 1;
   }
   
   .carousel .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-strong);
+    transform: translateY(-12px) scale(1.05);
+    box-shadow: var(--shadow-strong), 0 0 40px rgba(139, 115, 85, 0.2);
+    z-index: 10;
+  }
+  
+  .carousel .card:hover .media {
+    transform: scale(1.05);
   }
   
   .carousel .media {
@@ -492,10 +513,16 @@
   
   .carousel .media img {
     transition: all 0.8s var(--ease-smooth);
+    filter: brightness(1) contrast(1);
   }
   
   .carousel .card:hover .media img {
     transform: scale(1.1);
+    filter: brightness(1.1) contrast(1.1);
+  }
+  
+  .carousel .media {
+    transition: all 0.6s var(--ease-smooth);
   }
   
   .listing-overlay {

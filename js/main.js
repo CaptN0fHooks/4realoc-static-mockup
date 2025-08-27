@@ -39,30 +39,104 @@
   next();
 })();
 
-// Featured carousel simple pager
+// Premium Featured Carousel with Infinite Scroll
 (function() {
   const track = document.getElementById('featTrack');
   if (!track) return;
   const prev = document.getElementById('featPrev');
   const next = document.getElementById('featNext');
-  let page = 0;
-  function update() {
-    const width = track.clientWidth;
-    track.scrollTo({ left: page * width, behavior: 'smooth' });
+  
+  // Clone first few items for seamless infinite scroll
+  const items = track.querySelectorAll('.card');
+  if (items.length > 0) {
+    // Clone first 4 items and append to end
+    for (let i = 0; i < Math.min(4, items.length); i++) {
+      const clone = items[i].cloneNode(true);
+      track.appendChild(clone);
+    }
   }
-  next?.addEventListener('click', () => { page = Math.min(page + 1, 1); update(); }); // 2 pages (0,1) for 8 items / 4 visible approx
-  prev?.addEventListener('click', () => { page = Math.max(page - 1, 0); update(); });
+  
+  let currentIndex = 0;
+  const itemWidth = 300 + 24; // card width + gap
+  
+  function scrollToIndex(index, smooth = true) {
+    const scrollPosition = index * itemWidth;
+    track.scrollTo({ 
+      left: scrollPosition, 
+      behavior: smooth ? 'smooth' : 'auto' 
+    });
+  }
+  
+  function nextSlide() {
+    currentIndex++;
+    scrollToIndex(currentIndex);
+    
+    // If we've reached the cloned items, jump to real items
+    if (currentIndex >= items.length) {
+      setTimeout(() => {
+        currentIndex = 0;
+        scrollToIndex(currentIndex, false);
+      }, 500);
+    }
+  }
+  
+  function prevSlide() {
+    currentIndex--;
+    if (currentIndex < 0) {
+      currentIndex = items.length - 1;
+      scrollToIndex(currentIndex, false);
+      setTimeout(() => {
+        currentIndex--;
+        scrollToIndex(currentIndex);
+      }, 50);
+    } else {
+      scrollToIndex(currentIndex);
+    }
+  }
+  
+  next?.addEventListener('click', nextSlide);
+  prev?.addEventListener('click', prevSlide);
 
-  // Bonus: hover to right/left edges to switch
+  // Enhanced hover navigation with infinite scroll
   const carousel = document.getElementById('featCarousel');
   if (carousel) {
     carousel.addEventListener('mousemove', (e) => {
       const rect = carousel.getBoundingClientRect();
       const rel = (e.clientX - rect.left) / rect.width;
-      if (rel > 0.74) { page = 1; update(); }
-      if (rel < 0.26) { page = 0; update(); }
+      
+      if (rel > 0.8) { // Right edge
+        if (currentIndex < items.length - 1) {
+          nextSlide();
+        }
+      } else if (rel < 0.2) { // Left edge
+        if (currentIndex > 0) {
+          prevSlide();
+        }
+      }
     });
   }
+  
+  // Auto-scroll for infinite effect
+  let autoScrollInterval;
+  
+  function startAutoScroll() {
+    autoScrollInterval = setInterval(() => {
+      nextSlide();
+    }, 5000); // Change slide every 5 seconds
+  }
+  
+  function stopAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+    }
+  }
+  
+  // Start auto-scroll
+  startAutoScroll();
+  
+  // Pause auto-scroll on hover
+  carousel?.addEventListener('mouseenter', stopAutoScroll);
+  carousel?.addEventListener('mouseleave', startAutoScroll);
 })();
 
 // Mini search -> redirect with query params to search.html
