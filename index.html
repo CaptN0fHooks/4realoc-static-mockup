@@ -419,72 +419,86 @@
     padding: 0 40px;
   }
   
-  /* MAIN TEXT ANIMATION - MASSIVE & BOLD */
+  /* IMPACTFUL MAIN TEXT ANIMATION */
   .luxury-main-text {
     position: relative;
-    height: clamp(200px, 40vw, 500px);
+    height: clamp(150px, 30vw, 300px);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: visible;
     margin-bottom: 40px;
   }
   
-  .text-line {
+  .impact-text {
+    font-size: clamp(60px, 12vw, 180px);
+    font-weight: 900;
+    line-height: 0.9;
+    color: var(--ink);
+    text-shadow: 
+      0 6px 24px rgba(255,255,255,0.9),
+      0 12px 48px rgba(255,255,255,0.6);
+    letter-spacing: -0.01em;
     position: relative;
-    height: clamp(100px, 20vw, 250px);
+    opacity: 0;
+    transform: translateY(60px) scale(0.7);
+    transition: all 1.5s var(--ease-smooth);
+    white-space: nowrap;
+    font-family: "Impact", "Arial Black", "Helvetica Black", sans-serif;
+    text-transform: uppercase;
+    overflow: visible;
+  }
+  
+  .impact-text.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  .impact-text.animate-out {
+    opacity: 0;
+    transform: translateY(-60px) scale(1.1);
+  }
+  
+  /* FINAL LANDING TEXT - REGULAR FONT */
+  .final-text {
+    position: relative;
+    height: clamp(120px, 25vw, 250px);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: visible;
-    margin: 0;
-    padding: 0;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 2s var(--ease-smooth) 8s;
   }
   
-  .text-line-1 {
-    margin-bottom: -20px;
+  .final-text.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   
-  .text-line-2 {
-    margin-top: -20px;
-  }
-  
-  .luxury-text {
-    font-size: clamp(80px, 18vw, 300px);
-    font-weight: 900;
-    line-height: 0.85;
+  .landing-text {
+    font-size: clamp(50px, 10vw, 150px);
+    font-weight: 400;
+    line-height: 0.9;
     color: var(--ink);
     text-shadow: 
-      0 8px 32px rgba(255,255,255,0.9),
-      0 16px 64px rgba(255,255,255,0.6);
-    letter-spacing: -0.02em;
-    position: relative;
-    opacity: 0;
-    transform: translateY(100px) scale(0.5);
-    transition: all 2s var(--ease-smooth);
+      0 4px 20px rgba(255,255,255,0.8),
+      0 8px 32px rgba(255,255,255,0.5);
+    letter-spacing: -0.01em;
     white-space: nowrap;
     font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
     text-transform: uppercase;
     overflow: visible;
   }
   
-  .luxury-text.animate-in {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  
-  .luxury-text.animate-out {
-    opacity: 0;
-    transform: translateY(-100px) scale(1.1);
-  }
-  
-  /* SUBTITLE ANIMATION */
+  /* SUBTITLE ANIMATION - APPEARS WITH BUTTONS */
   .luxury-subtitle {
-    margin: 60px 0 40px 0;
+    margin: 40px 0 60px 0;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 2.5s var(--ease-smooth) 6s;
+    transition: all 2s var(--ease-smooth) 8.5s;
   }
   
   .luxury-subtitle.show {
@@ -493,50 +507,25 @@
   }
   
   .subtitle-text {
-    font-size: clamp(24px, 4vw, 48px);
-    font-weight: 300;
+    font-size: clamp(20px, 3.5vw, 36px);
+    font-weight: 400;
     color: var(--ink-light);
     text-shadow: 0 4px 20px rgba(255,255,255,0.8);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     opacity: 0.9;
     font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
   }
   
-  /* TAGLINE ANIMATION */
-  .luxury-tagline {
-    margin: 40px 0 80px 0;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 2.5s var(--ease-smooth) 8s;
-  }
-  
-  .luxury-tagline.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .tagline-text {
-    font-size: clamp(20px, 3vw, 36px);
-    font-size: clamp(20px, 3vw, 36px);
-    font-weight: 400;
-    color: var(--accent);
-    text-shadow: 0 2px 10px rgba(139, 115, 85, 0.3);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.8;
-    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
-  }
-  
-  /* LUXURY ACTION BUTTONS */
+  /* LUXURY ACTION BUTTONS - APPEAR WITH SUBTITLE */
   .luxury-actions {
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     gap: 40px;
     justify-content: center;
     opacity: 0;
-    transform: translateY(60px);
-    transition: all 3s var(--ease-smooth) 10s;
+    transform: translateY(40px);
+    transition: all 2s var(--ease-smooth) 8.5s;
   }
   
   .luxury-actions.show {
@@ -1603,26 +1592,21 @@
       style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; transform: scale(1.1); object-fit: cover;"
     ></iframe>
     <div class="hero-overlay">
-      <!-- LUXURY DYNAMIC TEXT ANIMATION -->
+      <!-- IMPACTFUL DYNAMIC TEXT ANIMATION -->
       <div class="luxury-hero-container">
         <!-- Main Text Animation -->
         <div class="luxury-main-text">
-          <div class="text-line text-line-1">
-            <span class="luxury-text" data-text="REAL">REAL</span>
-          </div>
-          <div class="text-line text-line-2">
-            <span class="luxury-text" data-text="OC">OC</span>
-          </div>
+          <span class="impact-text" id="mainText">REAL OC</span>
+        </div>
+        
+        <!-- Final Landing Text -->
+        <div class="final-text">
+          <span class="landing-text">REAL OC</span>
         </div>
         
         <!-- Subtitle Animation -->
         <div class="luxury-subtitle">
           <span class="subtitle-text">REPRESENTING ORANGE COUNTY</span>
-        </div>
-        
-        <!-- Tagline Animation -->
-        <div class="luxury-tagline">
-          <span class="tagline-text">COASTAL & LUXURY HOMES</span>
         </div>
       </div>
       
@@ -1941,66 +1925,61 @@
         }
       });
       
-      // EPIC LUXURY TEXT ANIMATION SEQUENCE
-      const luxuryTexts = document.querySelectorAll('.luxury-text');
+      // IMPACTFUL TEXT ANIMATION SEQUENCE WITH PAUSES
+      const mainText = document.getElementById('mainText');
+      const finalText = document.querySelector('.final-text');
       const luxurySubtitle = document.querySelector('.luxury-subtitle');
-      const luxuryTagline = document.querySelector('.luxury-tagline');
       const luxuryActions = document.querySelector('.luxury-actions');
       
-      if (luxuryTexts.length > 0 && luxurySubtitle && luxuryTagline && luxuryActions) {
-        // LUXURY ANIMATION TIMELINE
-        const luxuryTimeline = [
-          { element: luxuryTexts[0], delay: 1.5, duration: 3, text: 'REAL' },
-          { element: luxuryTexts[1], delay: 5.5, duration: 3, text: 'OC' },
-          { element: luxurySubtitle, delay: 9.5, duration: 2.5, action: 'show' },
-          { element: luxuryTagline, delay: 12.5, duration: 2.5, action: 'show' },
-          { element: luxuryActions, delay: 15.5, duration: 3, action: 'show' }
+      if (mainText && finalText && luxurySubtitle && luxuryActions) {
+        // TEXT SEQUENCE WITH LOGICAL FLOW
+        const textSequence = [
+          { text: 'REAL OC', delay: 1, duration: 2 },
+          { text: 'REAL ESTATE', delay: 4, duration: 2 },
+          { text: 'FOR REAL PEOPLE', delay: 7, duration: 2 },
+          { text: 'REAL OC', delay: 10, duration: 3 }
         ];
         
-        // ANIMATE EACH ELEMENT
-        luxuryTimeline.forEach((item, index) => {
-          setTimeout(() => {
-            if (item.action === 'show') {
-              item.element.classList.add('show');
-            } else {
-              // Text animation
-              item.element.textContent = item.text;
-              item.element.classList.add('animate-in');
-              
-              // Exit animation after duration
-              setTimeout(() => {
-                item.element.classList.remove('animate-in');
-                item.element.classList.add('animate-out');
-              }, item.duration * 1000 - 500);
-            }
-          }, item.delay * 1000);
-        });
+        let currentIndex = 0;
         
-        // SPECIAL EFFECT: Text morphing sequence
-        setTimeout(() => {
-          // Morph REAL to REAL ESTATE
-          luxuryTexts[0].textContent = 'REAL';
-          luxuryTexts[1].textContent = 'ESTATE';
-          luxuryTexts[0].classList.add('animate-in');
-          luxuryTexts[1].classList.add('animate-in');
+        function animateTextSequence() {
+          if (currentIndex >= textSequence.length) {
+            // Show final landing text
+            setTimeout(() => {
+              finalText.classList.add('show');
+            }, 1000);
+            
+            // Show subtitle and buttons together
+            setTimeout(() => {
+              luxurySubtitle.classList.add('show');
+              luxuryActions.classList.add('show');
+            }, 2000);
+            return;
+          }
+          
+          const currentText = textSequence[currentIndex];
           
           setTimeout(() => {
-            luxuryTexts[0].classList.remove('animate-in');
-            luxuryTexts[1].classList.remove('animate-in');
-            luxuryTexts[0].classList.add('animate-out');
-            luxuryTexts[1].classList.add('animate-out');
-          }, 3000);
-        }, 8000);
+            // Animate text in
+            mainText.textContent = currentText.text;
+            mainText.classList.add('animate-in');
+            
+            // Hold text for duration
+            setTimeout(() => {
+              mainText.classList.remove('animate-in');
+              mainText.classList.add('animate-out');
+              
+              // Move to next text
+              setTimeout(() => {
+                currentIndex++;
+                animateTextSequence();
+              }, 500);
+            }, currentText.duration * 1000);
+          }, currentText.delay * 1000);
+        }
         
-        // Final landing on REAL OC
-        setTimeout(() => {
-          luxuryTexts[0].textContent = 'REAL';
-          luxuryTexts[1].textContent = 'OC';
-          luxuryTexts[0].classList.remove('animate-out');
-          luxuryTexts[1].classList.remove('animate-out');
-          luxuryTexts[0].classList.add('animate-in');
-          luxuryTexts[1].classList.add('animate-in');
-        }, 12000);
+        // Start the sequence
+        setTimeout(animateTextSequence, 1000);
       }
       
       // Performance monitoring
