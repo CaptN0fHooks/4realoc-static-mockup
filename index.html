@@ -432,7 +432,7 @@
   
   .impact-text {
     font-size: clamp(60px, 12vw, 180px);
-    font-weight: 900;
+    font-weight: 700;
     line-height: 0.9;
     color: var(--ink);
     text-shadow: 
@@ -442,9 +442,9 @@
     position: relative;
     opacity: 0;
     transform: translateY(60px) scale(0.7);
-    transition: all 1.5s var(--ease-smooth);
+    transition: all 0.8s var(--ease-smooth);
     white-space: nowrap;
-    font-family: "Impact", "Arial Black", "Helvetica Black", sans-serif;
+    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
     text-transform: uppercase;
     overflow: visible;
   }
@@ -470,7 +470,7 @@
     margin-bottom: 40px;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 2s var(--ease-smooth) 8s;
+    transition: all 0.8s var(--ease-smooth) 3s;
   }
   
   .final-text.show {
@@ -498,7 +498,7 @@
     margin: 40px 0 60px 0;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 2s var(--ease-smooth) 8.5s;
+    transition: all 0.8s var(--ease-smooth) 3.3s;
   }
   
   .luxury-subtitle.show {
@@ -525,7 +525,7 @@
     justify-content: center;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 2s var(--ease-smooth) 8.5s;
+    transition: all 0.8s var(--ease-smooth) 3.3s;
   }
   
   .luxury-actions.show {
@@ -1932,28 +1932,25 @@
       const luxuryActions = document.querySelector('.luxury-actions');
       
       if (mainText && finalText && luxurySubtitle && luxuryActions) {
-        // TEXT SEQUENCE WITH LOGICAL FLOW
+        // FAST TEXT SEQUENCE - 3 SECONDS TOTAL
         const textSequence = [
-          { text: 'REAL OC', delay: 1, duration: 2 },
-          { text: 'REAL ESTATE', delay: 4, duration: 2 },
-          { text: 'FOR REAL PEOPLE', delay: 7, duration: 2 },
-          { text: 'REAL OC', delay: 10, duration: 3 }
+          { text: 'REAL ESTATE', delay: 0.5, duration: 0.8 },
+          { text: 'FOR REAL PEOPLE', delay: 1.5, duration: 0.8 },
+          { text: 'REAL OC', delay: 2.5, duration: 0.5 }
         ];
         
         let currentIndex = 0;
         
         function animateTextSequence() {
           if (currentIndex >= textSequence.length) {
-            // Show final landing text
-            setTimeout(() => {
-              finalText.classList.add('show');
-            }, 1000);
+            // Show final landing text immediately
+            finalText.classList.add('show');
             
-            // Show subtitle and buttons together
+            // Show subtitle and buttons together right after
             setTimeout(() => {
               luxurySubtitle.classList.add('show');
               luxuryActions.classList.add('show');
-            }, 2000);
+            }, 300);
             return;
           }
           
