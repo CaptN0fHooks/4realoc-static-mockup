@@ -1596,7 +1596,7 @@
       <div class="luxury-hero-container">
         <!-- Main Text Animation -->
         <div class="luxury-main-text">
-          <span class="impact-text" id="mainText">REAL OC</span>
+          <span class="impact-text" id="mainText"></span>
         </div>
         
         <!-- Final Landing Text -->
@@ -1932,17 +1932,20 @@
       const luxuryActions = document.querySelector('.luxury-actions');
       
       if (mainText && finalText && luxurySubtitle && luxuryActions) {
+        console.log('All elements found, starting animation');
+        
         // FAST TEXT SEQUENCE - 3 SECONDS TOTAL
         const textSequence = [
-          { text: 'REAL ESTATE', delay: 0.5, duration: 0.8 },
-          { text: 'FOR REAL PEOPLE', delay: 1.5, duration: 0.8 },
-          { text: 'REAL OC', delay: 2.5, duration: 0.5 }
+          { text: 'REAL ESTATE', delay: 0, duration: 1 },
+          { text: 'FOR REAL PEOPLE', delay: 1.2, duration: 1 },
+          { text: 'REAL OC', delay: 2.4, duration: 0.6 }
         ];
         
         let currentIndex = 0;
         
         function animateTextSequence() {
           if (currentIndex >= textSequence.length) {
+            console.log('Animation complete, showing final elements');
             // Show final landing text immediately
             finalText.classList.add('show');
             
@@ -1955,6 +1958,7 @@
           }
           
           const currentText = textSequence[currentIndex];
+          console.log(`Animating: ${currentText.text} at index ${currentIndex}`);
           
           setTimeout(() => {
             // Animate text in
@@ -1970,13 +1974,15 @@
               setTimeout(() => {
                 currentIndex++;
                 animateTextSequence();
-              }, 500);
+              }, 200);
             }, currentText.duration * 1000);
           }, currentText.delay * 1000);
         }
         
-        // Start the sequence
-        setTimeout(animateTextSequence, 1000);
+        // Start the sequence immediately
+        animateTextSequence();
+      } else {
+        console.log('Missing elements:', { mainText, finalText, luxurySubtitle, luxuryActions });
       }
       
       // Performance monitoring
