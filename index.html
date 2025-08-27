@@ -61,9 +61,7 @@
   body {
     margin: 0;
     background: 
-      linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 50%, var(--bg-dark) 100%),
-      url('assets/backgrounds/hero-bg.jpg') center/cover;
-    background-blend-mode: soft-light;
+      linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 50%, var(--bg-dark) 100%);
     color: var(--ink);
     font-family: "Calisto MT", "Bookman Old Style", Georgia, "Times New Roman", serif;
     -webkit-font-smoothing: antialiased;
@@ -255,13 +253,7 @@
     place-items: center;
   }
   
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
-    z-index: 1;
-  }
+
   
   .hero video, .hero iframe {
     position: absolute; 
@@ -272,7 +264,7 @@
     border: 0;
     transform: scale(1.1);
     transform-origin: center center;
-    opacity: 0.7;
+    opacity: 1;
   }
   
   .hero-overlay {
