@@ -489,6 +489,30 @@
     opacity: 1;
   }
   
+  /* Image loading states */
+  .carousel .media img {
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-smooth);
+  }
+  
+  .carousel .media img.loaded {
+    opacity: 1;
+  }
+  
+  .carousel .media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent-4) 0%, var(--accent-3) 100%);
+    opacity: 1;
+    transition: opacity 0.6s var(--ease-smooth);
+    z-index: 0;
+  }
+  
+  .carousel .media img.loaded + .carousel .media::after {
+    opacity: 0;
+  }
+  
   .carousel .card:hover {
     transform: translateY(-12px) scale(1.05);
     box-shadow: var(--shadow-strong), 0 0 40px rgba(139, 115, 85, 0.2);
@@ -514,15 +538,33 @@
   .carousel .media img {
     transition: all 0.8s var(--ease-smooth);
     filter: brightness(1) contrast(1);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    backface-visibility: hidden;
   }
   
   .carousel .card:hover .media img {
     transform: scale(1.1);
-    filter: brightness(1.1) contrast(1.1);
+    filter: brightness(1.1) contrast(1.1) saturate(1.1);
   }
   
   .carousel .media {
     transition: all 0.6s var(--ease-smooth);
+    background: var(--bg-alt);
+  }
+  
+  .carousel .media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-smooth);
+    z-index: 1;
+  }
+  
+  .carousel .card:hover .media::before {
+    opacity: 1;
   }
   
   .listing-overlay {
@@ -1135,7 +1177,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop&crop=center" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop&crop=center&q=90" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">HUNTINGTON BEACH</div>
               <div class="listing-address">116 11th St</div>
@@ -1146,7 +1188,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400&h=300&fit=crop&crop=center" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=600&fit=crop&crop=center&q=90" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">HUNTINGTON BEACH</div>
               <div class="listing-address">9121 Christine Dr</div>
@@ -1157,7 +1199,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=300&fit=crop&crop=center" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop&crop=center&q=90" alt="Huntington Beach Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">HUNTINGTON BEACH</div>
               <div class="listing-address">9552 Castine Dr</div>
@@ -1168,7 +1210,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop&crop=center" alt="Newport Beach Condo" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Newport Beach Condo" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">NEWPORT BEACH</div>
               <div class="listing-address">700 Lido Park Dr #5</div>
@@ -1179,7 +1221,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&h=300&fit=crop&crop=center" alt="Newport Beach Luxury Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&crop=center&q=90" alt="Newport Beach Luxury Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">NEWPORT BEACH</div>
               <div class="listing-address">117 E Bay Front</div>
@@ -1190,7 +1232,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop&crop=center" alt="Laguna Beach Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">LAGUNA BEACH</div>
               <div class="listing-address">716 Cliff Dr</div>
@@ -1201,7 +1243,7 @@
         
                 <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&h=300&fit=crop&crop=center" alt="Laguna Beach Luxury Home" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Luxury Home" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">LAGUNA BEACH</div>
               <div class="listing-address">125 Irvine Cove Ct</div>
@@ -1212,7 +1254,7 @@
         
         <article class="card glass">
           <div class="media">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop&crop=center" alt="Laguna Beach Estate" style="width:100%; height:100%; object-fit:cover;" />
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Estate" style="width:100%; height:100%; object-fit:cover;" />
             <div class="listing-overlay">
               <div class="listing-location">LAGUNA BEACH</div>
               <div class="listing-address">2961 Rounsevel Ter</div>

@@ -137,6 +137,30 @@
   // Pause auto-scroll on hover
   carousel?.addEventListener('mouseenter', stopAutoScroll);
   carousel?.addEventListener('mouseleave', startAutoScroll);
+  
+  // Handle image loading for better quality
+  const images = track.querySelectorAll('img');
+  images.forEach(img => {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+      });
+      img.addEventListener('error', () => {
+        // Fallback for failed images
+        img.style.display = 'none';
+        const fallback = document.createElement('div');
+        fallback.style.cssText = `
+          width: 100%; height: 100%; 
+          background: linear-gradient(135deg, var(--accent-4) 0%, var(--accent-3) 100%);
+          display: grid; place-items: center; color: white; font-weight: 600;
+        `;
+        fallback.textContent = 'Property Image';
+        img.parentNode.appendChild(fallback);
+      });
+    }
+  });
 })();
 
 // Mini search -> redirect with query params to search.html
