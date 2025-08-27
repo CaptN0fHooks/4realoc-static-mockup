@@ -7,13 +7,14 @@
 <meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
 <link rel="icon" href="assets/profile-icon.png" />
 
-<!-- Preload high-quality background images for optimal performance -->
-<link rel="preload" as="image" href="https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/FYFVSnBy/pexels-eunjin-baek-787544003-20989043.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/Xpkgp0QN/pexels-kindelmedia-8352369.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/DW8Qj4Fm/pexels-makai-castle-3851938-6253628.jpg">
-<link rel="preload" as="image" href="https://i.postimg.cc/WqPM19ZJ/pexels-peacefullens-2365363.jpg">
+<!-- Preload high-quality local background images for optimal performance -->
+<link rel="preload" as="image" href="assets/backgrounds/hero-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/results-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/about-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/contact-bg.jpg">
+<link rel="preload" as="image" href="assets/backgrounds/footer-bg.jpg">
 
 <!-- Calisto MT is system-installed on many Windows machines; provide graceful fallbacks -->
 <style>
@@ -61,7 +62,7 @@
     margin: 0;
     background: 
       linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 50%, var(--bg-dark) 100%),
-      url('https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg') center/cover;
+      url('assets/backgrounds/hero-bg.jpg') center/cover;
     background-blend-mode: soft-light;
     color: var(--ink);
     font-family: "Calisto MT", "Bookman Old Style", Georgia, "Times New Roman", serif;
@@ -408,18 +409,28 @@
     transition: all 0.8s var(--ease-smooth);
   }
   
-  /* High-Quality Background Images */
+  /* Ultra High-Quality Local Background Images */
   section {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    image-rendering: high-quality;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: translateZ(0);
     will-change: transform;
-    filter: contrast(1.05) saturate(1.1);
+    filter: contrast(1.08) saturate(1.15) brightness(1.02);
+    transition: all 0.8s var(--ease-smooth);
+  }
+  
+  /* Enhanced image quality for local assets */
+  section {
+    background-image: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
+      var(--bg-image);
+    background-blend-mode: soft-light;
   }
   
   /* Loading state for better quality */
@@ -449,7 +460,7 @@
   section.hero {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(166, 124, 82, 0.2) 100%),
-      url('https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg') center/cover;
+      url('assets/backgrounds/hero-bg.jpg') center/cover;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -460,7 +471,7 @@
   section#featured {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
-      url('https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg') center/cover;
+      url('assets/backgrounds/featured-bg.jpg') center/cover;
     background-attachment: fixed;
   }
   
@@ -468,7 +479,7 @@
   section.search-teaser {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
-      url('https://i.postimg.cc/FYFVSnBy/pexels-eunjin-baek-787544003-20989043.jpg') center/cover;
+      url('assets/backgrounds/search-bg.jpg') center/cover;
     background-attachment: fixed;
   }
   
@@ -476,7 +487,7 @@
   section[aria-label="Results"] {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
-      url('https://i.postimg.cc/Xpkgp0QN/pexels-kindelmedia-8352369.jpg') center/cover;
+      url('assets/backgrounds/results-bg.jpg') center/cover;
     background-attachment: fixed;
   }
   
@@ -484,7 +495,7 @@
   section[aria-label="About"] {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
-      url('https://i.postimg.cc/DW8Qj4Fm/pexels-makai-castle-3851938-6253628.jpg') center/cover;
+      url('assets/backgrounds/about-bg.jpg') center/cover;
     background-attachment: fixed;
   }
   
@@ -492,7 +503,7 @@
   section.contact {
     background: 
       linear-gradient(135deg, rgba(139, 115, 85, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%),
-      url('https://i.postimg.cc/WqPM19ZJ/pexels-peacefullens-2365363.jpg') center/cover;
+      url('assets/backgrounds/contact-bg.jpg') center/cover;
     background-attachment: fixed;
   }
   
@@ -1152,8 +1163,12 @@
     padding: var(--section) clamp(20px, 8vw, 80px);
     background: 
       linear-gradient(0deg, rgba(139, 115, 85, 0.08), rgba(139, 115, 85, 0.02)),
-      url('https://i.postimg.cc/FYFVSnBy/pexels-eunjin-baek-787544003-20989043.jpg') center/cover;
+      url('assets/backgrounds/footer-bg.jpg') center/cover;
     background-blend-mode: soft-light;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
   }
   
@@ -1537,23 +1552,43 @@
 </footer>
 
   <script>
-    // Ensure background images load at full quality
+    // Ultra high-quality local background image optimization
     document.addEventListener('DOMContentLoaded', function() {
-      // Force high-quality rendering
+      // Force maximum quality rendering
       const sections = document.querySelectorAll('section');
       sections.forEach(section => {
-        // Add loading class
+        // Add loading class for enhanced quality
         section.classList.add('loading');
         
-        // Force repaint for better quality
-        section.style.transform = 'translateZ(0)';
+        // Force hardware acceleration and repaint
+        section.style.transform = 'translate3d(0, 0, 0)';
         section.style.willChange = 'transform';
+        section.style.webkitTransform = 'translate3d(0, 0, 0)';
         
-        // Remove loading class after images load
-        setTimeout(() => {
-          section.classList.remove('loading');
-        }, 100);
+        // Optimize image loading
+        const bgImage = section.style.backgroundImage;
+        if (bgImage && bgImage.includes('assets/backgrounds/')) {
+          // Preload local images for maximum quality
+          const img = new Image();
+          img.src = bgImage.replace(/url\(['"]?([^'"]+)['"]?\)/, '$1');
+          img.onload = () => {
+            section.style.backgroundImage = bgImage;
+            section.classList.remove('loading');
+          };
+        } else {
+          setTimeout(() => {
+            section.classList.remove('loading');
+          }, 100);
+        }
       });
+      
+      // Performance monitoring
+      if ('performance' in window) {
+        window.addEventListener('load', () => {
+          const perfData = performance.getEntriesByType('navigation')[0];
+          console.log('Page loaded in:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+        });
+      }
     });
   </script>
 </body>
