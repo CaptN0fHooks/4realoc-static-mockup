@@ -249,8 +249,9 @@
     position: relative; 
     min-height: 100vh; 
     overflow: hidden;
-    display: grid; 
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Hero Text Container */
@@ -407,12 +408,25 @@
     opacity: 1;
   }
   
+  /* Hero overlay for text positioning */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+  }
+  
 
 
   /* LUXURY TEXT CONTAINER */
   .luxury-hero-container {
     text-align: center;
-    z-index: 2;
+    z-index: 3;
     position: relative;
     width: 100%;
     max-width: 1400px;
@@ -422,10 +436,11 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    margin: 0 auto;
   }
   
-  /* IMPACTFUL MAIN TEXT ANIMATION */
-  .luxury-main-text {
+  /* NEW DYNAMIC WELCOME TEXT ANIMATION */
+  .welcome-text-container {
     position: relative;
     min-height: clamp(120px, 25vw, 250px);
     display: flex;
@@ -435,34 +450,91 @@
     margin-bottom: 20px;
     width: 100%;
     max-width: 1400px;
+    z-index: 3;
   }
   
-  .impact-text {
-    font-size: clamp(50px, 10vw, 140px);
-    font-weight: 600;
+  .welcome-text {
+    font-size: clamp(60px, 12vw, 160px);
+    font-weight: 700;
     line-height: 0.9;
     color: var(--ink);
-    text-shadow: 0 4px 20px rgba(255,255,255,0.8);
-    letter-spacing: -0.01em;
-    position: relative;
+    text-shadow: 0 4px 20px rgba(255,255,255,0.9);
+    letter-spacing: -0.02em;
+    position: absolute;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s var(--ease-smooth);
+    transform: translate(-50%, -50%) translateY(40px) scale(0.8);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     white-space: nowrap;
-    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
-    text-transform: uppercase;
     text-align: center;
     width: 100%;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
   }
   
-  .impact-text.animate-in {
+  .welcome-text.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -50%) translateY(0) scale(1);
   }
   
-  .impact-text.animate-out {
+  .welcome-text.hide {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translate(-50%, -50%) translateY(-40px) scale(1.1);
+  }
+  
+  /* Typography System */
+  .welcome-text.didot {
+    font-family: "Didot", "Bodoni MT", "Baskerville", serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  
+  .welcome-text.vogue {
+    font-family: "Futura", "Avant Garde Gothic", "Arial Black", sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  
+  .welcome-text.regular {
+    font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  
+  /* Enhanced animation states */
+  .welcome-text {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+  
+  /* Smooth transitions between text states */
+  .welcome-text.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+    z-index: 10;
+  }
+  
+  .welcome-text.hide {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-40px) scale(1.1);
+    z-index: 5;
+  }
+  
+  /* Ensure perfect centering */
+  .welcome-text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1400px;
+    z-index: 3;
   }
   
   /* FINAL LANDING TEXT - REGULAR FONT */
@@ -504,7 +576,9 @@
     margin: 40px 0 60px 0;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.8s var(--ease-smooth) 3.3s;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-align: center;
+    width: 100%;
   }
   
   .luxury-subtitle.show {
@@ -521,6 +595,7 @@
     text-transform: uppercase;
     opacity: 0.9;
     font-family: "Calisto MT", "Bookman Old Style", Georgia, serif;
+    text-align: center;
   }
   
   /* LUXURY ACTION BUTTONS - APPEAR WITH SUBTITLE */
@@ -531,7 +606,9 @@
     justify-content: center;
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.8s var(--ease-smooth) 3.3s;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
+    flex-wrap: wrap;
   }
   
   .luxury-actions.show {
@@ -1598,16 +1675,13 @@
       style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; transform: scale(1.1); object-fit: cover;"
     ></iframe>
     <div class="hero-overlay">
-      <!-- IMPACTFUL DYNAMIC TEXT ANIMATION -->
+      <!-- NEW DYNAMIC WELCOME TEXT ANIMATION -->
       <div class="luxury-hero-container">
-        <!-- Main Text Animation -->
-        <div class="luxury-main-text">
-          <span class="impact-text" id="mainText"></span>
-        </div>
-        
-        <!-- Final Landing Text -->
-        <div class="final-text">
-          <span class="landing-text">REAL OC</span>
+        <!-- Welcome Text Container -->
+        <div class="welcome-text-container">
+          <span class="welcome-text didot" id="welcomeText1">REAL ESTATE</span>
+          <span class="welcome-text vogue" id="welcomeText2">FOR REAL PEOPLE</span>
+          <span class="welcome-text regular" id="welcomeText3">REAL OC</span>
         </div>
         
         <!-- Subtitle Animation -->
@@ -1931,59 +2005,65 @@
         }
       });
       
-      // SIMPLE CLEAN FADE TRANSITION SEQUENCE
-      const mainText = document.getElementById('mainText');
-      const finalText = document.querySelector('.final-text');
+      // SMOOTH 3-SECOND WELCOME TEXT SEQUENCE
+      const welcomeText1 = document.getElementById('welcomeText1');
+      const welcomeText2 = document.getElementById('welcomeText2');
+      const welcomeText3 = document.getElementById('welcomeText3');
       const luxurySubtitle = document.querySelector('.luxury-subtitle');
       const luxuryActions = document.querySelector('.luxury-actions');
       
-      if (mainText && finalText && luxurySubtitle && luxuryActions) {
-        // SIMPLE TEXT SEQUENCE
-        const textSequence = [
-          { text: 'REAL ESTATE', delay: 0.5, duration: 1.5 },
-          { text: 'FOR REAL PEOPLE', delay: 2.5, duration: 1.5 },
-          { text: 'REAL OC', delay: 4.5, duration: 2 }
-        ];
+      if (welcomeText1 && welcomeText2 && welcomeText3 && luxurySubtitle && luxuryActions) {
+        // Reset all elements to initial state
+        [welcomeText1, welcomeText2, welcomeText3].forEach(text => {
+          text.classList.remove('show', 'hide');
+        });
+        luxurySubtitle.classList.remove('show');
+        luxuryActions.classList.remove('show');
         
-        let currentIndex = 0;
-        
-        function simpleFadeSequence() {
-          if (currentIndex >= textSequence.length) {
-            // Show final landing text
-            finalText.classList.add('show');
+        // Smooth animation sequence
+        function startWelcomeSequence() {
+          // Show first text immediately
+          welcomeText1.classList.add('show');
+          
+          // After 1 second, transition to second text
+          setTimeout(() => {
+            welcomeText1.classList.remove('show');
+            welcomeText1.classList.add('hide');
             
-            // Show subtitle and buttons together
+            // Small delay for smooth transition
+            setTimeout(() => {
+              welcomeText2.classList.add('show');
+            }, 100);
+          }, 1000);
+          
+          // After 2 seconds, transition to third text
+          setTimeout(() => {
+            welcomeText2.classList.remove('show');
+            welcomeText2.classList.add('hide');
+            
+            setTimeout(() => {
+              welcomeText3.classList.add('show');
+            }, 100);
+          }, 2000);
+          
+          // After 3 seconds, show final elements
+          setTimeout(() => {
+            welcomeText3.classList.remove('show');
+            welcomeText3.classList.add('hide');
+            
+            // Show subtitle and buttons with staggered timing
             setTimeout(() => {
               luxurySubtitle.classList.add('show');
-              luxuryActions.classList.add('show');
-            }, 500);
-            return;
-          }
-          
-          const currentText = textSequence[currentIndex];
-          
-          setTimeout(() => {
-            // Fade in
-            mainText.textContent = currentText.text;
-            mainText.classList.add('animate-in');
+            }, 200);
             
-            // Hold text
             setTimeout(() => {
-              // Fade out
-              mainText.classList.remove('animate-in');
-              mainText.classList.add('animate-out');
-              
-              // Move to next text
-              setTimeout(() => {
-                currentIndex++;
-                simpleFadeSequence();
-              }, 300);
-            }, currentText.duration * 1000);
-          }, currentText.delay * 1000);
+              luxuryActions.classList.add('show');
+            }, 400);
+          }, 3000);
         }
         
-        // Start the sequence
-        simpleFadeSequence();
+        // Start sequence after a brief delay to ensure smooth loading
+        setTimeout(startWelcomeSequence, 500);
       }
       
       // Performance monitoring
