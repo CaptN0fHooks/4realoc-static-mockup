@@ -6,6 +6,15 @@
 <title>4 Real OC | Coastal & Luxury Homes</title>
 <meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
 <link rel="icon" href="assets/profile-icon.png" />
+
+<!-- Preload high-quality background images for optimal performance -->
+<link rel="preload" as="image" href="https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg">
+<link rel="preload" as="image" href="https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg">
+<link rel="preload" as="image" href="https://i.postimg.cc/FYFVSnBy/pexels-eunjin-baek-787544003-20989043.jpg">
+<link rel="preload" as="image" href="https://i.postimg.cc/Xpkgp0QN/pexels-kindelmedia-8352369.jpg">
+<link rel="preload" as="image" href="https://i.postimg.cc/DW8Qj4Fm/pexels-makai-castle-3851938-6253628.jpg">
+<link rel="preload" as="image" href="https://i.postimg.cc/WqPM19ZJ/pexels-peacefullens-2365363.jpg">
+
 <!-- Calisto MT is system-installed on many Windows machines; provide graceful fallbacks -->
 <style>
   @font-face { font-family: "Calisto MT"; src: local("Calisto MT"); font-display: swap; }
@@ -399,15 +408,41 @@
     transition: all 0.8s var(--ease-smooth);
   }
   
+  /* High-Quality Background Images */
+  section {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
+    filter: contrast(1.05) saturate(1.1);
+  }
+  
+  /* Loading state for better quality */
+  section.loading {
+    filter: contrast(1.1) saturate(1.2);
+    transform: translateZ(0) scale(1.001);
+  }
+  
+  /* Force hardware acceleration */
+  section {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
   /* Smooth background transitions */
   section {
-    background-size: 120% 120%;
-    background-position: center;
-    transition: background-size 0.8s var(--ease-smooth);
+    transition: all 0.8s var(--ease-smooth);
   }
   
   section:hover {
-    background-size: 110% 110%;
+    transform: scale(1.02);
   }
   
   /* Hero Section Background */
@@ -416,6 +451,9 @@
       linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(166, 124, 82, 0.2) 100%),
       url('https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg') center/cover;
     background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   
   /* Featured Listings Section Background */
@@ -1498,5 +1536,25 @@
   <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--muted)">&copy; <span id="year"></span> 4 Real OC. All rights reserved.</p>
 </footer>
 
+  <script>
+    // Ensure background images load at full quality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Force high-quality rendering
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+        // Add loading class
+        section.classList.add('loading');
+        
+        // Force repaint for better quality
+        section.style.transform = 'translateZ(0)';
+        section.style.willChange = 'transform';
+        
+        // Remove loading class after images load
+        setTimeout(() => {
+          section.classList.remove('loading');
+        }, 100);
+      });
+    });
+  </script>
 </body>
 </html>
