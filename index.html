@@ -147,14 +147,58 @@
     .about .copy h3 { margin-top:0; font-size:1.5rem; color:var(--gold); }
     .about .copy p { margin-bottom:1.2rem; }
 
-    .cta-strip { 
-      text-align: center; 
-      padding: 60px 20px; 
-      color: var(--ivory); 
-      position: relative; 
-      z-index: 2;
-      background: url('assets/backgrounds/contact-bg.jpg') center/cover no-repeat;
+    /* Featured section overlay */
+    #featured { position: relative; }
+    #featured::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
+
+    /* Reasons section overlay */
+    #reasons { position: relative; }
+    #reasons::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
+
+    /* Contact section overlay */
+    #contact { position: relative; }
+    #contact::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
+
+    /* Contact panel styling - matches reason panels */
+    .contact-panel { display: grid; gap: 18px; justify-items: center; }
+    .contact-info { 
+      background: var(--glass); 
+      border: 1px solid var(--glass-stroke); 
+      border-radius: var(--radius); 
+      padding: 28px; 
+      box-shadow: var(--shadow); 
+      backdrop-filter: blur(14px);
+      text-align: center;
+      max-width: 500px;
     }
+    .contact-info h3 { margin-top: 0; font-size: 1.5rem; color: var(--gold); }
+    .contact-info p { margin-bottom: 1.5rem; color: #ffffff; }
+    .contact-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    
+    /* Force white text with maximum specificity */
+    #contact .contact-info h2,
+    #contact .contact-info p,
+    #contact .contact-info a,
+    #contact .contact-info * {
+      color: #ffffff !important;
+    }
+    
+    /* Additional specificity to override any conflicts */
+    body #contact .contact-info h2,
+    body #contact .contact-info p,
+    body #contact .contact-info a {
+      color: #ffffff !important;
+    }
+
+    /* CRITICAL FIX: Target the header text that's OUTSIDE the contact-info panel */
+    #contact h2,
+    #contact > .container > h2,
+    #contact > .container > p {
+      color: #ffffff !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+
 
     /* prevent contact section overlay from bleeding into the footer */
     #contact::after { content:none; }
@@ -168,7 +212,7 @@
 }
 footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
 
-#contact{background:transparent !important}
+
 
 #contact::after{content:none}
     footer::after { content:none !important; }
@@ -263,12 +307,20 @@ footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62)
   </section>
 
 
-  <section class="cta-strip" id="contact">
+  <section id="contact" style="background:url('assets/backgrounds/contact-bg.jpg') center/cover no-repeat;">
     <div class="container">
       <h2>Ready to buy or sell in Orange County?</h2>
       <p>Let’s build your plan in 15 minutes.</p>
-      <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
-      <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+      <div class="contact-panel">
+        <div class="contact-info">
+          <h3>Get Started Today</h3>
+          <p>Ready to begin your real estate journey? Let's connect and build your personalized plan.</p>
+          <div class="contact-buttons">
+            <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+            <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
