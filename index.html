@@ -1,439 +1,327 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>4 Real OC | Coastal & Luxury Homes</title>
-  <meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
+  <meta name="description" content="Real Estate for Real People. Coastal & luxury homes in Orange County. Buying, selling, and strategy—made simple." />
+  <meta name="theme-color" content="#0D1B2A" />
+
+  <!-- Favicon -->
   <link rel="icon" href="assets/profile-icon.png" />
 
-  <!-- Preload local background images -->
-  <link rel="preload" as="image" href="assets/backgrounds/hero-bg.jpg">
+  <!-- Preload Backgrounds -->
   <link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/results-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/about-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/contact-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.jpg">
   <link rel="preload" as="image" href="assets/backgrounds/footer-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/results-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
 
   <style>
-    /* Typography + palette */
-    @font-face { font-family: "Calisto MT"; src: local("Calisto MT"); font-display: swap; }
-    :root{
-      --bg:#faf9f6;--bg-alt:#f5f3f0;--bg-dark:#e8e4dd;
-      --ink:#2c2a26;--ink-light:#4a4844;--muted:#8b857d;--muted-light:#b8b2a8;
-      --accent:#8b7355;--accent-2:#a67c52;--accent-3:#c4a484;--accent-4:#d4c4a8;
-      --glass:rgba(255,255,255,.08);--glass-border:rgba(255,255,255,.18);
-      --radius:24px;--radius-sm:16px;--pad:clamp(20px,3vw,40px);--section:clamp(80px,12vw,140px);
-      --ease:cubic-bezier(.4,0,.2,1);--ease-smooth:cubic-bezier(.25,.46,.45,.94);
+    :root {
+      --navy: #0D1B2A;
+      --ivory: #F8F8F6;
+      --gold: #C9A66B;
+      --glass: rgba(255,255,255,0.25);
+      --glass-stroke: rgba(255,255,255,0.4);
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --radius: 22px;
+      --radius-lg: 28px;
+      --maxw: 1200px;
     }
 
-    /* Global reset important for removing video side borders */
-    html,body{margin:0;padding:0;height:100%;overflow-x:hidden}
-    body{
-      background:linear-gradient(135deg,var(--bg) 0%,var(--bg-alt) 50%,var(--bg-dark) 100%);
-      color:var(--ink);
-      font-family:"Calisto MT","Bookman Old Style",Georgia,"Times New Roman",serif;
-      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-      line-height:1.6;letter-spacing:.01em;
+    body { margin: 0; font-family: Lato, sans-serif; background: #0B1A28; color: var(--ivory); }
+    h1,h2,h3 { font-family: "Calisto MT", serif; margin: 0 0 0.5em; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 40px, var(--maxw)); margin: 0 auto; }
+
+    header.site-header { 
+      position: fixed; 
+      inset: 0 0 auto 0; 
+      height: 76px; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      z-index: 50;
+      background: rgba(0,0,0,0.35); 
+      backdrop-filter: blur(6px); 
+      transition: all 300ms ease; 
+      padding: 0 20px; 
     }
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-    main{margin:0;padding:0}
-
-    /* Header */
-    header.site-header{
-      position:fixed;inset:0 0 auto 0;z-index:1000;
-      padding:16px clamp(20px,5vw,48px);
-      display:flex;align-items:center;justify-content:space-between;
-      background:rgba(255,255,255,.12);
-      backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
-      border-bottom:1px solid rgba(255,255,255,.15);
-      transition:all .6s var(--ease-smooth);
+    
+    header.site-header.scrolled { 
+      background: rgba(8,19,32,0.9); 
     }
-    header .brand{display:flex;align-items:center;gap:16px}
-    header .brand img{width:48px;height:48px;border-radius:16px;object-fit:cover}
-    header .title{font-weight:600;letter-spacing:.6px;font-size:20px;color:var(--ink)}
-    nav ul{list-style:none;display:flex;gap:clamp(16px,3vw,32px);margin:0;padding:0}
-    nav a{padding:12px 20px;border-radius:var(--radius-sm);transition:all .3s var(--ease-smooth)}
-    nav a:hover{background:rgba(255,255,255,.2);text-decoration:none}
-
-    .top-reveal-zone{position:fixed;top:0;left:0;right:0;height:20px;z-index:999}
-
-    /* HERO — full-bleed video with zero gutters */
-    section{padding:var(--section) clamp(20px,8vw,80px);position:relative;transition:all .8s var(--ease-smooth)}
-    section.hero{padding:0 !important;background:transparent;position:relative;min-height:100svh;overflow:hidden}
-    .hero > video{
-      position:absolute;inset:0;width:100%;height:100%;
-      object-fit:cover;border:0;display:block;
+    
+    header.site-header.retracted {
+      transform: translateY(-100%);
     }
-    .hero-overlay{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;
+    
+    .brand { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s ease;
+    }
+    
+    .brand:hover {
+      opacity: 0.8;
+    }
+    
+    .brand img { 
+      height: 40px; 
+    }
+    
+    .brand .title {
+      color: var(--ivory);
+      font-size: 1.1rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    
+    nav ul { 
+      list-style: none; 
+      display: flex; 
+      gap: 20px; 
+      margin: 0; 
+      padding: 0; 
+      align-items: center;
+    }
+    
+    nav a { 
+      color: var(--ivory);
+      padding: 8px 12px; 
+      border-radius: 12px; 
+      transition: all 200ms ease; 
+      text-decoration: none;
+    }
+    
+    nav a:hover { 
+      background: rgba(255,255,255,0.1); 
+      color: var(--gold);
+    }
+    
+    nav .cta-btn { 
+      background: var(--gold); 
+      color: #0B1A28; 
+      padding: 10px 16px; 
+      border-radius: 16px; 
+      font-weight: 700; 
+      transition: all 200ms ease;
+    }
+    
+    nav .cta-btn:hover {
+      background: #e6c200;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(230, 194, 0, 0.3);
     }
 
-    /* Text/CTA in hero */
-    .luxury-hero-container{max-width:1400px;width:100%;padding:0 40px;text-align:center}
-    .welcome-text-container{position:relative;min-height:clamp(120px,25vw,250px)}
-    .welcome-text{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      font-size:clamp(60px,12vw,160px);line-height:.9;color:var(--ink);
-      letter-spacing:.02em;opacity:0;transition:all 1s var(--ease-smooth);
-      white-space:nowrap;pointer-events:none;
+    .hero { position: relative; height: 100vh; min-height: 640px; display: grid; place-items: center; text-align: center; }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-inner h1 { font-size: 3rem; }
+    .hero-inner p { font-size: 1.25rem; margin: 10px 0 20px; }
+    .hero-inner .cta-btn { margin:5px; }
+
+    section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
+    section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
+    .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; position:relative; z-index:2; }
+    .card { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+    .card .bg { height: 280px; background-size: cover; background-position: center; }
+    .card .info { padding: 18px; background: rgba(0,0,0,0.5); position: absolute; bottom: 0; width: 100%; }
+
+    .reasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; position:relative; z-index:2; }
+    .reason { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+
+    /* About Section Styling */
+    .about-section { background:url('assets/backgrounds/kitchen-bg.jpg') center/cover no-repeat; position:relative; color:var(--ivory); }
+    .about-section::before { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.55); }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position:relative; z-index:2; }
+    .about .photo img { width: 100%; max-width: 300px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .about .copy { background: rgba(0,0,0,0.6); padding: 28px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .about .copy h3 { margin-top:0; font-size:1.5rem; color:var(--gold); }
+    .about .copy p { margin-bottom:1.2rem; }
+
+    .cta-strip { 
+      text-align: center; 
+      padding: 60px 20px; 
+      color: var(--ivory); 
+      position: relative; 
+      z-index: 2;
+      background: url('assets/backgrounds/contact-bg.jpg') center/cover no-repeat;
     }
-    .welcome-text.show{opacity:1;transform:translate(-50%,-50%) translateY(0)}
-    .welcome-text.hide{opacity:0;transform:translate(-50%,-50%) translateY(-20px) scale(1.03)}
-    .welcome-text.final-landing{opacity:1}
 
-    .luxury-subtitle{margin:35px 0 25px 0;opacity:0;transform:translateY(30px);transition:all 1s var(--ease-smooth)}
-    .luxury-subtitle.show{opacity:1;transform:translateY(0)}
-    .subtitle-text{font-size:clamp(18px,3vw,28px);letter-spacing:.15em;color:var(--ink-light);text-transform:uppercase}
+    /* prevent contact section overlay from bleeding into the footer */
+    #contact::after { content:none; }
 
-    .luxury-actions{margin-top:25px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(30px);transition:all 1s var(--ease-smooth)}
-    .luxury-actions.show{opacity:1;transform:translateY(0)}
-    .luxury-btn{padding:14px 28px;border-radius:28px;background:rgba(255,255,255,.95);border:2px solid rgba(255,255,255,.8);display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .3s var(--ease-smooth)}
-    .luxury-btn:hover{transform:translateY(-3px);border-color:var(--accent)}
-    .luxury-btn-primary{background:linear-gradient(135deg,var(--accent) 0%,var(--accent-2) 100%);color:#fff;border-color:var(--accent)}
-    .btn-content{display:flex;flex-direction:column;align-items:center;gap:3px}
-    .btn-main{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-    .btn-sub{font-size:9px;opacity:.75;letter-spacing:.08em;text-transform:uppercase}
+    footer{
+  position:relative;z-index:5;isolation:isolate;
+  padding:42px 0;text-align:center;font-size:.98rem;color:#eef3f8;
+  background:transparent;
+  border-top:1px solid rgba(255,255,255,.08);
+  box-shadow:0 -36px 60px rgba(0,0,0,.45) inset;
+}
+footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
 
-    /* Sections with backgrounds */
-    section:not(.hero){
-      background-size:cover;background-position:center;background-repeat:no-repeat;
-      filter:contrast(1.08) saturate(1.15) brightness(1.02);
-    }
-    section#featured{background:
-      linear-gradient(135deg, rgba(139,115,85,.10) 0%, rgba(166,124,82,.05) 100%),
-      url('assets/backgrounds/featured-bg.jpg') center/cover}
-    section.search-teaser{background:
-      linear-gradient(135deg, rgba(139,115,85,.10) 0%, rgba(166,124,82,.05) 100%),
-      url('assets/backgrounds/search-bg.jpg') center/cover}
-    section[aria-label="Results"]{background:
-      linear-gradient(135deg, rgba(139,115,85,.10) 0%, rgba(166,124,82,.05) 100%),
-      url('assets/backgrounds/results-bg.jpg') center/cover}
-    section[aria-label="About"]{background:
-      linear-gradient(135deg, rgba(139,115,85,.10) 0%, rgba(166,124,82,.05) 100%),
-      url('assets/backgrounds/about-bg.jpg') center/cover}
-    section.contact{background:
-      linear-gradient(135deg, rgba(139,115,85,.10) 0%, rgba(166,124,82,.05) 100%),
-      url('assets/backgrounds/contact-bg.jpg') center/cover}
+#contact{background:transparent !important}
 
-    /* Components (kept from your original, trimmed) */
-    .glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--radius)}
-    .section-title{margin:0 0 20px;font-size:clamp(32px,4.5vw,56px);font-weight:300;letter-spacing:-.02em;color:var(--ink);text-align:center}
-    .section-sub{color:var(--muted);margin:0 0 32px;text-align:center;font-size:clamp(16px,1.8vw,18px);line-height:1.6;max-width:800px;margin-inline:auto}
-
-    /* Featured carousel (structure preserved) */
-    .carousel{position:relative;border-radius:var(--radius);padding:4px;background:rgba(255,255,255,.05)}
-    .carousel-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,1fr);gap:24px;overflow:hidden;padding:4px}
-    .carousel .card{min-height:360px;display:grid;grid-template-rows:1fr auto;border-radius:16px;overflow:hidden;position:relative}
-    .carousel .media{position:relative;display:grid;place-items:center;overflow:hidden}
-    .carousel .media img{width:100%;height:100%;object-fit:cover;display:block}
-    .listing-overlay{position:absolute;inset:auto 0 0 0;background:linear-gradient(180deg,transparent 0%, rgba(139,115,85,.9) 100%);padding:20px 16px;color:#fff;transform:translateY(100%);transition:transform .4s var(--ease-smooth)}
-    .carousel .card:hover .listing-overlay{transform:translateY(0)}
-    .carousel .meta{padding:20px;background:rgba(255,255,255,.95)}
-
-    /* Search form */
-    .search-container{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:var(--pad);border-radius:var(--radius);background:rgba(255,255,255,.05)}
-    @media (max-width:900px){.search-container{grid-template-columns:1fr}}
-    .search-filters{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
-    .field{display:grid;gap:8px}
-    .field label{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.3px;text-transform:uppercase}
-    .input,select,textarea{padding:16px 20px;border-radius:16px;border:1px solid rgba(139,115,85,.2);background:rgba(255,255,255,.95);font-family:inherit;font-size:14px;color:var(--ink)}
-    textarea{min-height:120px}
-
-    /* Footer */
-    footer{margin-top:var(--section);padding:var(--section) clamp(20px,8vw,80px);background:
-      linear-gradient(0deg, rgba(139,115,85,.08), rgba(139,115,85,.02)),
-      url('assets/backgrounds/footer-bg.jpg') center/cover}
-    .footer-grid{display:grid;gap:40px;grid-template-columns:1.2fr 1fr 1fr}
-    @media (max-width:900px){.footer-grid{grid-template-columns:1fr}}
-    .chip{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.8)}
-
-    /* Space under fixed header for page content */
-    .page-intro{margin-top:90px}
+#contact::after{content:none}
+    footer::after { content:none !important; }
   </style>
-
-  <link rel="stylesheet" href="css/styles.css" />
-  <script defer src="js/main.js"></script>
 </head>
 <body>
-  <div class="top-reveal-zone"></div>
-  <header class="site-header glass" id="siteHeader">
-    <div class="brand">
-      <img src="https://live.staticflickr.com/65535/54747643065_2401236099_t.jpg" alt="4 Real OC logo" />
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="assets/logo-icon.png" alt="4 Real OC logo" />
       <div class="title">4 Real OC | Coastal &amp; Luxury Homes</div>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="buyers.html">Buyers</a></li>
-        <li><a href="sellers.html">Sellers</a></li>
-        <li><a href="search.html">Property Search</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-      </ul>
-    </nav>
+    </a>
+          <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buyers.html">Buyers</a></li>
+          <li><a href="sellers.html">Sellers</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="why-us.html">Why Us</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="cta-btn" href="contact.html">Book a Call ▸</a></li>
+        </ul>
+      </nav>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero" aria-label="Hero video">
-      <!-- Native video replaces iframe to ensure perfect edge-to-edge coverage -->
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/hero-bg.jpg" aria-label="Oceanfront lifestyle background video">
-        <source src="assets/MainCut.mp4" type="video/mp4" />
-      </video>
+  <section class="hero">
+    <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg" aria-hidden="true"></video>
+    <div class="hero-inner">
+      <h1>Real Estate for Real People</h1>
+      <p>4 Real OC | Coastal &amp; Luxury Homes in Orange County</p>
+      <a class="cta-btn" href="buyers.html">Explore Homes</a>
+      <a class="cta-btn" href="sellers.html">Sell My Home</a>
+    </div>
+  </section>
 
-      <div class="hero-overlay">
-        <div class="luxury-hero-container">
-          <div class="welcome-text-container">
-            <span class="welcome-text" id="welcomeText1">Real Estate</span>
-            <span class="welcome-text" id="welcomeText2">For Real People</span>
-            <span class="welcome-text" id="welcomeText3">Real OC</span>
-          </div>
-          <div class="luxury-subtitle"><span class="subtitle-text">REPRESENTING ORANGE COUNTY</span></div>
-          <div class="luxury-actions">
-            <a href="buyers.html" class="luxury-btn luxury-btn-primary">
-              <div class="btn-content"><span class="btn-main">BUY WITH CLARITY</span><span class="btn-sub">Exclusive Properties</span></div>
-            </a>
-            <a href="sellers.html" class="luxury-btn">
-              <div class="btn-content"><span class="btn-main">SELL WITH CONFIDENCE</span><span class="btn-sub">Maximum Value</span></div>
-            </a>
-          </div>
-        </div>
+  <section id="featured" style="background:url('assets/backgrounds/featured-bg.jpg') center/cover no-repeat;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Handpicked Coastal Homes</h2>
+        <p>Curated highlights — IDX coming soon</p>
       </div>
-    </section>
-
-    <!-- Featured -->
-    <section id="featured" aria-label="Featured Listings">
-      <h2 class="section-title">Featured Listings</h2>
-      <p class="section-sub">Hand‑picked Orange County coastal & luxury homes from Huntington Beach to Laguna Beach.</p>
-      <div class="carousel glass" id="featCarousel">
-        <div class="carousel-track" id="featTrack">
-          <article class="card glass">
-            <div class="media">
-              <img src="https://i.postimg.cc/3dTB8wjb/pexels-daniel-2984347.jpg" alt="Huntington Beach Home" />
-              <div class="listing-overlay"><div class="listing-location">HUNTINGTON BEACH</div><div class="listing-address">116 11th St</div></div>
-            </div>
-            <div class="meta"><strong>$1,299,000</strong><br/><small>3 Bed · 2 Bath · 1,200 sqft · Huntington Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://i.postimg.cc/9DxtYt6v/pexels-esmihel-16133569.jpg" alt="Huntington Beach Home" />
-              <div class="listing-overlay"><div class="listing-location">HUNTINGTON BEACH</div><div class="listing-address">9121 Christine Dr</div></div>
-            </div>
-            <div class="meta"><strong>$1,395,000</strong><br/><small>4 Bed · 3 Bath · 2,100 sqft · Huntington Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop&crop=center&q=90" alt="Huntington Beach Home" />
-              <div class="listing-overlay"><div class="listing-location">HUNTINGTON BEACH</div><div class="listing-address">9552 Castine Dr</div></div>
-            </div>
-            <div class="meta"><strong>$1,150,000</strong><br/><small>3 Bed · 2 Bath · 1,800 sqft · Huntington Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Newport Beach Condo" />
-              <div class="listing-overlay"><div class="listing-location">NEWPORT BEACH</div><div class="listing-address">700 Lido Park Dr #5</div></div>
-            </div>
-            <div class="meta"><strong>$2,195,000</strong><br/><small>2 Bed · 2 Bath · 1,100 sqft · Newport Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&crop=center&q=90" alt="Newport Beach Luxury Home" />
-              <div class="listing-overlay"><div class="listing-location">NEWPORT BEACH</div><div class="listing-address">117 E Bay Front</div></div>
-            </div>
-            <div class="meta"><strong>$8,995,000</strong><br/><small>4 Bed · 4 Bath · 3,200 sqft · Newport Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Home" />
-              <div class="listing-overlay"><div class="listing-location">LAGUNA BEACH</div><div class="listing-address">716 Cliff Dr</div></div>
-            </div>
-            <div class="meta"><strong>$3,295,000</strong><br/><small>3 Bed · 3 Bath · 2,400 sqft · Laguna Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Luxury Home" />
-              <div class="listing-overlay"><div class="listing-location">LAGUNA BEACH</div><div class="listing-address">125 Irvine Cove Ct</div></div>
-            </div>
-            <div class="meta"><strong>$4,995,000</strong><br/><small>4 Bed · 4 Bath · 3,100 sqft · Laguna Beach</small></div>
-          </article>
-
-          <article class="card glass">
-            <div class="media">
-              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop&crop=center&q=90" alt="Laguna Beach Estate" />
-              <div class="listing-overlay"><div class="listing-location">LAGUNA BEACH</div><div class="listing-address">2961 Rounsevel Ter</div></div>
-            </div>
-            <div class="meta"><strong>$6,495,000</strong><br/><small>5 Bed · 5 Bath · 4,200 sqft · Laguna Beach</small></div>
-          </article>
+      <div class="cards">
+        <div class="card">
+          <div class="bg" style="background-image:url('assets/backgrounds/pexels-esmihel-16133569.jpg');"></div>
+          <div class="info"><h3>122 Oceancrest Dr, Newport Beach</h3><p>$4,250,000 · Ocean View</p></div>
         </div>
-        <div class="controls">
-          <button aria-label="Prev" id="featPrev">&#9664;</button>
-          <button aria-label="Next" id="featNext">&#9654;</button>
+        <div class="card">
+          <div class="bg" style="background-image:url('assets/backgrounds/Max Vakhtbovycn.jpg');"></div>
+          <div class="info"><h3>18 Tidepool Ln, Laguna Beach</h3><p>$3,150,000 · Walk to Sand</p></div>
         </div>
-      </div>
-    </section>
-
-    <!-- Search teaser -->
-    <section class="search-teaser" aria-label="Property Search">
-      <h2 class="section-title">Property Search</h2>
-      <p class="section-sub">Filter by city, ZIP, price, beds, and more. Your inputs pass to the full search page.</p>
-      <div class="search-container glass">
-        <form id="miniSearch" class="search-filters">
-          <div class="field"><label>City</label><input class="input" name="city" placeholder="Newport Beach" /></div>
-          <div class="field"><label>ZIP</label><input class="input" name="zip" placeholder="92660" /></div>
-          <div class="field"><label>Price (Min)</label><input class="input" name="price_min" type="number" placeholder="500000" /></div>
-          <div class="field"><label>Price (Max)</label><input class="input" name="price_max" type="number" placeholder="3000000" /></div>
-          <div class="field"><label>Beds (Min)</label><input class="input" name="beds_min" type="number" min="0" max="10" /></div>
-          <div class="field"><label>Sq Ft (Min)</label><input class="input" name="sqft_min" type="number" min="0" /></div>
-          <div class="field"><label>Property Type</label>
-            <select name="ptype"><option value="">Any</option><option>SFR</option><option>Condo</option><option>Townhouse</option><option>Manufactured</option><option>Multi‑Family</option></select>
-          </div>
-          <div class="field" style="align-self:end"><button class="btn" type="submit">See Results</button></div>
-        </form>
-
-        <div class="map-container">
-          <div class="map-header">
-            <div class="map-controls">
-              <button class="map-btn" aria-label="Zoom In">+</button>
-              <button class="map-btn" aria-label="Zoom Out">−</button>
-              <button class="map-btn" aria-label="Full Screen">⛶</button>
-            </div>
-            <div class="map-location">Orange County, CA</div>
-          </div>
-          <div class="map-content">
-            <div class="map-overlay">
-              <div class="map-pins">
-                <div class="map-pin" style="top:25%;left:20%;" data-price="$1,299,000"></div>
-                <div class="map-pin" style="top:35%;left:45%;" data-price="$2,195,000"></div>
-                <div class="map-pin" style="top:60%;left:70%;" data-price="$8,995,000"></div>
-                <div class="map-pin" style="top:75%;left:30%;" data-price="$3,295,000"></div>
-                <div class="map-pin" style="top:45%;left:80%;" data-price="$4,995,000"></div>
-              </div>
-              <div class="map-legend">
-                <div class="legend-item"><span class="legend-dot active"></span><span>Active Listings</span></div>
-                <div class="legend-item"><span class="legend-dot pending"></span><span>Pending</span></div>
-                <div class="legend-item"><span class="legend-dot sold"></span><span>Recently Sold</span></div>
-              </div>
-            </div>
-          </div>
+        <div class="card">
+          <div class="bg" style="background-image:url('assets/backgrounds/pexels-sonny-11968593.jpg');"></div>
+          <div class="info"><h3>9 Seabreeze Ct, Huntington Beach</h3><p>$1,975,000 · Gated</p></div>
         </div>
-      </div>
-    </section>
-
-    <!-- Results -->
-    <section aria-label="Results">
-      <h2 class="section-title">Results</h2>
-      <p class="section-sub">Six iconic reasons to work with us &amp; love Orange County coastal living.</p>
-      <div class="grid-3">
-        <div class="glass" style="padding:16px"><h4>Iconic Point 1</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-        <div class="glass" style="padding:16px"><h4>Iconic Point 2</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-        <div class="glass" style="padding:16px"><h4>Iconic Point 3</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-        <div class="glass" style="padding:16px"><h4>Iconic Point 4</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-        <div class="glass" style="padding:16px"><h4>Iconic Point 5</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-        <div class="glass" style="padding:16px"><h4>Iconic Point 6</h4><p class="section-sub">Short supporting line that teases your unique value.</p></div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section aria-label="About">
-      <div class="about-split glass" style="padding:var(--pad)">
-        <div>
-          <h2 class="section-title">About Michael</h2>
-          <p class="section-sub">Professional. Precise. Personable. Focused on coastal &amp; luxury homes throughout Orange County.</p>
-          <p>With years in the market and a builder’s eye for detail, Michael navigates complex deals while keeping the process calm and transparent. Whether you’re upgrading, rightsizing, or investing, you’ll get a steady hand and sharp strategy.</p>
+        <div class="card">
+          <div class="bg" style="background-image:url('assets/backgrounds/Pixabay.jpg');"></div>
+          <div class="info"><h3>301 Shoreline Ave, Dana Point</h3><p>$2,495,000 · Marina Adjacent</p></div>
         </div>
-        <div class="profile-container">
-          <div class="profile-frame">
-            <img src="https://live.staticflickr.com/65535/54747645745_b62595701c_b.jpg" alt="Michael R. Jacquez - Professional Headshot" class="profile-image"/>
-            <div class="profile-overlay"><div class="profile-badge">DRE# 01901413</div></div>
-          </div>
-          <div class="profile-accent"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section class="contact" aria-label="Get In Touch">
-      <h2 class="section-title">Get In Touch</h2>
-      <form class="glass" style="padding:var(--pad)">
-        <div class="field"><label>First name</label><input class="input" name="first_name" /></div>
-        <div class="field"><label>Last name</label><input class="input" name="last_name" /></div>
-        <div class="field"><label>Email</label><input class="input" type="email" name="email" /></div>
-        <div class="field"><label>Phone</label><input class="input" type="tel" name="phone" /></div>
-        <div class="field"><label>I'm a</label>
-          <select name="role"><option>Buyer</option><option>Seller</option><option>Investor</option></select>
-        </div>
-        <div class="field" style="grid-column:1/-1"><label>Message</label><textarea name="message" placeholder="Send a property inquiry or message"></textarea></div>
-        <div class="field" style="grid-column:1/-1"><button class="btn" type="submit">Submit</button></div>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h3 class="section-title">Get in touch</h3>
-        <p class="section-sub">Real estate for real people—serving Orange County with care and precision.</p>
-        <div class="chip">
-          <img src="https://live.staticflickr.com/65535/54747643065_2401236099_t.jpg" alt="Profile icon" style="width:24px;height:24px;border-radius:999px;object-fit:cover" />
-          <div><strong>Michael R. Jacquez</strong><br/>DRE# 01901413</div>
-        </div>
-        <p style="margin-top:8px;line-height:1.6">
-          <a href="tel:+18884732562">(888) 4-REAL-OC</a> &nbsp;|&nbsp; 
-          <a href="mailto:Mike@4realoc.com">Mike@4realoc.com</a><br/>
-          <a href="https://www.4realoc.com" target="_blank" rel="noopener">www.4realoc.com</a>
-        </p>
-      </div>
-      <div>
-        <h4>Affiliations</h4>
-        <div class="affiliations"><span class="chip">eXp Realty</span><span class="chip">NAR</span><span class="chip">CRMLS</span><span class="chip">CAR</span></div>
-      </div>
-      <div>
-        <h4>Compliance</h4>
-        <p class="section-sub" style="margin:0">eXp Realty of Southern California<br/>DRE# 01901413</p>
-        <p style="font-size:12px;color:var(--muted)">All information deemed reliable but not guaranteed.</p>
       </div>
     </div>
-    <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--muted)">&copy; <span id="year"></span> 4 Real OC. All rights reserved.</p>
+  </section>
+
+  <section id="reasons" style="background:url('assets/backgrounds/results-bg.jpg') center/cover no-repeat;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Six Reasons Buyers &amp; Sellers Pick 4 Real OC</h2>
+        <p>Trust, clarity, and Marine-grade reliability</p>
+      </div>
+      <div class="reasons">
+        <div class="reason"><h3>Local Coastal Insight</h3><p>Six years living and exploring OC.</p></div>
+        <div class="reason"><h3>Buyer’s Advocate</h3><p>Three active buyers now.</p></div>
+        <div class="reason"><h3>Discipline & Duty</h3><p>Former US Marine.</p></div>
+        <div class="reason"><h3>Data, Not Drama</h3><p>Pricing, comps, ROI.</p></div>
+        <div class="reason"><h3>Networked & Trusted</h3><p>Vetted partners.</p></div>
+        <div class="reason"><h3>2008 Short-Sale Roots</h3><p>Battle-tested calm.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="section-head"><h2>About Michael R. Jacquez</h2></div>
+      <div class="about">
+        <div class="photo"><img src="assets/headshot.jpg" alt="Michael R. Jacquez" /></div>
+        <div class="copy">
+          <h3>Marine Discipline · Local Expertise</h3>
+          <p>Hi, I’m Michael — a licensed Realtor® focused on coastal &amp; luxury homes in Orange County. I served in the US Marine Corps and cut my real-estate teeth during the 2008 crisis helping homeowners navigate short sales. Today, I bring that same duty, clarity, and steady hand to every deal.</p>
+          <a class="cta-btn" href="#contact">Work with Michael</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="cta-strip" id="contact">
+    <div class="container">
+      <h2>Ready to buy or sell in Orange County?</h2>
+      <p>Let’s build your plan in 15 minutes.</p>
+      <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+      <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> 4 Real OC · eXp Realty of Southern California · DRE #01901413</div>
   </footer>
 
   <script>
-    // Hero text sequence
-    document.addEventListener('DOMContentLoaded', function (){
-      const welcomeText1 = document.getElementById('welcomeText1');
-      const welcomeText2 = document.getElementById('welcomeText2');
-      const welcomeText3 = document.getElementById('welcomeText3');
-      const luxurySubtitle = document.querySelector('.luxury-subtitle');
-      const luxuryActions = document.querySelector('.luxury-actions');
-
-      if (welcomeText1 && welcomeText2 && welcomeText3 && luxurySubtitle && luxuryActions){
-        [welcomeText1, welcomeText2, welcomeText3].forEach(t=>t.classList.remove('show','hide','final-landing'));
-        luxurySubtitle.classList.remove('show'); luxuryActions.classList.remove('show');
-
-        function run(){
-          welcomeText1.classList.add('show');
-          setTimeout(()=>{ welcomeText1.classList.remove('show'); welcomeText1.classList.add('hide');
-            setTimeout(()=>{ welcomeText2.classList.add('show'); },200);
-          },2000);
-          setTimeout(()=>{ welcomeText2.classList.remove('show'); welcomeText2.classList.add('hide');
-            setTimeout(()=>{ welcomeText3.classList.add('final-landing'); },200);
-          },4000);
-          setTimeout(()=>{ luxurySubtitle.classList.add('show'); },6200);
-          setTimeout(()=>{ luxuryActions.classList.add('show'); },6500);
-        }
-        setTimeout(run, 600);
+    const header = document.querySelector('header.site-header');
+    let scrollTimeout;
+    let hoverTimeout;
+    let isRetracted = false;
+    
+    // Scroll behavior - retract header when scrolling down
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 8);
+      
+      // Retract header when scrolling down
+      if (window.scrollY > 100 && !isRetracted) {
+        header.classList.add('retracted');
+        isRetracted = true;
       }
-
-      // Footer year
-      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+      
+      // Show header when scrolling to top
+      if (window.scrollY <= 100 && isRetracted) {
+        header.classList.remove('retracted');
+        isRetracted = false;
+      }
+      
+      // Clear any existing scroll timeout
+      clearTimeout(scrollTimeout);
     });
+    
+    // Hover behavior - show header when hovering at top of page
+    document.addEventListener('mouseenter', (e) => {
+      // Only trigger when hovering near the top of the page
+      if (e.clientY <= 100 && isRetracted) {
+        header.classList.remove('retracted');
+        isRetracted = false;
+        
+        // Retract again after 3 seconds
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => {
+          if (window.scrollY > 100) {
+            header.classList.add('retracted');
+            isRetracted = true;
+          }
+        }, 3000);
+      }
+    });
+    
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

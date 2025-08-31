@@ -1,264 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>4 Real OC | Coastal & Luxury Homes</title>
-<meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
-<link rel="icon" href="assets/profile-icon.png" />
-<!-- Calisto MT is system-installed on many Windows machines; provide graceful fallbacks -->
-<style>
-  @font-face { font-family: "Calisto MT"; src: local("Calisto MT"); font-display: swap; }
-  :root {
-    --bg: #f7f5f1;            /* Nakashima-inspired soft paper tone */
-    --ink: #1f2937;           /* rich charcoal for text */
-    --muted: #6b7280;         /* cool gray for subtext */
-    --glass: rgba(255, 255, 255, 0.55);
-    --glass-border: rgba(255, 255, 255, 0.35);
-    --accent: #1f3d5b;        /* deep ocean blue */
-    --accent-2: #8fb1c7;      /* seafoam */
-    --shadow: 0 10px 30px rgba(31, 61, 91, 0.12);
-    --radius: 22px;
-    --pad: clamp(14px, 2.4vw, 28px);
-    --section: clamp(48px, 8vw, 96px);
-  }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: radial-gradient(1200px 800px at 80% -10%, #ffffff 0%, var(--bg) 55%, #efece6 100%);
-    color: var(--ink);
-    font-family: "Calisto MT", "Bookman Old Style", Georgia, "Times New Roman", serif;
-    -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Property Search | 4 Real OC | Coastal & Luxury Homes</title>
+  <meta name="description" content="Search Orange County coastal and luxury homes. Find your perfect property with advanced search filters." />
+  <meta name="theme-color" content="#0D1B2A" />
 
-  /* Glassmorphism utility */
-  .glass {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    border-radius: var(--radius);
-  }
+  <!-- Favicon -->
+  <link rel="icon" href="assets/profile-icon.png" />
 
-  /* Header */
-  header.site-header {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 8px clamp(12px, 4vw, 32px);
-    display: flex; align-items: center; justify-content: space-between;
-    transition: transform 380ms ease, background 280ms ease;
-    transform: translateY(0);
-    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.35));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-  }
-  header.site-header.hidden { transform: translateY(-120%); }
-  header .brand { display: flex; align-items: center; gap: 12px; }
-  header .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; }
-  header .brand .title { font-weight: 700; letter-spacing: 0.4px; font-size: 18px; }
-  nav ul { list-style: none; display: flex; gap: clamp(10px, 2vw, 26px); margin: 0; padding: 0; }
-  nav a { padding: 8px 10px; border-radius: 12px; }
-  nav a:hover { background: rgba(255,255,255,0.6); text-decoration: none; }
+  <!-- Preload Backgrounds -->
+  <link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/footer-bg.jpg">
 
-  /* Top reveal zone for header */
-  .top-reveal-zone {
-    position: fixed; top: 0; left: 0; right: 0; height: 20px;
-    z-index: 999;
-  }
+  <style>
+    :root {
+      --navy: #0D1B2A;
+      --ivory: #F8F8F6;
+      --gold: #C9A66B;
+      --glass: rgba(255,255,255,0.25);
+      --glass-stroke: rgba(255,255,255,0.4);
+      --shadow: 0 10px 30px rgba(0,0,0,0.25);
+      --radius: 22px;
+      --radius-lg: 28px;
+      --maxw: 1200px;
+    }
 
-  /* Hero */
-  .hero {
-    position: relative; min-height: 100vh; overflow: hidden;
-    display: grid; place-items: center;
-  }
-  .hero video, .hero iframe {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; border: 0;
-  }
-  .hero-overlay {
-    position: relative; z-index: 2; text-align: center; padding: var(--pad);
-  }
-  .hero-badge {
-    display: inline-block; padding: 8px 14px; font-size: 12px; letter-spacing: 1px;
-    text-transform: uppercase; color: #fff; background: rgba(31,61,91,0.55);
-    border: 1px solid rgba(255,255,255,0.35); border-radius: 999px;
-  }
-  .hero h1 {
-    margin: 14px auto 10px; font-size: clamp(34px, 6vw, 78px); line-height: 1.04;
-    color: #fff; text-shadow: 0 10px 26px rgba(0,0,0,0.35);
-  }
-  .hero p.sub {
-    margin: 0 auto; max-width: 760px; color: #eef5fb; font-size: clamp(14px, 1.6vw, 18px);
-  }
+    body { margin: 0; font-family: Lato, sans-serif; background: #0B1A28; color: var(--ivory); }
+    h1,h2,h3 { font-family: "Calisto MT", serif; margin: 0 0 0.5em; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 40px, var(--maxw)); margin: 0 auto; }
 
-  .cta-row { margin-top: 22px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 12px 16px; border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
-    border: 1px solid rgba(255,255,255,0.7);
-    box-shadow: var(--shadow);
-    color: var(--ink); font-weight: 600;
-  }
-  .btn:hover { transform: translateY(-1px); }
+    header.site-header { position: fixed; inset: 0 0 auto 0; height: 76px; display: flex; align-items: center; z-index: 50;
+      background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); transition: background 300ms ease; padding:0 20px; }
+    header.site-header.scrolled { background: rgba(8,19,32,0.9); }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand img { height:40px; }
+    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
+    nav a { padding: 8px 12px; border-radius: 12px; transition: background 200ms ease; }
+    nav a:hover { background: rgba(255,255,255,0.1); }
+    .cta-btn { background: var(--gold); color: #0B1A28; padding: 10px 16px; border-radius: 16px; font-weight: 700; }
 
-  /* Sections */
-  section { padding: var(--section) clamp(16px, 6vw, 72px); }
-  .section-title { margin: 0 0 14px; font-size: clamp(24px, 3.6vw, 48px); }
-  .section-sub { color: var(--muted); margin-bottom: 22px; }
+    .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
+    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-inner h1 { font-size: 2.5rem; }
+    .hero-inner p { font-size: 1.1rem; margin: 10px 0 20px; }
 
-  /* Featured listings carousel (simple) */
-  .carousel { position: relative; }
-  .carousel-track {
-    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 1fr);
-    gap: 18px; overflow: hidden;
-  }
-  .carousel .card {
-    min-height: 300px; display: grid; grid-template-rows: 1fr auto; overflow: hidden;
-  }
-  .carousel .media {
-    background: #dfe7ee; display: grid; place-items: center; color: #345;
-    font-weight: 600; letter-spacing: 0.3px;
-  }
-  .carousel .meta { padding: 12px; }
-  .carousel .controls {
-    position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; pointer-events: none;
-  }
-  .carousel button {
-    pointer-events: auto; border: 0; border-radius: 999px; width: 44px; height: 44px;
-    background: rgba(255,255,255,0.8); display: grid; place-items: center; box-shadow: var(--shadow);
-  }
+    section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
+    section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
+    .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
 
-  /* Property search teaser */
-  .search-teaser form, .contact form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-  .field { display: grid; gap: 6px; }
-  .input, select, textarea {
-    padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(31,61,91,0.15);
-    background: rgba(255,255,255,0.9);
-  }
-  textarea { min-height: 120px; }
+    .search-form { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); backdrop-filter: blur(14px); position:relative; z-index:2; }
+    .search-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 24px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-size: 14px; font-weight: 600; color: var(--ivory); }
+    .input, select { padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: var(--ivory); font-family: inherit; }
+    .input::placeholder { color: rgba(255,255,255,0.6); }
+    .search-btn { background: var(--gold); color: var(--navy); padding: 14px 28px; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+    .search-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201, 166, 107, 0.3); }
 
-  /* Results grid */
-  .grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; position:relative; z-index:2; }
+    .property-card { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+    .property-image { height: 200px; background-size: cover; background-position: center; position: relative; }
+    .property-price { position: absolute; top: 16px; right: 16px; background: var(--gold); color: var(--navy); padding: 8px 12px; border-radius: 8px; font-weight: 700; }
+    .property-details { padding: 20px; }
+    .property-address { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .property-features { color: rgba(255,255,255,0.8); margin-bottom: 16px; }
+    .property-description { color: rgba(255,255,255,0.9); line-height: 1.5; }
 
-  /* About split */
-  .about-split { display: grid; gap: 26px; grid-template-columns: 1.1fr 0.9fr; align-items: center; }
-  @media (max-width: 900px) { .about-split { grid-template-columns: 1fr; } }
+    .cta-strip { text-align: center; padding: 60px 20px; color: var(--ivory); position:relative; z-index:2; }
 
-  /* Footer */
-  footer {
-    margin-top: var(--section);
-    padding: var(--section) clamp(16px, 6vw, 72px);
-    background: linear-gradient(0deg, rgba(31,61,91,0.06), rgba(31,61,91,0.0));
-  }
-  .footer-grid { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr 1fr; }
-  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
-  .social-row { display: flex; gap: 12px; align-items: center; }
-  .affiliations { display: flex; gap: 10px; flex-wrap: wrap; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px;
-    background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.8);
-  }
-
-  /* Page intro block */
-  .page-intro { margin-top: 90px; } /* space under fixed header */
-</style>
-<link rel="stylesheet" href="css/styles.css" />
-<script defer src="js/main.js"></script>
-
+    footer{
+      position:relative;z-index:5;isolation:isolate;
+      padding:42px 0;text-align:center;font-size:.98rem;color:#eef3f8;
+      background:transparent;
+      border-top:1px solid rgba(255,255,255,.08);
+      box-shadow:0 -36px 60px rgba(0,0,0,.45) inset;
+    }
+    footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
+    .bottom-bg{position:relative;background:url('assets/backgrounds/footer-bg.jpg') center/cover no-repeat}
+    footer::after { content:none !important; }
+  </style>
 </head>
 <body>
-<div class="top-reveal-zone"></div>
-<header class="site-header glass" id="siteHeader">
-  <div class="brand">
-    <img src="assets/logo-icon.png" alt="4 Real OC logo" />
-    <div class="title">4 Real OC | Coastal &amp; Luxury Homes</div>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="buyers.html">Buyers</a></li>
-      <li><a href="sellers.html">Sellers</a></li>
-      <li><a href="search.html">Property Search</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-    </ul>
-  </nav>
-</header>
+  <header class="site-header">
+    <div class="brand"><img src="assets/logo-icon.png" alt="4 Real OC" /><span>4 Real OC</span></div>
+    <nav>
+      <ul>
+        <li><a href="buyers.html">Buyers</a></li>
+        <li><a href="sellers.html">Sellers</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="why-us.html">Why Us</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="cta-btn" href="contact.html">Book a Call ▸</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<main class="page-intro">
-  <section>
-    <h1 class="section-title">Property Search</h1>
-    <p class="section-sub">Interactive IDX will live here. For now, the UI and map frame are ready. The form is prefilled from the homepage.</p>
+  <section class="hero">
+    <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg" aria-hidden="true"></video>
+    <div class="hero-inner">
+      <h1>Find Your Dream Home</h1>
+      <p>Search Orange County's finest coastal and luxury properties</p>
+    </div>
+  </section>
 
-    <form id="fullSearch" class="glass" style="padding:var(--pad)">
-      <div class="field"><label>City</label><input class="input" name="city" /></div>
-      <div class="field"><label>ZIP</label><input class="input" name="zip" /></div>
-      <div class="field"><label>Price (Min)</label><input class="input" type="number" name="price_min" /></div>
-      <div class="field"><label>Price (Max)</label><input class="input" type="number" name="price_max" /></div>
-      <div class="field"><label>Beds (Min)</label><input class="input" type="number" name="beds_min" /></div>
-      <div class="field"><label>Sq Ft (Min)</label><input class="input" type="number" name="sqft_min" /></div>
-      <div class="field"><label>Property Type</label>
-        <select name="ptype"><option value="">Any</option><option>SFR</option><option>Condo</option><option>Townhouse</option><option>Manufactured</option><option>Multi‑Family</option></select>
+  <section id="search" style="background:url('assets/backgrounds/search-bg.jpg') center/cover no-repeat;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Property Search</h2>
+        <p>Use our advanced filters to find your perfect home</p>
       </div>
-      <div class="field" style="align-self:end"><button class="btn" type="submit">Update Results</button></div>
-    </form>
+      <form class="search-form">
+        <div class="search-grid">
+          <div class="field">
+            <label for="location">Location</label>
+            <select id="location" name="location">
+              <option value="">Any Location</option>
+              <option value="huntington-beach">Huntington Beach</option>
+              <option value="newport-beach">Newport Beach</option>
+              <option value="laguna-beach">Laguna Beach</option>
+              <option value="dana-point">Dana Point</option>
+              <option value="san-clemente">San Clemente</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="price-min">Price Min</label>
+            <input type="number" id="price-min" name="price-min" placeholder="$500,000" min="0">
+          </div>
+          <div class="field">
+            <label for="price-max">Price Max</label>
+            <input type="number" id="price-max" name="price-max" placeholder="$5,000,000" min="0">
+          </div>
+          <div class="field">
+            <label for="beds">Bedrooms</label>
+            <select id="beds" name="beds">
+              <option value="">Any</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="baths">Bathrooms</label>
+            <select id="baths" name="baths">
+              <option value="">Any</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="property-type">Property Type</label>
+            <select id="property-type" name="property-type">
+              <option value="">Any Type</option>
+              <option value="single-family">Single Family</option>
+              <option value="condo">Condo</option>
+              <option value="townhouse">Townhouse</option>
+              <option value="luxury">Luxury</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="search-btn">Search Properties</button>
+      </form>
+    </div>
+  </section>
 
-    <div class="glass" style="margin-top:18px; padding:0">
-      <div style="height:48vh; display:grid; place-items:center; background: #e7eef5; border-radius: var(--radius) var(--radius) 0 0">Map placeholder</div>
-      <div style="padding:var(--pad)">
-        <h3 style="margin-top:0">Results</h3>
-        <div id="results" class="grid-3">
-          <div class="glass" style="padding:12px"><strong>Result 1</strong><br/><small>Placeholder details</small></div><div class="glass" style="padding:12px"><strong>Result 2</strong><br/><small>Placeholder details</small></div><div class="glass" style="padding:12px"><strong>Result 3</strong><br/><small>Placeholder details</small></div><div class="glass" style="padding:12px"><strong>Result 4</strong><br/><small>Placeholder details</small></div><div class="glass" style="padding:12px"><strong>Result 5</strong><br/><small>Placeholder details</small></div><div class="glass" style="padding:12px"><strong>Result 6</strong><br/><small>Placeholder details</small></div>
+  <section id="featured">
+    <div class="container">
+      <div class="section-head">
+        <h2>Featured Properties</h2>
+        <p>Handpicked homes that showcase Orange County's finest</p>
+      </div>
+      <div class="results-grid">
+        <div class="property-card">
+          <div class="property-image" style="background-image: url('assets/backgrounds/pexels-esmihel-16133569.jpg');">
+            <div class="property-price">$4,250,000</div>
+          </div>
+          <div class="property-details">
+            <div class="property-address">122 Oceancrest Dr, Newport Beach</div>
+            <div class="property-features">4 Bed · 3 Bath · 2,800 sqft</div>
+            <div class="property-description">Stunning oceanfront property with panoramic views, recently renovated with luxury finishes throughout.</div>
+          </div>
+        </div>
+        <div class="property-card">
+          <div class="property-image" style="background-image: url('assets/backgrounds/Max Vakhtbovycn.jpg');">
+            <div class="property-price">$3,150,000</div>
+          </div>
+          <div class="property-details">
+            <div class="property-address">18 Tidepool Ln, Laguna Beach</div>
+            <div class="property-features">3 Bed · 2.5 Bath · 2,200 sqft</div>
+            <div class="property-description">Charming coastal cottage steps from the beach, featuring a private garden and ocean breezes.</div>
+          </div>
+        </div>
+        <div class="property-card">
+          <div class="property-image" style="background-image: url('assets/backgrounds/pexels-sonny-11968593.jpg');">
+            <div class="property-price">$1,975,000</div>
+          </div>
+          <div class="property-details">
+            <div class="property-address">9 Seabreeze Ct, Huntington Beach</div>
+            <div class="property-features">3 Bed · 2 Bath · 1,800 sqft</div>
+            <div class="property-description">Gated community home with modern amenities, close to shopping and excellent schools.</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
-</main>
-<footer>
-  <div class="footer-grid">
-    <div>
-      <h3 class="section-title">Get in touch</h3>
-      <p class="section-sub">Real estate for real people—serving Orange County with care and precision.</p>
-      <div class="chip">
-        <img src="assets/profile-icon.png" alt="Profile icon" style="width:24px;height:24px;border-radius:999px;object-fit:cover" />
-        <div>
-          <strong>Michael R. Jacquez</strong><br/>
-          DRE# 01901413
-        </div>
-      </div>
-      <p style="margin-top:8px;line-height:1.6">
-        <a href="tel:+18884732562">(888) 4-REAL-OC</a> &nbsp;|&nbsp; 
-        <a href="mailto:Mike@4realoc.com">Mike@4realoc.com</a><br/>
-        <a href="https://www.4realoc.com" target="_blank" rel="noopener">www.4realoc.com</a>
-      </p>
-      <div class="social-row">
-        <!-- Simple glass icons (SVG) -->
-        <a class="chip" aria-label="X / Twitter" href="#" title="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> X</a>
-        <a class="chip" aria-label="Instagram" href="#" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="black" stroke-opacity=".8" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="black" fill-opacity=".6"/><circle cx="12" cy="12" r="4" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> IG</a>
-        <a class="chip" aria-label="LinkedIn" href="#" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="black" stroke-opacity=".8" stroke-width="2"/><rect x="6" y="10" width="3" height="8" fill="black" fill-opacity=".7"/><circle cx="7.5" cy="7.5" r="1.5" fill="black" fill-opacity=".7"/><path d="M12 18v-4.5a2.5 2.5 0 015 0V18" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> LinkedIn</a>
-      </div>
-    </div>
-    <div>
-      <h4>Affiliations</h4>
-      <div class="affiliations">
-        <span class="chip">eXp Realty</span>
-        <span class="chip">NAR</span>
-        <span class="chip">CRMLS</span>
-        <span class="chip">CAR</span>
-      </div>
-    </div>
-    <div>
-      <h4>Compliance</h4>
-      <p class="section-sub" style="margin:0">eXp Realty of Southern California<br/>DRE# 01901413</p>
-      <p style="font-size:12px;color:var(--muted)">All information deemed reliable but not guaranteed.</p>
-    </div>
-  </div>
-  <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--muted)">&copy; <span id="year"></span> 4 Real OC. All rights reserved.</p>
-</footer>
 
+  <div class="bottom-bg">
+    <section class="cta-strip" id="contact">
+      <div class="container">
+        <h2>Need help finding your perfect home?</h2>
+        <p>Let our experts guide you through the search process.</p>
+        <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+        <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">© <span id="year"></span> 4 Real OC · eXp Realty of Southern California · DRE #01901413</div>
+    </footer>
+  </div>
+
+  <script>
+    const header=document.querySelector('header.site-header');
+    window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>8)});
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
 </body>
 </html>
