@@ -10,370 +10,198 @@
   <!-- Favicon -->
   <link rel="icon" href="assets/profile-icon.png" />
 
-  <!-- Preload Backgrounds -->
-  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.jpg">
+  <!-- Preload media for smoother UX -->
   <link rel="preload" as="image" href="assets/backgrounds/footer-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
   <link rel="preload" as="image" href="assets/backgrounds/results-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.jpg">
   <link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
+  <link rel="preload" as="video" href="assets/maincut.mp4">
 
-  <style>
-    :root {
-      --navy: #0D1B2A;
-      --ivory: #F8F8F6;
-      --gold: #C9A66B;
-      --glass: rgba(255,255,255,0.25);
-      --glass-stroke: rgba(255,255,255,0.4);
-      --shadow: 0 10px 30px rgba(0,0,0,0.25);
-      --radius: 22px;
-      --radius-lg: 28px;
-      --maxw: 1200px;
-    }
-
-    body { margin: 0; font-family: Lato, sans-serif; background: #0B1A28; color: var(--ivory); }
-    h1,h2,h3 { font-family: "Calisto MT", serif; margin: 0 0 0.5em; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(100% - 40px, var(--maxw)); margin: 0 auto; }
-
-    header.site-header { 
-      position: fixed; 
-      inset: 0 0 auto 0; 
-      height: 76px; 
-      display: flex; 
-      justify-content: space-between;
-      align-items: center; 
-      z-index: 50;
-      background: rgba(0,0,0,0.35); 
-      backdrop-filter: blur(6px); 
-      transition: all 300ms ease; 
-      padding: 0 20px; 
-    }
-    
-    header.site-header.scrolled { 
-      background: rgba(8,19,32,0.9); 
-    }
-    
-    header.site-header.retracted {
-      transform: translateY(-100%);
-    }
-    
-    .brand { 
-      display: flex; 
-      align-items: center; 
-      gap: 10px; 
-      text-decoration: none;
-      color: inherit;
-      transition: opacity 0.2s ease;
-    }
-    
-    .brand:hover {
-      opacity: 0.8;
-    }
-    
-    .brand img { 
-      height: 40px; 
-    }
-    
-    .brand .title {
-      color: var(--ivory);
-      font-size: 1.1rem;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    
-    nav ul { 
-      list-style: none; 
-      display: flex; 
-      gap: 20px; 
-      margin: 0; 
-      padding: 0; 
-      align-items: center;
-    }
-    
-    nav a { 
-      color: var(--ivory);
-      padding: 8px 12px; 
-      border-radius: 12px; 
-      transition: all 200ms ease; 
-      text-decoration: none;
-    }
-    
-    nav a:hover { 
-      background: rgba(255,255,255,0.1); 
-      color: var(--gold);
-    }
-    
-    nav .cta-btn { 
-      background: var(--gold); 
-      color: #0B1A28; 
-      padding: 10px 16px; 
-      border-radius: 16px; 
-      font-weight: 700; 
-      transition: all 200ms ease;
-    }
-    
-    nav .cta-btn:hover {
-      background: #e6c200;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(230, 194, 0, 0.3);
-    }
-
-    .hero { position: relative; height: 100vh; min-height: 640px; display: grid; place-items: center; text-align: center; }
-    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
-    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-inner h1 { font-size: 3rem; }
-    .hero-inner p { font-size: 1.25rem; margin: 10px 0 20px; }
-    .hero-inner .cta-btn { margin:5px; }
-
-    section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
-    section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
-    .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
-
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; position:relative; z-index:2; }
-    .card { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
-    .card .bg { height: 280px; background-size: cover; background-position: center; }
-    .card .info { padding: 18px; background: rgba(0,0,0,0.5); position: absolute; bottom: 0; width: 100%; }
-
-    .reasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; position:relative; z-index:2; }
-    .reason { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-
-    /* About Section Styling */
-    .about-section { background:url('assets/backgrounds/kitchen-bg.jpg') center/cover no-repeat; position:relative; color:var(--ivory); }
-    .about-section::before { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.55); }
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; position:relative; z-index:2; }
-    .about .photo img { width: 100%; max-width: 300px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .about .copy { background: rgba(0,0,0,0.6); padding: 28px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .about .copy h3 { margin-top:0; font-size:1.5rem; color:var(--gold); }
-    .about .copy p { margin-bottom:1.2rem; }
-
-    /* Featured section overlay */
-    #featured { position: relative; }
-    #featured::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
-
-    /* Reasons section overlay */
-    #reasons { position: relative; }
-    #reasons::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
-
-    /* Contact section overlay */
-    #contact { position: relative; }
-    #contact::before { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.55); z-index: 1; }
-
-    /* Contact panel styling - matches reason panels */
-    .contact-panel { display: grid; gap: 18px; justify-items: center; }
-    .contact-info { 
-      background: var(--glass); 
-      border: 1px solid var(--glass-stroke); 
-      border-radius: var(--radius); 
-      padding: 28px; 
-      box-shadow: var(--shadow); 
-      backdrop-filter: blur(14px);
-      text-align: center;
-      max-width: 500px;
-    }
-    .contact-info h3 { margin-top: 0; font-size: 1.5rem; color: var(--gold); }
-    .contact-info p { margin-bottom: 1.5rem; color: #ffffff; }
-    .contact-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    
-    /* Force white text with maximum specificity */
-    #contact .contact-info h2,
-    #contact .contact-info p,
-    #contact .contact-info a,
-    #contact .contact-info * {
-      color: #ffffff !important;
-    }
-    
-    /* Additional specificity to override any conflicts */
-    body #contact .contact-info h2,
-    body #contact .contact-info p,
-    body #contact .contact-info a {
-      color: #ffffff !important;
-    }
-
-    /* CRITICAL FIX: Target the header text that's OUTSIDE the contact-info panel */
-    #contact h2,
-    #contact > .container > h2,
-    #contact > .container > p {
-      color: #ffffff !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-
-
-    /* prevent contact section overlay from bleeding into the footer */
-    #contact::after { content:none; }
-
-    footer{
-  position:relative;z-index:5;isolation:isolate;
-  padding:42px 0;text-align:center;font-size:.98rem;color:#eef3f8;
-  background:transparent;
-  border-top:1px solid rgba(255,255,255,.08);
-  box-shadow:0 -36px 60px rgba(0,0,0,.45) inset;
-}
-footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
-
-
-
-#contact::after{content:none}
-    footer::after { content:none !important; }
-  </style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-  <header class="site-header">
-    <a href="index.html" class="brand">
-      <img src="assets/logo-icon.png" alt="4 Real OC logo" />
-      <div class="title">4 Real OC | Coastal &amp; Luxury Homes</div>
-    </a>
-          <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="4 Real OC home">
+        <img src="assets/logo-icon.png" alt="4 Real OC logo" />
+        <span class="brand-name">4 Real OC</span>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="search.html">Homes</a></li>
           <li><a href="buyers.html">Buyers</a></li>
           <li><a href="sellers.html">Sellers</a></li>
-          <li><a href="search.html">Search</a></li>
           <li><a href="why-us.html">Why Us</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a class="cta-btn" href="contact.html">Book a Call ▸</a></li>
+          <!-- listing.html intentionally not linked -->
         </ul>
       </nav>
+
+      <div class="nav-ctas">
+        <a class="btn ghost" href="search.html">Property Search</a>
+        <a class="btn cta" href="contact.html">Book a Call ▸</a>
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg" aria-hidden="true"></video>
-    <div class="hero-inner">
-      <h1>Real Estate for Real People</h1>
-      <p>4 Real OC | Coastal &amp; Luxury Homes in Orange County</p>
-      <a class="cta-btn" href="buyers.html">Explore Homes</a>
-      <a class="cta-btn" href="sellers.html">Sell My Home</a>
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <!-- Keep the filename EXACT (case matters on many hosts) -->
+      <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg"></video>
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="container hero-content">
+      <!-- Big animated headline -->
+      <h1 class="hero-headline">
+        <span id="heroLine" aria-live="polite">Real Estate</span>
+      </h1>
+
+      <!-- Staged reveals after headline lands on "Real OC" -->
+      <div class="hero-reveal">
+        <p class="hero-byline">By Michael R Jacquez</p>
+        <p class="hero-tagline">Representing Orange County</p>
+
+        <div class="hero-ctas">
+          <a class="btn cta" href="search.html">Explore Homes</a>
+          <a class="btn ghost" href="contact.html">Sell My Home</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="featured" style="background:url('assets/backgrounds/featured-bg.jpg') center/cover no-repeat;">
+  <!-- ===== FEATURED ===== -->
+  <section id="featured" class="section section-img">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Handpicked Coastal Homes</h2>
         <p>Curated highlights — IDX coming soon</p>
-      </div>
-      <div class="cards">
-        <div class="card">
-          <div class="bg" style="background-image:url('assets/backgrounds/pexels-esmihel-16133569.jpg');"></div>
-          <div class="info"><h3>122 Oceancrest Dr, Newport Beach</h3><p>$4,250,000 · Ocean View</p></div>
-        </div>
-        <div class="card">
-          <div class="bg" style="background-image:url('assets/backgrounds/Max Vakhtbovycn.jpg');"></div>
-          <div class="info"><h3>18 Tidepool Ln, Laguna Beach</h3><p>$3,150,000 · Walk to Sand</p></div>
-        </div>
-        <div class="card">
-          <div class="bg" style="background-image:url('assets/backgrounds/pexels-sonny-11968593.jpg');"></div>
-          <div class="info"><h3>9 Seabreeze Ct, Huntington Beach</h3><p>$1,975,000 · Gated</p></div>
-        </div>
-        <div class="card">
-          <div class="bg" style="background-image:url('assets/backgrounds/Pixabay.jpg');"></div>
-          <div class="info"><h3>301 Shoreline Ave, Dana Point</h3><p>$2,495,000 · Marina Adjacent</p></div>
+      </header>
+
+      <div id="featCarousel" class="grid cards">
+        <!-- optional nav buttons (wire to JS with these IDs if desired)
+        <button id="featPrev" class="carousel-nav prev" aria-label="Previous">‹</button>
+        <button id="featNext" class="carousel-nav next" aria-label="Next">›</button>
+        -->
+        <div id="featTrack" class="feat-track">
+          <article class="card glass">
+            <div class="card-media" style="background-image:url('assets/backgrounds/pexels-esmihel-16133569.jpg');"></div>
+            <div class="card-body">
+              <h3>122 Oceancrest Dr, Newport Beach</h3>
+              <p>$4,250,000 · Ocean View</p>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-media" style="background-image:url('assets/backgrounds/Max Vakhtbovycn.jpg');"></div>
+            <div class="card-body">
+              <h3>18 Tidepool Ln, Laguna Beach</h3>
+              <p>$3,150,000 · Walk to Sand</p>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-media" style="background-image:url('assets/backgrounds/pexels-sonny-11968593.jpg');"></div>
+            <div class="card-body">
+              <h3>9 Seabreeze Ct, Huntington Beach</h3>
+              <p>$1,975,000 · Gated</p>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-media" style="background-image:url('assets/backgrounds/Pixabay.jpg');"></div>
+            <div class="card-body">
+              <h3>301 Shoreline Ave, Dana Point</h3>
+              <p>$2,495,000 · Marina Adjacent</p>
+            </div>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="reasons" style="background:url('assets/backgrounds/results-bg.jpg') center/cover no-repeat;">
+  <!-- ===== SIX REASONS ===== -->
+  <section id="reasons" class="section section-img">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Six Reasons Buyers &amp; Sellers Pick 4 Real OC</h2>
         <p>Trust, clarity, and Marine-grade reliability</p>
-      </div>
-      <div class="reasons">
-        <div class="reason"><h3>Local Coastal Insight</h3><p>Six years living and exploring OC.</p></div>
-        <div class="reason"><h3>Buyer’s Advocate</h3><p>Three active buyers now.</p></div>
-        <div class="reason"><h3>Discipline & Duty</h3><p>Former US Marine.</p></div>
-        <div class="reason"><h3>Data, Not Drama</h3><p>Pricing, comps, ROI.</p></div>
-        <div class="reason"><h3>Networked & Trusted</h3><p>Vetted partners.</p></div>
-        <div class="reason"><h3>2008 Short-Sale Roots</h3><p>Battle-tested calm.</p></div>
+      </header>
+
+      <div class="grid reasons">
+        <div class="reason glass"><h3>Local Coastal Insight</h3><p>Six years living and exploring OC.</p></div>
+        <div class="reason glass"><h3>Buyer’s Advocate</h3><p>Three active buyers now.</p></div>
+        <div class="reason glass"><h3>Discipline & Duty</h3><p>Former US Marine.</p></div>
+        <div class="reason glass"><h3>Data, Not Drama</h3><p>Pricing, comps, ROI.</p></div>
+        <div class="reason glass"><h3>Networked & Trusted</h3><p>Vetted partners.</p></div>
+        <div class="reason glass"><h3>2008 Short-Sale Roots</h3><p>Battle-tested calm.</p></div>
       </div>
     </div>
   </section>
 
-  <section id="about" class="about-section">
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section section-img">
     <div class="container">
-      <div class="section-head"><h2>About Michael R. Jacquez</h2></div>
+      <header class="section-head"><h2>About Michael R. Jacquez</h2></header>
       <div class="about">
-        <div class="photo"><img src="assets/headshot.jpg" alt="Michael R. Jacquez" /></div>
-        <div class="copy">
+        <figure class="about-photo">
+          <img src="assets/headshot.jpg" alt="Michael R. Jacquez">
+        </figure>
+        <div class="about-copy glass">
           <h3>Marine Discipline · Local Expertise</h3>
           <p>Hi, I’m Michael — a licensed Realtor® focused on coastal &amp; luxury homes in Orange County. I served in the US Marine Corps and cut my real-estate teeth during the 2008 crisis helping homeowners navigate short sales. Today, I bring that same duty, clarity, and steady hand to every deal.</p>
-          <a class="cta-btn" href="#contact">Work with Michael</a>
+          <a class="btn cta" href="contact.html">Work with Michael</a>
         </div>
       </div>
     </div>
   </section>
 
-
-  <section id="contact" style="background:url('assets/backgrounds/contact-bg.jpg') center/cover no-repeat;">
-    <div class="container">
-      <h2>Ready to buy or sell in Orange County?</h2>
-      <p>Let’s build your plan in 15 minutes.</p>
-      <div class="contact-panel">
-        <div class="contact-info">
-          <h3>Get Started Today</h3>
-          <p>Ready to begin your real estate journey? Let's connect and build your personalized plan.</p>
-          <div class="contact-buttons">
-            <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
-            <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
-          </div>
+  <!-- ===== CONTACT + FOOTER (single shared background) ===== -->
+  <div class="bottom-bg">
+    <section id="contact" class="section section-clear">
+      <div class="container contact">
+        <h2>Ready to buy or sell in Orange County?</h2>
+        <p>Let’s build your plan in 15 minutes.</p>
+        <div class="contact-ctas">
+          <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+          <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container">© <span id="year"></span> 4 Real OC · eXp Realty of Southern California · DRE #01901413</div>
-  </footer>
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        © <span id="year"></span> 4 Real OC · eXp Realty of Southern California · DRE #01901413
+      </div>
+    </footer>
+  </div>
 
+  <!-- JS -->
+  <script src="js/main.js"></script>
   <script>
-    const header = document.querySelector('header.site-header');
-    let scrollTimeout;
-    let hoverTimeout;
-    let isRetracted = false;
-    
-    // Scroll behavior - retract header when scrolling down
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 8);
-      
-      // Retract header when scrolling down
-      if (window.scrollY > 100 && !isRetracted) {
-        header.classList.add('retracted');
-        isRetracted = true;
-      }
-      
-      // Show header when scrolling to top
-      if (window.scrollY <= 100 && isRetracted) {
-        header.classList.remove('retracted');
-        isRetracted = false;
-      }
-      
-      // Clear any existing scroll timeout
-      clearTimeout(scrollTimeout);
-    });
-    
-    // Hover behavior - show header when hovering at top of page
-    document.addEventListener('mouseenter', (e) => {
-      // Only trigger when hovering near the top of the page
-      if (e.clientY <= 100 && isRetracted) {
-        header.classList.remove('retracted');
-        isRetracted = false;
-        
-        // Retract again after 3 seconds
-        clearTimeout(hoverTimeout);
-        hoverTimeout = setTimeout(() => {
-          if (window.scrollY > 100) {
-            header.classList.add('retracted');
-            isRetracted = true;
-          }
-        }, 3000);
-      }
-    });
-    
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Highlight current page in nav
+    (function () {
+      const here = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        if (a.getAttribute('href') === here) a.classList.add('active');
+      });
+    })();
   </script>
 </body>
 </html>

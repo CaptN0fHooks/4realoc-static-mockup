@@ -1,7 +1,0 @@
-/* Extra room for overrides or future theming.
-   Keeping this minimal since most core styles are inlined in the <head> to simplify mockup usage. */
-
-:focus-visible { outline: 3px solid rgba(31,61,91,0.55); outline-offset: 2px; }
-
-/* Subtle section dividers */
-section + section { border-top: 1px dashed rgba(31,61,91,0.06); }
