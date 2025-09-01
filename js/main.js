@@ -67,22 +67,23 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     document.getElementById('heroLine') ||
     document.getElementById('heroText');
   const reveal = $$('.hero-reveal');
+  const logoVideo = document.getElementById('heroLogoVideo');
+  const headline = $$('.hero-headline');
 
   if (!line || !reveal) return;
 
   const phrases = ['Real Estate', 'For Real People', 'Real OC'];
 
   // Timings (ms)
-  const holdTime = 1100;   // how long each phrase is visible
-  const fadeTime = 380;    // should be in sync with CSS keyframes
-  const bylineDelay = 200; // wait after landing on "Real OC" before byline
-  const taglineDelay = 700; // wait after byline before tagline + buttons
+  const holdTime = 1000;   // how long each phrase is visible (1 second)
+  const fadeTime = 500;    // should be in sync with CSS keyframes
+  const logoDisplayTime = 7000; // how long 3D logo shows (7 seconds)
 
   // Ensure first phrase is set and faded in
   line.textContent = phrases[0];
   line.style.animation = `heroFadeIn ${fadeTime}ms ease forwards`;
 
-  function swapText(next) {
+  function swapText(next, showContent = false) {
     return new Promise((resolve) => {
       // fade out current
       line.style.animation = `heroFadeOut ${fadeTime}ms ease forwards`;
@@ -91,6 +92,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
         line.textContent = next;
         // fade back in
         line.style.animation = `heroFadeIn ${fadeTime}ms ease forwards`;
+        
+        // Show subtexts and buttons immediately when "Real OC" appears
+        if (showContent && next === 'Real OC') {
+          reveal.classList.add('show');
+          reveal.classList.add('show-2');
+        }
+        
         // hold visible for a beat before next swap
         setTimeout(resolve, fadeTime + holdTime);
       }, fadeTime);
@@ -98,20 +106,58 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   }
 
   (async function run() {
-    // Hold first phrase
+    // Initial sequence - show subtexts and buttons once
+    // Hold first phrase for 1 second
     await sleep(fadeTime + holdTime);
-    // Second
+    // Second phrase for 1 second
     await swapText(phrases[1]);
-    // Third (landing)
-    await swapText(phrases[2]);
-
-    // Stage 1: show byline
-    await sleep(bylineDelay);
-    reveal.classList.add('show');
-
-    // Stage 2: show tagline + buttons
-    await sleep(taglineDelay);
-    reveal.classList.add('show-2');
+    // Third phrase - show subtexts and buttons immediately when "Real OC" fades in
+    await swapText(phrases[2], true);
+    
+    // Now start the infinite cycle (subtexts and buttons stay visible)
+    while (true) {
+      // "Real OC" stays for 1 second, then morph to 3D logo
+      await sleep(holdTime);
+      
+      // Morph text to 3D logo
+      if (headline && logoVideo) {
+        // Stop any ongoing text animations and ensure no flash
+        line.style.animation = 'none';
+        // Force reflow to cancel animation reliably
+        void line.offsetWidth;
+        // Optionally clear the text while morphing to avoid brief reappearance
+        line.textContent = '';
+        // Hide headline via class (opacity 0)
+        headline.classList.add('morphing');
+        // Show the overlayed 3D logo
+        logoVideo.style.display = 'block';
+        setTimeout(() => logoVideo.classList.add('show'), 100);
+      }
+      
+      // Show 3D logo for 7 seconds
+      await sleep(logoDisplayTime);
+      
+      // Reset text for next cycle (keep subtexts and buttons visible)
+      if (headline && logoVideo) {
+        // Start hiding the logo, keep headline hidden meanwhile
+        logoVideo.classList.remove('show');
+        await sleep(600); // wait for logo fade-out CSS transition
+        logoVideo.style.display = 'none';
+        // Reveal headline again
+        headline.classList.remove('morphing');
+        // Cleanly show the first phrase using the same swap pipeline
+        await swapText(phrases[0]);
+      }
+      
+      // Brief pause, then restart text cycle
+      await sleep(500);
+      
+      // Continue text sequence (first phrase already shown after logo)
+      await swapText(phrases[1]);
+      await sleep(holdTime);
+      await swapText(phrases[2]); // "Real OC" - subtexts and buttons already visible
+      await sleep(holdTime); // Hold before morphing to logo
+    }
   })();
 })();
 
