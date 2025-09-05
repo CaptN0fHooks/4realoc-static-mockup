@@ -77,7 +77,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   // Timings (ms)
   const holdTime = 1000;   // how long each phrase is visible (1 second)
   const fadeTime = 500;    // should be in sync with CSS keyframes
-  const logoDisplayTime = 7000; // how long 3D logo shows (7 seconds)
+  const logoDisplayTime = 6000; // how long 3D logo shows (match 1 rotation)
 
   // Ensure first phrase is set and faded in
   line.textContent = phrases[0];
@@ -116,8 +116,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     
     // Now start the infinite cycle (subtexts and buttons stay visible)
     while (true) {
-      // "Real OC" stays for 1 second, then morph to 3D logo
-      await sleep(holdTime);
+      // Immediately morph after the standard display duration handled in swapText
       
       // Morph text to 3D logo
       if (headline && logoVideo) {
@@ -167,106 +166,65 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
    - Auto-scroll
    - Edge-hover navigation
 -------------------------------------- */
+
 (function featuredCarousel() {
   const track = document.getElementById('featTrack');
   const carousel = document.getElementById('featCarousel');
   if (!track || !carousel) return;
 
-  const prev = document.getElementById('featPrev');
-  const next = document.getElementById('featNext');
-
-  const items = $$$('.card', track);
-  if (items.length) {
-    const cloneCount = Math.min(4, items.length);
-    for (let i = 0; i < cloneCount; i++) {
-      track.appendChild(items[i].cloneNode(true));
-    }
+  // Build exactly 8 tiles as the base loop, then duplicate once for seamless wrap
+  const original = $$$('.card', track);
+  const base = [];
+  for (let i = 0; i < 8; i++) {
+    const src = original[i % original.length];
+    base.push(src.cloneNode(true));
   }
+  track.innerHTML = '';
+  base.forEach(n => track.appendChild(n));
+  base.forEach(n => track.appendChild(n.cloneNode(true)));
 
-  let currentIndex = 0;
-
-  // Compute a dynamic width: card width + gap
   function getItemWidth() {
-    // Use first real card to measure
     const first = $$('.card', track);
-    if (!first) return 324; // default
+    if (!first) return 324;
     const style = window.getComputedStyle(track);
     const gap = parseFloat(style.columnGap || style.gap || '24');
     return first.getBoundingClientRect().width + (isNaN(gap) ? 24 : gap);
   }
 
-  function scrollToIndex(index, smooth = true) {
-    const scrollPosition = index * getItemWidth();
-    track.scrollTo({
-      left: scrollPosition,
-      behavior: smooth ? 'smooth' : 'auto',
-    });
+  let itemWidth = getItemWidth();
+  let loopWidth = itemWidth * 8; // one full set of 8
+  track.scrollLeft = 0;
+
+  const RIGHT_ZONE = 0.82;
+  const LEFT_ZONE = 0.18;
+  let direction = 0; // 1 right, -1 left, 0 pause
+  let rafId = null;
+  let lastTs = 0;
+  const SPEED = 260; // px/s
+
+  function step(ts) {
+    if (!direction) { lastTs = 0; rafId = null; return; }
+    if (!lastTs) lastTs = ts;
+    const dt = (ts - lastTs) / 1000;
+    lastTs = ts;
+    let x = track.scrollLeft + direction * SPEED * dt;
+    if (x >= loopWidth) x -= loopWidth;
+    if (x < 0) x += loopWidth;
+    track.scrollLeft = x;
+    rafId = requestAnimationFrame(step);
   }
 
-  function nextSlide() {
-    currentIndex++;
-    scrollToIndex(currentIndex);
-    // If we've reached the cloned items, jump back to start of real items
-    if (currentIndex >= items.length) {
-      setTimeout(() => {
-        currentIndex = 0;
-        scrollToIndex(currentIndex, false);
-      }, 500);
-    }
+  function ensureRAF() {
+    if (rafId == null && direction) rafId = requestAnimationFrame(step);
   }
-
-  function prevSlide() {
-    currentIndex--;
-    if (currentIndex < 0) {
-      // Jump to last real item without animation, then step back smoothly
-      currentIndex = items.length - 1;
-      scrollToIndex(currentIndex, false);
-      setTimeout(() => {
-        currentIndex--;
-        if (currentIndex < 0) currentIndex = 0;
-        scrollToIndex(currentIndex);
-      }, 50);
-    } else {
-      scrollToIndex(currentIndex);
-    }
-  }
-
-  next && next.addEventListener('click', nextSlide);
-  prev && prev.addEventListener('click', prevSlide);
-
-  // Edge-hover navigation (throttled)
-  let hoverCooldown = false;
-  const HOVER_COOLDOWN_MS = 450;
 
   carousel.addEventListener('mousemove', (e) => {
-    if (hoverCooldown) return;
     const rect = carousel.getBoundingClientRect();
     const rel = (e.clientX - rect.left) / rect.width;
-
-    if (rel > 0.8) {
-      nextSlide();
-      hoverCooldown = true;
-      setTimeout(() => (hoverCooldown = false), HOVER_COOLDOWN_MS);
-    } else if (rel < 0.2) {
-      prevSlide();
-      hoverCooldown = true;
-      setTimeout(() => (hoverCooldown = false), HOVER_COOLDOWN_MS);
-    }
+    direction = rel > RIGHT_ZONE ? 1 : rel < LEFT_ZONE ? -1 : 0;
+    ensureRAF();
   });
-
-  // Auto-scroll
-  let autoScrollInterval;
-  function startAutoScroll() {
-    stopAutoScroll();
-    autoScrollInterval = setInterval(nextSlide, 5000);
-  }
-  function stopAutoScroll() {
-    if (autoScrollInterval) clearInterval(autoScrollInterval);
-  }
-
-  startAutoScroll();
-  carousel.addEventListener('mouseenter', stopAutoScroll);
-  carousel.addEventListener('mouseleave', startAutoScroll);
+  carousel.addEventListener('mouseleave', () => { direction = 0; });
 
   // Image quality guard / fallback
   $$$('img', track).forEach((img) => {
@@ -293,8 +251,14 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     }
   });
 
-  // Resize recalculations
-  window.addEventListener('resize', () => scrollToIndex(currentIndex, false));
+  // Resize recalculations: maintain relative position in the middle block
+  window.addEventListener('resize', () => {
+    const rel = (track.scrollLeft - middleStart) % blockWidth;
+    itemWidth = getItemWidth();
+    blockWidth = realCount * itemWidth;
+    middleStart = blockWidth;
+    track.scrollLeft = middleStart + (isNaN(rel) ? 0 : (rel < 0 ? rel + blockWidth : rel));
+  });
 })();
 
 /* --------------------------------------

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>3D-ish Spinning Logo (No Libraries)</title>
+<style>
+  :root{
+    --w: 520px;      /* logo width  */
+    --h: 340px;      /* logo height (adjust to your PNG) */
+    --thick: 20px;   /* balanced thickness */
+    --bg: #0b0f14;   /* page background (overrideable via ?bg=transparent) */
+    --logo: url('logo-bgr.png'); /* default logo image; override via ?img= */
+  }
+  html,body{height:100%;margin:0;background:var(--bg);font-family:system-ui,Segoe UI,Roboto,Arial;overflow:hidden}
+  .stage{
+    height:100%;display:grid;place-items:center;
+    perspective: 1400px; /* stable depth */
+  }
+
+  /* Spinner wrapper: rotates in 3D space */
+  .spin {
+    position: relative;
+    transform-style: preserve-3d;
+    animation: turn 6s linear infinite;
+  }
+  @keyframes turn {
+    from { transform: rotateX(12deg) rotateY(0deg); }
+    to   { transform: rotateX(12deg) rotateY(360deg); }
+  }
+
+  /* The “domino”: sides via stacked shadows; faces are separate layers */
+  .tile{
+    width:var(--w); height:var(--h);
+    background: transparent;
+    border-radius: 24px;
+    box-shadow:
+      /* stack many narrow shadows to simulate a black edge (thickness) */
+      1px 0 0 0 #000, 2px 0 0 0 #000, 3px 0 0 0 #000, 4px 0 0 0 #000,
+      5px 0 0 0 #000, 6px 0 0 0 #000, 7px 0 0 0 #000, 8px 0 0 0 #000,
+      9px 0 0 0 #000, 10px 0 0 0 #000, 11px 0 0 0 #000, 12px 0 0 0 #000,
+      13px 0 0 0 rgba(0,0,0,.9), 14px 0 0 0 rgba(0,0,0,.85);
+    transform: translateZ(calc(var(--thick) * -0.5));
+    /* slight tilt so the 3D reads even at 0° */
+    transform-style: preserve-3d;
+    border: 3px solid #000;            /* crisp black face outline */
+    backface-visibility: hidden;
+    filter: drop-shadow(0 12px 24px rgba(0,0,0,.38));
+  }
+
+  /* Faces (front/back) */
+  .face{ position:absolute; inset:0; border-radius:24px; backface-visibility:hidden; }
+  .face::before{ content:""; position:absolute; inset:0; border-radius:24px; background: var(--logo) center/contain no-repeat; filter: var(--faceFilter, none); }
+  .face.front{ transform: translateZ(0); border: 3px solid #000; }
+  .face.front::after{ content:""; position:absolute; inset:0; border-radius:24px; background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 32%, rgba(255,255,255,0) 62%); pointer-events:none; }
+  .face.back{ transform: rotateY(180deg) translateZ(var(--thick)); border: 3px solid #000; }
+
+  /* Specular sheen across the front face */
+  .tile::after{
+    content:"";
+    position:absolute; inset:0;
+    border-radius:24px;
+    background: linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 32%, rgba(255,255,255,0) 62%);
+    pointer-events:none;
+  }
+
+  /* subtle floor to ground the object */
+  .floor{
+    position: absolute; inset: auto 0 12vh 0; height: 20vh;
+    background: radial-gradient(50% 60% at 50% 0%,
+      rgba(0,0,0,.45), rgba(0,0,0,0) 70%);
+    filter: blur(10px);
+    transform: translateZ(-200px);
+    pointer-events:none;
+  }
+
+  /* helper message if the image isn’t found */
+  .fallback{
+    position:fixed; left:12px; top:12px;
+    background: rgba(255,255,255,.06);
+    color:#cfd8e3; padding:10px 12px; border-radius:10px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* Pause on hover (handy while tweaking) */
+  .spin:hover { animation-play-state: paused; cursor: grab; }
+  @media (max-width:700px){
+    :root{ --w: 86vw; --h: 56vw; --thick: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="spin">
+    <div class="tile" role="img" aria-label="Call Mike logo spinning">
+      <div class="face front"></div>
+      <div class="face back"></div>
+    </div>
+    <div class="floor"></div>
+  </div>
+</div>
+
+<!-- Tiny helpers (no external libs) -->
+<script>
+  (function(){
+    // Allow transparent background via ?bg=transparent or any CSS color value
+    try{
+      const params = new URLSearchParams(window.location.search);
+      const bg = params.get('bg');
+      const img = params.get('img');
+      const color = params.get('color');
+      if (bg) {
+        document.documentElement.style.setProperty('--bg', bg === 'transparent' ? 'transparent' : bg);
+        document.body.style.background = 'var(--bg)';
+      }
+      if (img) {
+        // Allow absolute or relative URL
+        document.documentElement.style.setProperty('--logo', `url('${img}')`);
+      }
+      if (color) {
+        // Invert the image if requesting white; otherwise attempt CSS filter mapping
+        if (color.toLowerCase() === 'white' || color === '#fff' || color === '#ffffff') {
+          document.documentElement.style.setProperty('--faceFilter', 'invert(1) brightness(1.08)');
+        } else {
+          document.documentElement.style.setProperty('--faceFilter', `drop-shadow(0 0 0 ${color})`);
+        }
+      }
+    }catch(e){}
+
+    // Guard: show message if the PNG is missing
+    const test = new Image();
+    test.onload = () => {};
+    test.onerror = () => {
+      const msg = document.createElement('div');
+      msg.className = 'fallback';
+      msg.innerHTML = 'Couldn’t load logo image. Ensure your PNG path is correct.';
+      document.body.appendChild(msg);
+    };
+    const currentLogo = getComputedStyle(document.documentElement).getPropertyValue('--logo').trim();
+    // Extract URL from css var like url('...')
+    const match = currentLogo.match(/url\(["']?(.*?)["']?\)/);
+    test.src = match ? match[1] : 'logo-bgr.png';
+  })();
+</script>
+</body>
+</html>
