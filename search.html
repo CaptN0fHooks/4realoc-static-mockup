@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Property Search | 4 Real OC | Coastal & Luxury Homes</title>
+  <title>Property Search | Real OC | Coastal & Luxury Homes</title>
   <meta name="description" content="Search Orange County coastal and luxury homes. Find your perfect property with advanced search filters." />
   <meta name="theme-color" content="#0D1B2A" />
 
@@ -84,11 +84,26 @@
     footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
     .bottom-bg{position:relative;background:url('assets/backgrounds/footer-bg.jpg') center/cover no-repeat}
     footer::after { content:none !important; }
+
+    /* IDX full-viewport embed */
+    .idx-container { position: relative; margin-top: 76px; height: calc(100vh - 76px); z-index: 2; }
+    .idx-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    /* Featured strip above IDX */
+    .featured-on-search { position: relative; z-index: 3; padding: 26px 0 0; background: rgba(11,26,40,0.85); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .featured-on-search .section-head { margin: 0 auto 14px; }
+    .featured-tiles { width:min(100% - 40px, var(--maxw)); margin:0 auto 16px; display:grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 1fr); gap: 16px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; }
+    .featured-tiles::-webkit-scrollbar { display:none; }
+    .featured-card { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-height: 260px; }
+    .featured-card .media { height: 160px; background-size: cover; background-position: center; }
+    .featured-card .body { padding: 12px; font-size: 0.95rem; }
+    .featured-actions { width:min(100% - 40px, var(--maxw)); margin:0 auto 18px; text-align:right; }
+    .featured-actions a { display:inline-block; background: var(--gold); color:#0B1A28; padding:8px 12px; border-radius:12px; font-weight:700; }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="brand"><img src="assets/logo-icon.png" alt="4 Real OC" /><span>4 Real OC</span></div>
+    <div class="brand"><img src="assets/logo-icon.png" alt="Real OC" /><span>Real OC</span></div>
     <nav>
       <ul>
         <li><a href="buyers.html">Buyers</a></li>
@@ -102,118 +117,54 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg" aria-hidden="true"></video>
-    <div class="hero-inner">
-      <h1>Find Your Dream Home</h1>
-      <p>Search Orange County's finest coastal and luxury properties</p>
+  <!-- Featured properties (above IDX) -->
+  <section class="featured-on-search">
+    <div class="section-head">
+      <h2>Featured Properties</h2>
+      <p>Live from MLS — curated coastal homes</p>
+    </div>
+    <div id="featuredTiles" class="featured-tiles" aria-live="polite">
+      <div class="featured-card"><div class="media" style="background-image:url('assets/backgrounds/featured-bg.jpg')"></div><div class="body">Loading featured listings…</div></div>
+    </div>
+    <div class="featured-actions"><a href="search.html">View All ▸</a></div>
+  </section>
+
+  <!-- Full-viewport IDX embed -->
+  <section class="idx-container">
+    <!-- Selected property banner; appears only if ?mls= is present -->
+    <div id="sel" style="display:none; max-width:1200px; margin:0 auto 12px; padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); color:#fff;">
+      <strong id="selLabel"></strong>
+      <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn cta" href="mailto:michaelrichard.re@gmail.com?subject=Book a Showing">Book a Showing</a>
+        <a class="btn ghost" href="#idx">Open in Full Search</a>
+      </div>
+    </div>
+    <div id="idx" class="idx-wrap" style="position:relative;width:100%;height:100%;">
+      <iframe id="idxFrame" src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" width="100%" height="100%" frameborder="0" marginwidth="0" marginheight="0" title="Property Search" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
     </div>
   </section>
 
-  <section id="search" style="background:url('assets/backgrounds/search-bg.jpg') center/cover no-repeat;">
-    <div class="container">
-      <div class="section-head">
-        <h2>Property Search</h2>
-        <p>Use our advanced filters to find your perfect home</p>
-      </div>
-      <form class="search-form">
-        <div class="search-grid">
-          <div class="field">
-            <label for="location">Location</label>
-            <select id="location" name="location">
-              <option value="">Any Location</option>
-              <option value="huntington-beach">Huntington Beach</option>
-              <option value="newport-beach">Newport Beach</option>
-              <option value="laguna-beach">Laguna Beach</option>
-              <option value="dana-point">Dana Point</option>
-              <option value="san-clemente">San Clemente</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="price-min">Price Min</label>
-            <input type="number" id="price-min" name="price-min" placeholder="$500,000" min="0">
-          </div>
-          <div class="field">
-            <label for="price-max">Price Max</label>
-            <input type="number" id="price-max" name="price-max" placeholder="$5,000,000" min="0">
-          </div>
-          <div class="field">
-            <label for="beds">Bedrooms</label>
-            <select id="beds" name="beds">
-              <option value="">Any</option>
-              <option value="1">1+</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-              <option value="5">5+</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="baths">Bathrooms</label>
-            <select id="baths" name="baths">
-              <option value="">Any</option>
-              <option value="1">1+</option>
-              <option value="2">2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="property-type">Property Type</label>
-            <select id="property-type" name="property-type">
-              <option value="">Any Type</option>
-              <option value="single-family">Single Family</option>
-              <option value="condo">Condo</option>
-              <option value="townhouse">Townhouse</option>
-              <option value="luxury">Luxury</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="search-btn">Search Properties</button>
-      </form>
-    </div>
-  </section>
+  <script>
+  (function(){
+    function getParam(name){ return new URLSearchParams(location.search).get(name); }
+    const DETAILS_URL_PREFIX = null; // set later if provider gives a direct detail link
+    document.addEventListener('DOMContentLoaded', function(){
+      const mls = getParam('mls');
+      if (!mls) return;
+      const box = document.getElementById('sel');
+      const label = document.getElementById('selLabel');
+      const frame = document.getElementById('idxFrame');
+      box.style.display = 'block';
+      label.textContent = `Selected MLS#: ${mls} — scroll/search below for full details.`;
+      if (DETAILS_URL_PREFIX && frame) {
+        frame.src = DETAILS_URL_PREFIX + encodeURIComponent(mls);
+        label.textContent = `Showing MLS#: ${mls} in IDX.`;
+      }
+    });
+  })();
+  </script>
 
-  <section id="featured">
-    <div class="container">
-      <div class="section-head">
-        <h2>Featured Properties</h2>
-        <p>Handpicked homes that showcase Orange County's finest</p>
-      </div>
-      <div class="results-grid">
-        <div class="property-card">
-          <div class="property-image" style="background-image: url('assets/backgrounds/pexels-esmihel-16133569.jpg');">
-            <div class="property-price">$4,250,000</div>
-          </div>
-          <div class="property-details">
-            <div class="property-address">122 Oceancrest Dr, Newport Beach</div>
-            <div class="property-features">4 Bed · 3 Bath · 2,800 sqft</div>
-            <div class="property-description">Stunning oceanfront property with panoramic views, recently renovated with luxury finishes throughout.</div>
-          </div>
-        </div>
-        <div class="property-card">
-          <div class="property-image" style="background-image: url('assets/backgrounds/Max Vakhtbovycn.jpg');">
-            <div class="property-price">$3,150,000</div>
-          </div>
-          <div class="property-details">
-            <div class="property-address">18 Tidepool Ln, Laguna Beach</div>
-            <div class="property-features">3 Bed · 2.5 Bath · 2,200 sqft</div>
-            <div class="property-description">Charming coastal cottage steps from the beach, featuring a private garden and ocean breezes.</div>
-          </div>
-        </div>
-        <div class="property-card">
-          <div class="property-image" style="background-image: url('assets/backgrounds/pexels-sonny-11968593.jpg');">
-            <div class="property-price">$1,975,000</div>
-          </div>
-          <div class="property-details">
-            <div class="property-address">9 Seabreeze Ct, Huntington Beach</div>
-            <div class="property-features">3 Bed · 2 Bath · 1,800 sqft</div>
-            <div class="property-description">Gated community home with modern amenities, close to shopping and excellent schools.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <div class="bottom-bg">
     <section class="cta-strip" id="contact">
@@ -226,7 +177,7 @@
     </section>
 
     <footer>
-      <div class="container">© <span id="year"></span> 4 Real OC · eXp Realty of Southern California · DRE #01901413</div>
+      <div class="container">© <span id="year"></span> Real OC · eXp Realty of Southern California · DRE #01901413</div>
     </footer>
   </div>
 

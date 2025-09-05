@@ -1,5 +1,5 @@
 /* =======================
-   4 Real OC — Global CSS
+   Real OC — Global CSS
    ======================= */
 
    :root{
@@ -306,6 +306,15 @@
     background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.45) 100%);
     z-index: 0;
   }
+  /* Gentle fade at the bottom of each image section to transition into the page */
+  .section-img::after{
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(11,26,40,0.95));
+    pointer-events: none;
+    z-index: 0;
+  }
   
   /* Individual section backgrounds - Fixed paths */
   #featured { background: url('../assets/backgrounds/featured-bg.jpg') center/cover no-repeat; }
@@ -331,7 +340,19 @@
   /* Grids */
   .grid{ display:grid; gap:18px; position:relative; z-index:1; }
   .cards{ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-  .reasons{ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .reasons{ 
+    grid-template-columns: repeat(3, minmax(280px, 1fr)); 
+    justify-content: center; 
+    align-items: stretch; 
+    margin: 0 auto; 
+    gap: 22px;
+  }
+  @media (max-width: 1000px){
+    .reasons{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+  }
+  @media (max-width: 640px){
+    .reasons{ grid-template-columns: 1fr; }
+  }
   
   /* Featured carousel track (horizontal) */
   #featCarousel { overflow: hidden; position: relative; }
@@ -358,6 +379,19 @@
   .card{ overflow:hidden; border-radius:var(--radius-lg); }
   .card-media{ height:260px; background-size:cover; background-position:center; }
   .card-body{ padding:18px; background:rgba(0,0,0,.55); }
+
+  /* Clean, centered Reason tiles */
+  #reasons .reason{
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px;
+    min-height: 180px; padding: 20px 22px;
+    text-align:center; line-height:1.45;
+  }
+  #reasons .reason h3{ margin:0; font-size: clamp(1.05rem, 1.8vw, 1.3rem); }
+  #reasons .reason p{ margin:0; opacity:.95; }
+
+  @media (max-width: 720px){
+    #reasons .reason{ min-height: 160px; padding: 16px 18px; }
+  }
   
   /* About block */
   .about{ display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:center; position:relative; z-index:1; }
@@ -385,4 +419,110 @@
     background:rgba(5,10,16,.48);
     border-top:1px solid rgba(255,255,255,.08);
   }
-  
+
+  /* ===== Featured IDX Section with Background ===== */
+  #featured.idx-bg {
+    background: url("../assets/backgrounds/idx-bg.jpg") center/cover no-repeat;
+    position: relative;
+    color: #fff;
+  }
+  #featured.idx-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 0;
+  }
+  #featured.idx-bg .container { position: relative; z-index: 1; }
+  /* Add bottom fade on IDX featured to ease into next section */
+  #featured.idx-bg::after{
+    content: "";
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(11,26,40,0.95));
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Glassy card look for IDX iframe */
+  #featured .idx-frame-wrap {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: var(--radius-lg, 20px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    backdrop-filter: blur(6px) saturate(1.05);
+    overflow: hidden;
+    height: 70vh;
+    max-height: 840px;
+    min-height: 540px;
+  }
+  #featured .idx-frame-wrap iframe { display:block; width:100%; height:100%; border:0; }
+
+  #featured .idx-actions {
+    margin-top: 14px;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  #featured .idx-actions .btn.cta {
+    padding: 10px 16px; border-radius: 12px; font-weight: 700;
+  }
+  #featured .idx-actions .mls-attrib { font-size: .9rem; opacity: .9; }
+
+  /* Responsive heights */
+  @media (max-width: 1100px) {
+    #featured .idx-frame-wrap { height: 64vh; min-height: 500px; }
+  }
+  @media (max-width: 800px) {
+    #featured .idx-frame-wrap { height: 58vh; min-height: 460px; }
+  }
+  @media (max-width: 560px) {
+    #featured .idx-frame-wrap { height: 52vh; min-height: 420px; }
+  }
+  /* ===== Featured Carousel: tiny, safe, scoped ===== */
+#featured .carousel{
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#featured .feat-track{
+  display: flex;
+  gap: 20px;               /* space between cards */
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  transition: transform .35s ease; /* one-card step */
+  padding: 6px 2px 12px 2px;
+}
+
+/* Show 4 cards at once (responsive) */
+#featured .card{
+  flex: 0 0 calc((100% - 3*20px) / 4); /* 4 across minus the 3 gaps */
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+#featured .card img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+#featured .card .card-body{ padding: 14px 14px 16px; color: var(--ivory); }
+#featured .card h3{ margin: 0 0 6px 0; }
+#featured .card .btn.small{ padding: 6px 10px; font-size: .9rem; }
+
+/* Card hover “reaction” */
+#featured .card:hover,
+#featured .card.is-hovered{
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(0,0,0,.35);
+  border-color: rgba(255,255,255,.45);
+}
+
+/* Edge hover zones created by JS */
+#featured .hover-zone{ position:absolute; top:0; bottom:0; width:14%; }

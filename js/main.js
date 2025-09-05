@@ -1,5 +1,5 @@
 /* ==========================================================================
-   4 Real OC — Main JS
+   Real OC — Main JS
    ========================================================================== */
 
 /* --------------------------------------
@@ -262,6 +262,36 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 })();
 
 /* --------------------------------------
+   Featured tiles → search.html?mls=...
+-------------------------------------- */
+(function linkFeaturedTilesToSearch(){
+  document.addEventListener('DOMContentLoaded', function(){
+    const cards = document.querySelectorAll('#featured .card');
+    cards.forEach(card => {
+      const mls = card.getAttribute('data-mls');
+      if (!mls) return;
+      const href = 'search.html?mls=' + encodeURIComponent(mls);
+      card.querySelectorAll('a').forEach(a => a.setAttribute('href', href));
+      // Optional: make full card clickable
+      // card.style.cursor = 'pointer';
+      // card.addEventListener('click', () => window.location.href = href);
+    });
+  });
+})();
+
+/* --------------------------------------
+   Prevent scroll jump when IDX loads
+-------------------------------------- */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    const idx = document.getElementById('idxFeatured');
+    if (!idx) return;
+    const top = window.scrollY;
+    idx.addEventListener('load', () => window.scrollTo({ top, left: 0, behavior: 'instant' }));
+  });
+})();
+
+/* --------------------------------------
    Mini search: redirect to search.html with params
 -------------------------------------- */
 (function miniSearchRedirect() {
@@ -303,4 +333,168 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       results.appendChild(card);
     }
   });
+})();
+
+// ===== Featured Carousel (tiny addon) =====
+(function () {
+  const STEP_MS  = 350;  // must match CSS .35s
+  const PAUSE_MS = 900;  // brief pause between single-card steps
+
+  function getTranslateX(el) {
+    const t = getComputedStyle(el).transform;
+    if (!t || t === 'none') return 0;
+    const m = t.match(/matrix\(([^)]+)\)/);
+    if (!m) return 0;
+    const parts = m[1].split(',').map(Number);
+    return parts.length >= 6 ? parts[4] : 0;
+  }
+
+  function debounce(fn, delay) {
+    let id;
+    return () => { clearTimeout(id); id = setTimeout(fn, delay); };
+  }
+
+  function initFeaturedCarousel() {
+    const carousel = document.getElementById('featCarousel');
+    const track    = document.getElementById('featTrack');
+    if (!carousel || !track) return; // do nothing if section missing
+
+    // Create left/right hover zones if not present (no HTML edits needed)
+    let zoneLeft  = document.getElementById('featHoverLeft');
+    let zoneRight = document.getElementById('featHoverRight');
+
+    if (!zoneLeft) {
+      zoneLeft = document.createElement('div');
+      zoneLeft.id = 'featHoverLeft';
+      zoneLeft.className = 'hover-zone left';
+      zoneLeft.setAttribute('aria-hidden', 'true');
+      carousel.appendChild(zoneLeft);
+    }
+    if (!zoneRight) {
+      zoneRight = document.createElement('div');
+      zoneRight.id = 'featHoverRight';
+      zoneRight.className = 'hover-zone right';
+      zoneRight.setAttribute('aria-hidden', 'true');
+      carousel.appendChild(zoneRight);
+    }
+
+    let cardWidth = 0;
+    let runningDir = null; // 'left' | 'right' | null
+    let stepTimer = null;
+    let animating = false;
+
+    function computeStep() {
+      const cards = Array.from(track.children);
+      if (cards.length < 2) { cardWidth = 0; return; }
+      const a = cards[0].getBoundingClientRect();
+      const b = cards[1].getBoundingClientRect();
+      const gap = Math.max(0, b.left - a.right);
+      cardWidth = a.width + gap;
+    }
+
+    function shiftLeft() { // first -> end
+      const first = track.firstElementChild;
+      if (first) track.appendChild(first);
+    }
+    function shiftRight() { // last -> front
+      const last = track.lastElementChild;
+      if (last) track.insertBefore(last, track.firstElementChild);
+    }
+
+    function step(dir) {
+      if (animating || !cardWidth) return;
+      animating = true;
+
+      if (dir === 'right') {
+        const startX = getTranslateX(track);
+        const targetX = startX - cardWidth;
+
+        track.style.transition = 'transform .35s ease';
+        track.style.transform  = `translate3d(${targetX}px,0,0)`;
+
+        setTimeout(() => {
+          track.style.transition = 'none';
+          shiftLeft();
+          track.style.transform  = `translate3d(${startX}px,0,0)`;
+          void track.getBoundingClientRect();
+          track.style.transition = 'transform .35s ease';
+
+          animating = false;
+          queueNext(dir);
+        }, STEP_MS);
+      } else {
+        const startX = getTranslateX(track);
+        track.style.transition = 'none';
+        shiftRight();
+        track.style.transform  = `translate3d(${startX - cardWidth}px,0,0)`;
+        void track.getBoundingClientRect();
+        track.style.transition = 'transform .35s ease';
+        track.style.transform  = `translate3d(${startX}px,0,0)`;
+
+        setTimeout(() => {
+          animating = false;
+          queueNext(dir);
+        }, STEP_MS);
+      }
+    }
+
+    function queueNext(dir) {
+      if (runningDir !== dir) return;
+      clearTimeout(stepTimer);
+      stepTimer = setTimeout(() => step(dir), PAUSE_MS);
+    }
+
+    function start(dir) {
+      if (runningDir === dir) return;
+      runningDir = dir;
+      clearTimeout(stepTimer);
+      computeStep();
+      queueNext(dir);
+    }
+
+    function stop() {
+      runningDir = null;
+      clearTimeout(stepTimer);
+    }
+
+    // Edge hover controls
+    zoneRight.addEventListener('mouseenter', () => start('right'));
+    zoneLeft .addEventListener('mouseenter', () => start('left'));
+    zoneRight.addEventListener('mouseleave', stop);
+    zoneLeft .addEventListener('mouseleave', stop);
+
+    // Optional: press/hold near edges on touch devices
+    function onPointerDown(e) {
+      const rect = carousel.getBoundingClientRect();
+      const x = e.clientX;
+      const leftEdge = rect.left + rect.width * 0.35;
+      const rightEdge = rect.right - rect.width * 0.35;
+      if (x >= rightEdge) start('right');
+      else if (x <= leftEdge) start('left');
+    }
+    function onPointerUp() { stop(); }
+
+    carousel.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+
+    // Optional “react” class for more targeted CSS effects
+    Array.from(track.children).forEach((card) => {
+      card.addEventListener('mouseenter', () => card.classList.add('is-hovered'));
+      card.addEventListener('mouseleave', () => card.classList.remove('is-hovered'));
+    });
+
+    // Keep measurement fresh
+    window.addEventListener('resize', debounce(() => {
+      const wasRunning = runningDir;
+      stop();
+      computeStep();
+      if (wasRunning) start(wasRunning);
+    }, 150));
+
+    computeStep();
+  }
+
+  // Don’t replace your existing DOMContentLoaded—just add another
+  document.addEventListener('DOMContentLoaded', initFeaturedCarousel);
 })();
