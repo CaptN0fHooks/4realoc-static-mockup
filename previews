@@ -1,0 +1,971 @@
+previews/index-v1.html 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Real OC • Orange County Luxury Real Estate</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ========= Design Tokens ========= */
+:root{
+  --bg:#F7F5F2;
+  --surface:#FFFFFF;
+  --ink:#1a1c1f;
+  --muted:#69707a;
+  --accent:#CDA57C;       /* champagne gold */
+  --accent-2:#0B0E11;     /* deep ink for contrast */
+  --radius:24px;
+  --shadow-1:0 10px 30px rgba(0,0,0,.08);
+  --shadow-2:0 20px 60px rgba(0,0,0,.12);
+}
+
+/* ========= Base ========= */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--ink);line-height:1.2}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ========= Header ========= */
+.header{
+  position:fixed; inset:0 auto auto 0; height:72px; width:100%;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 24px; z-index:999;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:saturate(140%) blur(10px);
+  transition:box-shadow .3s ease, background .3s ease, height .3s ease;
+}
+.header.scrolled{ box-shadow:0 6px 20px rgba(0,0,0,.06); background:rgba(255,255,255,.9); height:64px;}
+.logo{font-family:'Playfair Display',serif; font-size:22px; letter-spacing:.5px}
+.nav{display:flex; align-items:center; gap:28px; }
+.nav a{position:relative; padding:8px 0; font-weight:500;}
+.nav a:after{
+  content:""; position:absolute; left:0; bottom:-4px; height:2px; width:0; background:var(--accent);
+  transition:width .25s ease;
+}
+.nav a:hover:after{width:100%}
+.header .cta{
+  background:var(--accent); color:#111; border:0; border-radius:999px;
+  padding:10px 18px; font-weight:600; cursor:pointer; transition:transform .15s ease, filter .25s ease;
+}
+.header .cta:hover{ transform:translateY(-2px); filter:brightness(1.05) }
+.menu-btn{ display:none; }
+
+/* ========= Hero ========= */
+.hero{
+  position:relative; height:100vh; min-height:620px; display:grid; place-items:center; text-align:center; overflow:hidden;
+}
+.hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.hero:after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.55));
+}
+.hero .inner{ position:relative; z-index:2; padding:0 20px; max-width:860px;}
+.hero h1{ color:#fff; font-size:clamp(36px,5vw,56px); margin-bottom:14px;}
+.hero p{ color:#eaeaea; font-size:clamp(16px,2.1vw,20px); margin-bottom:24px;}
+.buttons{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+.btn{
+  border-radius:999px; padding:12px 22px; font-weight:600; cursor:pointer; border:2px solid transparent;
+  transition:transform .15s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+}
+.btn.primary{ background:var(--accent); color:#111; box-shadow:0 12px 30px rgba(205,165,124,.35);}
+.btn.primary:hover{ transform:translateY(-2px); box-shadow:0 16px 40px rgba(205,165,124,.45);}
+.btn.dark{ background:rgba(255,255,255,.1); color:#fff; border-color:rgba(255,255,255,.25); }
+.btn.dark:hover{ background:#fff; color:#111; }
+
+/* ========= Sections ========= */
+.section{ padding:64px 20px; }
+.center{ text-align:center; }
+.container{ max-width:1180px; margin:0 auto; }
+
+/* Search */
+.search-wrap{
+  background:#fff; border-radius:var(--radius); box-shadow:var(--shadow-2); padding:28px; margin-top:-80px;
+}
+.search-wrap h2{ margin-bottom:6px;}
+.search-wrap p{ color:var(--muted); margin-bottom:18px;}
+.search-bar{ display:flex; flex-wrap:wrap; gap:10px; }
+.search-bar input{
+  flex:1 1 300px; padding:14px 16px; border-radius:999px; border:1px solid #e6e6e6; font-size:16px;
+}
+.search-bar button{
+  background:var(--accent); color:#111; border:0; border-radius:999px; padding:12px 20px; font-weight:600; cursor:pointer;
+}
+.filters{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+.chip{
+  border:1px solid var(--accent); color:var(--accent); padding:8px 14px; border-radius:999px; font-size:14px; cursor:pointer;
+  transition:background .25s,color .25s;
+}
+.chip:hover{ background:var(--accent); color:#111; }
+
+.idx-shell{ margin-top:18px; border-radius:16px; overflow:hidden; background:#fafafa; box-shadow:var(--shadow-1); }
+.idx-shell iframe{ width:100%; height:620px; border:0; }
+
+/* Reasons */
+.reasons{ background:#fafafa; }
+.grid{
+  display:grid; gap:22px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  margin-top:28px;
+}
+.card{
+  background:rgba(255,255,255,.65); backdrop-filter:blur(8px);
+  border-radius:18px; padding:22px; box-shadow:var(--shadow-1);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{ transform:translateY(-6px); box-shadow:0 18px 40px rgba(0,0,0,.12);}
+.card h3{ margin-bottom:6px; font-size:20px;}
+.card p{ color:var(--muted); font-size:15px;}
+
+/* About */
+.about{
+  display:grid; gap:32px; align-items:center;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+}
+.portrait{ border-radius:24px; overflow:hidden; box-shadow:var(--shadow-2); }
+.tagline{ color:var(--accent); letter-spacing:.3px; margin:.25rem 0 1rem; font-weight:600;}
+.signature{ font-family:'Playfair Display',serif; color:var(--accent); margin-top:8px; }
+
+/* CTA */
+.cta{
+  background:#fff; border-radius:24px; box-shadow:var(--shadow-2);
+  padding:42px 28px; text-align:center;
+}
+.cta .buttons{ margin-top:10px;}
+.cta .btn.outline{ background:transparent; color:var(--accent); border:2px solid var(--accent);}
+.cta .btn.outline:hover{ background:var(--accent); color:#111;}
+
+/* Footer */
+footer{
+  margin-top:40px; background:var(--accent-2); color:#cfcfcf; padding:36px 20px 20px;
+}
+.foot{
+  display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  max-width:1180px; margin:0 auto;
+}
+footer h4{ color:#fff; font-family:'Playfair Display',serif; margin-bottom:10px;}
+footer a{ color:#b9c0c8; }
+footer a:hover{ color:#fff; }
+.copy{ text-align:center; font-size:14px; color:#9aa3ad; margin-top:18px;}
+
+/* Mobile nav */
+@media (max-width:900px){
+  .nav{ display:none; }
+  .menu-btn{ display:block; background:transparent; border:0; font-size:14px; padding:8px 12px; border:1px solid #ddd; border-radius:999px;}
+  .nav.open{
+    position:fixed; top:72px; left:0; right:0; background:rgba(255,255,255,.96);
+    backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:14px; padding:18px 22px; box-shadow:0 10px 30px rgba(0,0,0,.08);
+  }
+}
+</style>
+
+<script>
+/* Header shrink on scroll */
+addEventListener('scroll',()=>document.querySelector('.header')
+  .classList.toggle('scrolled',scrollY>40));
+
+/* Mobile menu toggle */
+function toggleMenu(){
+  const nav=document.querySelector('.nav');
+  nav.classList.toggle('open');
+}
+
+/* Smooth scroll for in-page anchors */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const el=document.querySelector(a.getAttribute('href')); if(!el) return;
+  e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Real OC</div>
+  <nav class="nav">
+    <a href="#search">Search</a>
+    <a href="#reasons">Why Us</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="menu-btn" onclick="toggleMenu()">Menu</button>
+  <button class="cta" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Book a Call</button>
+</header>
+
+<section class="hero" id="home" aria-label="Hero">
+  <video autoplay muted loop playsinline>
+    <source src="MainCut.mp4" type="video/mp4"/>
+  </video>
+  <div class="inner">
+    <h1>Orange County Luxury Real Estate</h1>
+    <p>Live the Coast. Own the Quiet.</p>
+    <div class="buttons">
+      <button class="btn primary" onclick="document.querySelector('#search').scrollIntoView({behavior:'smooth'})">Explore Listings</button>
+      <button class="btn dark" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Sell with Confidence</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <!-- Search / IDX -->
+  <section class="section">
+    <div class="container">
+      <div id="search" class="search-wrap">
+        <h2 class="center">Discover Your Slice of Orange County</h2>
+        <p class="center">Explore live listings via CRMLS IDX — updated continuously.</p>
+        <div class="search-bar">
+          <input type="text" placeholder="Search by city, address, ZIP or MLS #">
+          <button>Search</button>
+        </div>
+        <div class="filters" aria-label="Quick filters">
+          <span class="chip">Coastal</span>
+          <span class="chip">$1M–$2M</span>
+          <span class="chip">$2M+</span>
+          <span class="chip">Open Houses</span>
+          <span class="chip">New Listings</span>
+        </div>
+        <div class="idx-shell" aria-label="Property search results">
+          <iframe src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=37fc3688" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasons -->
+  <section class="section reasons" id="reasons">
+    <div class="container">
+      <h2 class="center">Six Reasons to Work with Michael</h2>
+      <div class="grid">
+        <article class="card"><h3>Combat-Tested, Market-Proven</h3><p>From Iraq to Orange County, I fight for the people I represent.</p></article>
+        <article class="card"><h3>Rescuer of Homeowners</h3><p>I began helping families escape foreclosure during the 2008 crisis.</p></article>
+        <article class="card"><h3>Ethics Over Ego</h3><p>I left the industry when I saw fraud. Now I protect clients at all costs.</p></article>
+        <article class="card"><h3>Orange County Obsessed</h3><p>Local knowledge of neighborhoods, lifestyle, and hidden gems.</p></article>
+        <article class="card"><h3>Results That Matter</h3><p>Closing deals and building toward 100 sales a year—one client at a time.</p></article>
+        <article class="card"><h3>Reputation Without Rival</h3><p>Trusted by buyers, sellers, and fellow agents. My word is my brand.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container about">
+      <figure class="portrait"><img src="your-photo.jpg" alt="Michael R. Jacquez portrait"></figure>
+      <div>
+        <h2>About Michael R. Jacquez</h2>
+        <div class="tagline">Marine Discipline • Local Expertise</div>
+        <p>I’m Michael Jacquez, a U.S. Marine veteran turned buyer’s advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California—from Sacramento to the Bay, and now here in Orange County. I don’t chase deals; I fight for people.</p>
+        <p>Whether you’re buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
+        <div class="signature">Michael R. Jacquez • DRE #01901413</div>
+        <div class="buttons" style="margin-top:14px">
+          <button class="btn primary" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Work with Michael</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container cta" id="contact">
+      <h2>Ready to buy or sell in Orange County?</h2>
+      <p>Let’s build your plan in 15 minutes.</p>
+      <div class="buttons">
+        <a class="btn outline" href="mailto:michael@example.com">Email Michael</a>
+        <a class="btn primary" href="tel:17146552923">Call (714) 655-2923</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <h4>Real OC</h4>
+      <p>Representing Orange County’s finest homes with discipline, ethics, and results.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <p><a href="#home">Home</a><br><a href="#search">Search</a><br><a href="#reasons">Why Us</a><br><a href="#about">About</a><br><a href="#contact">Contact</a></p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>Huntington Beach, CA<br><a href="mailto:michael@example.com">michael@example.com</a><br><a href="tel:17146552923">(714) 655-2923</a></p>
+    </div>
+    <div>
+      <h4>Brokerage</h4>
+      <p>eXp Realty of Southern California<br>DRE #01901413</p>
+    </div>
+  </div>
+  <div class="copy">© 2025 Real OC • All rights reserved.</div>
+</footer>
+
+</body>
+</html>
+
+previews/index-v2.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Real OC • Luxury Estates</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0B0E11;
+  --glass:rgba(255,255,255,0.06);
+  --ink:#E9EDF2;
+  --muted:#A7B0BD;
+  --gold:#CDA57C;
+  --radius:22px;
+  --shadow:0 30px 90px rgba(0,0,0,.55);
+}
+
+/* Base */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Manrope',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;
+}
+h1,h2,h3{font-family:'Cormorant Garamond',serif; font-weight:700; line-height:1.15}
+a{color:inherit;text-decoration:none}
+
+/* Header */
+.header{
+  position:fixed; inset:0 auto auto 0; height:76px; width:100%; z-index:999;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 22px;
+  background:rgba(11,14,17,.45);
+  backdrop-filter:blur(12px);
+  transition:background .35s ease, height .25s ease, box-shadow .35s ease;
+}
+.header.scrolled{ height:64px; background:rgba(11,14,17,.7); box-shadow:0 8px 20px rgba(0,0,0,.35);}
+.logo{ font-family:'Cormorant Garamond',serif; font-size:24px; letter-spacing:.6px;}
+nav a{ margin:0 14px; position:relative; padding:8px 2px; }
+nav a:after{
+  content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:var(--gold);
+  transition:width .25s ease;
+}
+nav a:hover:after{width:100%}
+.menu{display:none}
+.cta{
+  background:var(--gold); color:#0b0e11; border:0; border-radius:999px;
+  padding:10px 18px; font-weight:700; box-shadow:0 10px 30px rgba(205,165,124,.35);
+  cursor:pointer; transition:transform .2s ease,box-shadow .3s ease,filter .25s ease;
+}
+.cta:hover{ transform:translateY(-2px); box-shadow:0 16px 44px rgba(205,165,124,.5); filter:brightness(1.05)}
+
+/* Hero */
+.hero{ position:relative; height:100vh; min-height:640px; display:grid; place-items:center; text-align:center; overflow:hidden;}
+.hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.55) saturate(110%);}
+.hero:after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(11,14,17,.25),rgba(11,14,17,.85));}
+.hero .stack{ position:relative; z-index:2; padding:0 20px; max-width:900px;}
+.hero h1{ font-size:clamp(38px,6vw,64px); margin-bottom:10px;}
+.hero p{ color:#C9D2DC; font-size:clamp(16px,2vw,20px); margin-bottom:22px;}
+.btn{
+  border-radius:999px; padding:12px 22px; font-weight:700; letter-spacing:.2px; cursor:pointer;
+  background:var(--gold); color:#0b0e11; border:0; margin:6px;
+  box-shadow:0 10px 30px rgba(205,165,124,.35); transition:transform .2s ease, box-shadow .3s ease;
+}
+.btn:hover{ transform:translateY(-2px); box-shadow:0 16px 44px rgba(205,165,124,.5);}
+.btn.ghost{ background:transparent; color:#E9EDF2; border:2px solid rgba(233,237,242,.38); box-shadow:none;}
+.btn.ghost:hover{ background:#fff; color:#0b0e11; border-color:#fff}
+
+/* Section helpers */
+.section{ padding:70px 20px;}
+.container{ max-width:1200px; margin:0 auto;}
+.center{text-align:center}
+
+/* Search Dock + IDX */
+.glass{
+  background:var(--glass); border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(14px);
+  border-radius:var(--radius); box-shadow:var(--shadow);
+}
+.search-dock{ margin-top:-80px; padding:28px;}
+.search-dock h2{ font-size:28px; margin-bottom:4px;}
+.search-dock p{ color:var(--muted); margin-bottom:16px;}
+.searchbar{ display:flex; flex-wrap:wrap; gap:10px;}
+.searchbar input{
+  flex:1 1 320px; padding:14px 16px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:var(--ink);
+}
+.searchbar button{ composes: btn; }
+.quick{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
+.chip{
+  border:1px solid var(--gold); color:var(--gold); padding:8px 14px; border-radius:999px; font-size:14px; cursor:pointer; transition:all .25s;
+}
+.chip:hover{ background:var(--gold); color:#0b0e11;}
+.idx{
+  margin-top:18px; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.08);
+}
+.idx iframe{ width:100%; height:640px; border:0; }
+
+/* Reasons */
+.reasons h2{ text-align:center; margin-bottom:18px;}
+.grid{
+  display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+.card{
+  background:var(--glass); border:1px solid rgba(255,255,255,.08); backdrop-filter:blur(10px);
+  border-radius:18px; padding:22px; box-shadow:0 10px 28px rgba(0,0,0,.45);
+  transition:transform .25s, box-shadow .25s;
+}
+.card:hover{ transform:translateY(-6px); box-shadow:0 18px 44px rgba(0,0,0,.55);}
+.card h3{ margin-bottom:6px;}
+.card p{ color:var(--muted); font-size:15px;}
+
+/* About */
+.about{
+  display:grid; gap:28px; align-items:center;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+}
+.portrait{
+  border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
+}
+.tag{ color:var(--gold); font-weight:700; letter-spacing:.4px; margin:.25rem 0 1rem;}
+.sig{ color:var(--gold); font-family:'Cormorant Garamond',serif; margin-top:10px; }
+
+/* CTA parallax */
+.cta{
+  position:relative; border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+  background:#101318;
+}
+.cta .bg{
+  position:absolute; inset:0; background:url('oc-harbor.jpg') center/cover no-repeat fixed; opacity:.35;
+}
+.cta .overlay{ position:absolute; inset:0; background:linear-gradient(180deg,rgba(11,14,17,.4),rgba(11,14,17,.8));}
+.cta .inner{ position:relative; z-index:2; padding:56px 22px; text-align:center;}
+.cta h2{ margin-bottom:8px;}
+.cta p{ color:#C9D2DC; margin-bottom:12px;}
+
+/* Footer */
+footer{
+  margin-top:40px; background:#07090B; color:#98A4B2; padding:34px 20px 18px;
+}
+.foot{ max-width:1200px; margin:0 auto; display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+footer h4{ color:#E9EDF2; font-family:'Cormorant Garamond',serif; margin-bottom:8px;}
+footer a:hover{ color:#fff}
+.copy{ text-align:center; color:#8793A2; font-size:14px; margin-top:14px;}
+
+/* Mobile */
+@media (max-width:900px){
+  nav{ display:none }
+  .menu{ display:inline-block; background:transparent; border:1px solid rgba(255,255,255,.25); color:#fff; border-radius:999px; padding:8px 12px;}
+  .nav-open{
+    position:fixed; top:76px; left:0; right:0; background:rgba(11,14,17,.92);
+    backdrop-filter:blur(10px); display:flex; flex-direction:column; gap:14px; padding:16px 22px;
+    box-shadow:0 16px 40px rgba(0,0,0,.5);
+  }
+}
+</style>
+
+<script>
+/* Header behavior */
+addEventListener('scroll',()=>document.querySelector('.header')
+  .classList.toggle('scrolled',scrollY>40));
+
+/* Mobile menu */
+function toggleMenu(){
+  let m=document.querySelector('nav');
+  if(!m.classList.contains('nav-open')){ m.classList.add('nav-open'); m.style.display='flex'; }
+  else{ m.classList.remove('nav-open'); m.removeAttribute('style'); }
+}
+
+/* Smooth in-page scroll */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const t=document.querySelector(a.getAttribute('href')); if(!t) return;
+  e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'});
+});
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Real OC</div>
+  <nav>
+    <a href="#search">Search</a>
+    <a href="#reasons">Why Us</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="menu" onclick="toggleMenu()">Menu</button>
+  <button class="cta" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Book a Call</button>
+</header>
+
+<section class="hero" id="home" aria-label="Hero">
+  <video autoplay muted loop playsinline>
+    <source src="MainCut.mp4" type="video/mp4"/>
+  </video>
+  <div class="stack">
+    <h1>Private Access to Orange County Luxury</h1>
+    <p>Discreet representation. Impeccable results.</p>
+    <div>
+      <button class="btn" onclick="document.querySelector('#search').scrollIntoView({behavior:'smooth'})">Explore Listings</button>
+      <button class="btn ghost" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Sell with Confidence</button>
+    </div>
+  </div>
+</section>
+
+<main>
+  <!-- Search Dock + IDX -->
+  <section class="section">
+    <div class="container">
+      <div id="search" class="glass search-dock">
+        <h2 class="center">Discover Your Slice of Orange County</h2>
+        <p class="center">Live CRMLS IDX — updated continuously.</p>
+        <div class="searchbar">
+          <input type="text" placeholder="City, Address, ZIP or MLS #">
+          <button class="btn" type="button">Search</button>
+        </div>
+        <div class="quick" aria-label="Quick filters">
+          <span class="chip">Coastal</span>
+          <span class="chip">$2M+</span>
+          <span class="chip">Ocean View</span>
+          <span class="chip">New Listings</span>
+          <span class="chip">Open Houses</span>
+        </div>
+        <div class="idx">
+          <iframe src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=37fc3688" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasons -->
+  <section class="section reasons" id="reasons">
+    <div class="container">
+      <h2>Why Work with Michael</h2>
+      <div class="grid">
+        <article class="card"><h3>Combat-Tested, Market-Proven</h3><p>From Iraq to Orange County, I fight for the people I represent.</p></article>
+        <article class="card"><h3>Rescuer of Homeowners</h3><p>I began helping families escape foreclosure during the 2008 crisis.</p></article>
+        <article class="card"><h3>Ethics Over Ego</h3><p>I left the industry when I saw fraud. Now I protect clients at all costs.</p></article>
+        <article class="card"><h3>Orange County Obsessed</h3><p>Local knowledge of neighborhoods, lifestyle, and hidden gems.</p></article>
+        <article class="card"><h3>Results That Matter</h3><p>Closing deals and building toward 100 sales a year—one client at a time.</p></article>
+        <article class="card"><h3>Reputation Without Rival</h3><p>Trusted by buyers, sellers, and fellow agents. My word is my brand.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container about">
+      <figure class="portrait"><img src="your-photo.jpg" alt="Michael R. Jacquez portrait"></figure>
+      <div>
+        <h2>About Michael R. Jacquez</h2>
+        <div class="tag">Marine Discipline • Local Expertise</div>
+        <p>I’m Michael Jacquez, a U.S. Marine veteran turned buyer’s advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California—from Sacramento to the Bay, and now here in Orange County. I don’t chase deals; I fight for people with professionalism, ethics, and results.</p>
+        <p>Whether you’re buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
+        <div class="sig">DRE #01901413</div>
+        <div style="margin-top:14px">
+          <button class="btn" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Work with Michael</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA with parallax bg -->
+  <section class="section">
+    <div class="container">
+      <div class="cta" id="contact">
+        <div class="bg" aria-hidden="true"></div>
+        <div class="overlay" aria-hidden="true"></div>
+        <div class="inner">
+          <h2>Ready to buy or sell in Orange County?</h2>
+          <p>Let’s build your plan in 15 minutes.</p>
+          <div>
+            <a class="btn ghost" href="mailto:michael@example.com">Email Michael</a>
+            <a class="btn" href="tel:17146552923">Call (714) 655-2923</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div><h4>Real OC</h4><p>Discreet representation for exceptional homes.</p></div>
+    <div><h4>Navigate</h4><p><a href="#home">Home</a><br><a href="#search">Search</a><br><a href="#reasons">Why Us</a><br><a href="#about">About</a><br><a href="#contact">Contact</a></p></div>
+    <div><h4>Contact</h4><p>Huntington Beach, CA<br><a href="mailto:michael@example.com">michael@example.com</a><br><a href="tel:17146552923">(714) 655-2923</a></p></div>
+    <div><h4>Brokerage</h4><p>eXp Realty of Southern California<br>DRE #01901413</p></div>
+  </div>
+  <div class="copy">© 2025 Real OC • All rights reserved.</div>
+</footer>
+
+</body>
+</html>
+
+previews/index-v3.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Real OC • Coastal Luxury Homes</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --navy:#0A2342;
+  --ink:#0f1720;
+  --sea:#0F7EC9;
+  --teal:#21B6C9;
+  --sand:#E8DCC9;
+  --white:#ffffff;
+  --muted:#5d6773;
+  --radius:22px;
+  --shadow:0 18px 50px rgba(10,35,66,.18);
+}
+
+/* Base */
+*{box-sizing:border-box;margin:0;padding:0}
+body{ font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:#fff; line-height:1.6; }
+h1,h2,h3{ font-family:'Lora',serif; font-weight:700; line-height:1.15; }
+a{ color:inherit; text-decoration:none}
+img{ max-width:100%; display:block}
+
+/* Header */
+.header{
+  position:fixed; inset:0 auto auto 0; height:74px; width:100%; z-index:999;
+  display:flex; align-items:center; justify-content:space-between; padding:0 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.66));
+  backdrop-filter:blur(8px);
+  transition:box-shadow .3s ease, height .25s ease;
+}
+.header.scrolled{ height:64px; box-shadow:0 8px 24px rgba(10,35,66,.08);}
+.logo{ font-family:'Lora',serif; font-size:22px; color:var(--navy);}
+nav a{ margin:0 14px; position:relative; padding:8px 2px; color:var(--navy); font-weight:600}
+nav a:after{
+  content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:linear-gradient(90deg,var(--sea),var(--teal));
+  transition:width .25s ease;
+}
+nav a:hover:after{ width:100% }
+.menu{ display:none }
+.header .cta{
+  background:linear-gradient(90deg,var(--sea),var(--teal)); color:#fff; border:0; border-radius:999px; padding:10px 18px; font-weight:700;
+  box-shadow:0 12px 30px rgba(15,126,201,.35); cursor:pointer; transition:transform .2s ease, box-shadow .3s ease, filter .25s ease;
+}
+.header .cta:hover{ transform:translateY(-2px); box-shadow:0 16px 44px rgba(15,126,201,.45); filter:brightness(1.05)}
+
+/* Hero */
+.hero{ position:relative; height:100vh; min-height:640px; display:grid; place-items:center; text-align:center; overflow:hidden; }
+.hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.7) saturate(110%);}
+.hero:after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,35,66,.2),rgba(10,35,66,.55));}
+.hero .stack{ position:relative; z-index:2; color:#fff; padding:0 20px; max-width:920px;}
+.hero h1{ font-size:clamp(36px,5.8vw,64px); margin-bottom:8px; }
+.hero p{ color:#e6f3ff; margin-bottom:18px; }
+.hero .dock{
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+}
+.dock .btn{
+  border-radius:16px; padding:14px 18px; font-weight:700; border:0; cursor:pointer;
+  background:rgba(255,255,255,.12); color:#fff; backdrop-filter:blur(6px);
+  box-shadow:0 10px 24px rgba(0,0,0,.18); transition:transform .2s, background .25s;
+}
+.dock .btn:hover{ transform:translateY(-2px); background:rgba(255,255,255,.22)}
+.dock .primary{
+  background:linear-gradient(90deg,var(--sea),var(--teal));
+  box-shadow:0 14px 34px rgba(33,182,201,.35);
+}
+
+/* Wave separator */
+.wave{ display:block; line-height:0; }
+.wave svg{ display:block; width:100%; height:70px; }
+
+/* Section helpers */
+.section{ padding:64px 20px; }
+.container{ max-width:1200px; margin:0 auto; }
+.center{ text-align:center }
+
+/* Search + IDX (light card) */
+.search{
+  margin-top:-60px; background:#fff; border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:26px;
+}
+.search h2{ color:var(--navy); margin-bottom:4px}
+.search p{ color:var(--muted); margin-bottom:14px}
+.searchbar{ display:flex; flex-wrap:wrap; gap:10px }
+.searchbar input{
+  flex:1 1 320px; padding:14px 16px; border-radius:999px; border:1px solid #e6e6e6; font-size:16px;
+}
+.searchbar button{
+  background:linear-gradient(90deg,var(--sea),var(--teal)); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:700; cursor:pointer;
+}
+.quick{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px }
+.chip{
+  border:1px solid var(--sea); color:var(--sea); padding:8px 14px; border-radius:999px; font-size:14px; cursor:pointer; transition:all .25s;
+}
+.chip:hover{ background:var(--sea); color:#fff }
+.idx{ margin-top:16px; border-radius:16px; overflow:hidden; background:#f7fbff; border:1px solid #e6f0fa}
+.idx iframe{ width:100%; height:620px; border:0 }
+
+/* Reasons (3D tilt cards) */
+.reasons{ background:#f7fbff }
+.grid{
+  display:grid; gap:22px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); margin-top:20px;
+}
+.card{
+  background:#fff; border:1px solid #edf4fb; border-radius:18px; padding:22px; box-shadow:0 14px 30px rgba(10,35,66,.08);
+  transform-style:preserve-3d; transition:transform .15s ease, box-shadow .25s ease;
+}
+.card:hover{ box-shadow:0 18px 44px rgba(10,35,66,.14); }
+.card h3{ color:var(--navy); margin-bottom:6px}
+.card p{ color:var(--muted); font-size:15px}
+
+/* About */
+.about{ display:grid; gap:28px; align-items:center; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); }
+.portrait{ border-radius:22px; overflow:hidden; box-shadow:var(--shadow)}
+.tag{ color:var(--sea); font-weight:700; letter-spacing:.3px; margin:.25rem 0 1rem}
+.sig{ color:var(--sea); font-family:'Lora',serif; margin-top:8px}
+
+/* CTA beach band */
+.band{
+  position:relative; border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+  background:linear-gradient(90deg,var(--sea),var(--teal));
+  color:#fff; text-align:center; padding:48px 20px;
+}
+
+/* Footer */
+footer{ margin-top:40px; background:var(--navy); color:#cfe3f7; padding:34px 20px 18px}
+.foot{ max-width:1200px; margin:0 auto; display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+footer h4{ color:#fff; font-family:'Lora',serif; margin-bottom:8px}
+footer a{ color:#cfe3f7 } footer a:hover{ color:#fff }
+.copy{ text-align:center; color:#a9c0d8; font-size:14px; margin-top:14px}
+
+/* Mobile */
+@media (max-width:900px){
+  nav{ display:none }
+  .menu{ display:inline-block; border:1px solid rgba(10,35,66,.25); background:#fff; color:var(--navy); border-radius:999px; padding:8px 12px }
+  .nav-open{
+    position:fixed; top:74px; left:0; right:0; background:#fff; display:flex; flex-direction:column; gap:14px; padding:16px 22px; box-shadow:0 16px 36px rgba(10,35,66,.12)
+  }
+}
+</style>
+
+<script>
+/* Header shrink */
+addEventListener('scroll',()=>document.querySelector('.header')
+  .classList.toggle('scrolled',scrollY>40));
+
+/* Mobile menu */
+function toggleMenu(){
+  const n=document.querySelector('nav');
+  if(!n.classList.contains('nav-open')){ n.classList.add('nav-open'); n.style.display='flex'; }
+  else{ n.classList.remove('nav-open'); n.removeAttribute('style'); }
+}
+
+/* Smooth anchor scroll */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const t=document.querySelector(a.getAttribute('href')); if(!t) return;
+  e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+/* Lightweight 3D tilt for cards */
+(function(){
+  const cards=[...document.querySelectorAll('.card')];
+  const damp=30; // lower = stronger tilt
+  cards.forEach(c=>{
+    c.addEventListener('mousemove',e=>{
+      const r=c.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+      const rx=(.5-y)*damp, ry=(x-.5)*damp;
+      c.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+    });
+    c.addEventListener('mouseleave',()=>{ c.style.transform='rotateX(0deg) rotateY(0deg)';});
+  });
+})();
+</script>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">Real OC</div>
+  <nav>
+    <a href="#search">Search</a>
+    <a href="#reasons">Why Us</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="menu" onclick="toggleMenu()">Menu</button>
+  <button class="cta" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Book a Call</button>
+</header>
+
+<section class="hero" id="home" aria-label="Hero">
+  <video autoplay muted loop playsinline>
+    <source src="MainCut.mp4" type="video/mp4"/>
+  </video>
+  <div class="stack">
+    <h1>Coastal Living, Curated</h1>
+    <p>Orange County luxury homes with ocean, light, and effortless style.</p>
+    <div class="dock">
+      <button class="btn primary" onclick="document.querySelector('#search').scrollIntoView({behavior:'smooth'})">Explore Listings</button>
+      <button class="btn" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Sell with Confidence</button>
+    </div>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none">
+    <path fill="#ffffff" d="M0,32L80,37.3C160,43,320,53,480,56C640,59,800,53,960,48C1120,43,1280,37,1360,34.7L1440,32L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"/>
+  </svg>
+</div>
+
+<main>
+  <!-- Search + IDX -->
+  <section class="section">
+    <div class="container">
+      <div id="search" class="search">
+        <h2 class="center">Discover Your Slice of Orange County</h2>
+        <p class="center">Live CRMLS IDX — updated continuously.</p>
+        <div class="searchbar">
+          <input type="text" placeholder="City, Address, ZIP or MLS #">
+          <button type="button">Search</button>
+        </div>
+        <div class="quick" aria-label="Quick filters">
+          <span class="chip">Coastal</span>
+          <span class="chip">$1M–$2M</span>
+          <span class="chip">$2M+</span>
+          <span class="chip">Ocean View</span>
+          <span class="chip">New Listings</span>
+        </div>
+        <div class="idx">
+          <iframe src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=37fc3688" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reasons -->
+  <section class="section reasons" id="reasons">
+    <div class="container">
+      <h2 class="center" style="color:var(--navy)">Six Reasons to Work with Michael</h2>
+      <div class="grid">
+        <article class="card"><h3>Combat-Tested, Market-Proven</h3><p>From Iraq to Orange County, I fight for the people I represent.</p></article>
+        <article class="card"><h3>Rescuer of Homeowners</h3><p>I began helping families escape foreclosure during the 2008 crisis.</p></article>
+        <article class="card"><h3>Ethics Over Ego</h3><p>I left the industry when I saw fraud. Now I protect clients at all costs.</p></article>
+        <article class="card"><h3>Orange County Obsessed</h3><p>Local knowledge of neighborhoods, lifestyle, and hidden gems.</p></article>
+        <article class="card"><h3>Results That Matter</h3><p>Closing deals and building toward 100 sales a year—one client at a time.</p></article>
+        <article class="card"><h3>Reputation Without Rival</h3><p>Trusted by buyers, sellers, and fellow agents. My word is my brand.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container about">
+      <figure class="portrait"><img src="your-photo.jpg" alt="Michael R. Jacquez portrait"></figure>
+      <div>
+        <h2 style="color:var(--navy)">About Michael R. Jacquez</h2>
+        <div class="tag">Marine Discipline • Local Expertise</div>
+        <p>I’m Michael Jacquez, a U.S. Marine veteran turned buyer’s advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California—from Sacramento to the Bay, and now here in Orange County. I don’t chase deals; I fight for people.</p>
+        <p>Whether you’re buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
+        <div class="sig">DRE #01901413</div>
+        <div class="dock" style="margin-top:12px">
+          <a class="btn primary" href="#contact">Work with Michael</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <section class="section">
+    <div class="container">
+      <div class="band" id="contact">
+        <h2>Ready to buy or sell in Orange County?</h2>
+        <p>Let’s build your plan in 15 minutes.</p>
+        <div class="dock" style="justify-content:center">
+          <a class="btn" style="background:#fff; color:var(--navy)" href="mailto:michael@example.com">Email Michael</a>
+          <a class="btn" style="background:#fff; color:var(--navy)" href="tel:17146552923">Call (714) 655-2923</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div><h4>Real OC</h4><p>Coastal luxury representation with discipline, ethics, and results.</p></div>
+    <div><h4>Explore</h4><p><a href="#home">Home</a><br><a href="#search">Search</a><br><a href="#reasons">Why Us</a><br><a href="#about">About</a><br><a href="#contact">Contact</a></p></div>
+    <div><h4>Contact</h4><p>Huntington Beach, CA<br><a href="mailto:michael@example.com">michael@example.com</a><br><a href="tel:17146552923">(714) 655-2923</a></p></div>
+    <div><h4>Brokerage</h4><p>eXp Realty of Southern California<br>DRE #01901413</p></div>
+  </div>
+  <div class="copy">© 2025 Real OC • All rights reserved.</div>
+</footer>
+
+</body>
+</html>
+
+previews/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Real OC • Preview Variations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{ --ink:#0B0E11; --muted:#6b7280; --accent:#CDA57C; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;color:var(--ink);padding:40px 20px}
+    .wrap{max-width:720px;margin:0 auto}
+    h1{font-size:28px;margin-bottom:6px}
+    p{color:var(--muted);margin-bottom:18px}
+    .grid{display:grid;gap:14px}
+    a.card{display:block;border:1px solid #e5e7eb;border-radius:14px;padding:16px 18px;text-decoration:none;color:inherit;transition:all .2s}
+    a.card:hover{border-color:#d1d5db;transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.06)}
+    .tag{font-size:12px;background:var(--accent);color:#111;border-radius:999px;padding:4px 10px;margin-left:8px}
+    .hint{font-size:13px;color:#6b7280;margin-top:12px}
+    code{background:#f3f4f6;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Preview Variations</h1>
+    <p>Select a design. Replace <code>your-photo.jpg</code>, email, and phone to personalize.</p>
+    <div class="grid">
+      <a class="card" href="./index-v1.html">
+        <strong>Variation 1 — Light & Elegant</strong><span class="tag">white + champagne</span>
+        <div class="hint">Clean, airy gallery feel; glass cards; gold accents.</div>
+      </a>
+      <a class="card" href="./index-v2.html">
+        <strong>Variation 2 — Dark Luxe + Glass</strong><span class="tag">charcoal + gold</span>
+        <div class="hint">Moody cinematic vibe; frosted panels; glowing CTAs.</div>
+      </a>
+      <a class="card" href="./index-v3.html">
+        <strong>Variation 3 — Coastal Modern</strong><span class="tag">navy/teal</span>
+        <div class="hint">Coastal energy; wave separators; subtle 3D tilt.</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
+
+
