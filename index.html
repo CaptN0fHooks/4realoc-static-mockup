@@ -11,12 +11,12 @@
   <link rel="icon" href="assets/profile-icon.png" />
 
   <!-- Preload media for smoother UX -->
-  <link rel="preload" as="image" href="assets/backgrounds/footer-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.jpg">
+  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/reasons-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/about-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/results-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.jpg">
-  <link rel="preload" as="image" href="assets/backgrounds/search-bg.jpg">
-  <link rel="preload" as="video" href="assets/maincut.mp4">
+  <link rel="preload" as="video" href="assets/MainCut.mp4">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
@@ -26,12 +26,18 @@
   <!-- Reveal zone (hover near top to show header) -->
   <div class="top-reveal-zone" aria-hidden="true"></div>
 
-  <!-- ===== HEADER ===== -->
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
   <header id="siteHeader" class="site-header" role="banner">
     <div class="container header-row">
       <a class="brand" href="index.html" aria-label="Real OC home">
-        <img src="assets/logo-icon.png" alt="Real OC logo" />
-        <span class="brand-name">Real OC</span>
+        <div class="brand-logo">
+          <img src="assets/logo-icon.png" alt="Real OC logo" />
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
+        </div>
       </a>
 
       <!-- Mobile menu toggle -->
@@ -42,19 +48,53 @@
 
       <nav class="main-nav" aria-label="Primary">
         <ul class="nav-links">
-          <li><a href="search.html">Homes</a></li>
-          <li><a href="buyers.html">Buyers</a></li>
-          <li><a href="sellers.html">Sellers</a></li>
-          <li><a href="why-us.html">Why Us</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <!-- listing.html intentionally not linked -->
+          <li class="nav-item">
+            <a href="search.html" class="nav-link">
+              <span class="nav-text">Homes</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
         </ul>
       </nav>
 
       <div class="nav-ctas">
-        <a class="btn ghost" href="search.html">Property Search</a>
-        <a class="btn cta" href="contact.html">Book a Call ▸</a>
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
       </div>
     </div>
   </header>
@@ -63,7 +103,7 @@
   <section id="hero" class="hero">
     <div class="hero-bg" aria-hidden="true">
       <!-- Keep the filename EXACT (case matters on many hosts) -->
-      <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.jpg"></video>
+      <video src="assets/MainCut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.webp"></video>
       <div class="hero-scrim"></div>
     </div>
 
@@ -87,8 +127,14 @@
         <p class="hero-tagline">Representing Orange County</p>
 
                  <div class="hero-ctas">
-           <a class="btn cta" href="buyers.html">Buy with Clarity</a>
-           <a class="btn ghost" href="sellers.html">Sell with Confidence</a>
+          <a class="btn cta" href="buyers.html">
+            <span class="btn-main">Buy</span>
+            <span class="btn-sub">with Clarity</span>
+          </a>
+          <a class="btn ghost" href="sellers.html">
+            <span class="btn-main">Sell</span>
+            <span class="btn-sub">with Confidence</span>
+          </a>
          </div>
       </div>
     </div>
@@ -160,32 +206,258 @@
         </figure>
         <div class="about-copy glass">
           <h3>Marine Discipline · Local Expertise</h3>
-          <p>I’m Michael Jacquez, a U.S. Marine veteran turned buyer’s advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California — from Sacramento to the Bay, and now here in Orange County. I don’t chase deals; I fight for people. My approach is simple: professionalism, ethics, and results. Whether you’re buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
+          <p>I'm Michael Jacquez, a U.S. Marine veteran turned buyer's advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California —from Sacramento to the Bay, and now here in Orange County. I don't chase deals; I fight for people. My approach is simple: professionalism, ethics, and results. Whether you're buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
           <a class="btn cta" href="contact.html">Work with Michael</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== CONTACT + FOOTER (single shared background) ===== -->
-  <div class="bottom-bg">
-    <section id="contact" class="section section-clear">
-      <div class="container contact">
-        <h2>Ready to buy or sell in Orange County?</h2>
-        <p>Let’s build your plan in 15 minutes.</p>
-        <div class="contact-ctas">
+  <!-- ===== INQUIRE SECTION ===== -->
+  <section id="inquire" class="section inquire-section" aria-labelledby="inquire-title">
+    <div class="inquire-inner container">
+      <div class="inquire-copy">
+        <h2 id="inquire-title">Ready to buy, sell or invest in Orange County?</h2>
+        <p>Let's build your plan in 15 minutes.</p>
+        <div class="quick-actions">
           <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
           <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
         </div>
       </div>
-    </section>
+      <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+        <input type="hidden" name="_subject" value="New inquiry from Real OC">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span>Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+          </label>
+          <label class="form-field">
+            <span>I'm looking for</span>
+            <div class="custom-select">
+              <div class="select-trigger">
+                <span class="select-value">Select option</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="select-options">
+                <div class="select-option" data-value="consultation">Buyer/Seller Consultation</div>
+                <div class="select-option" data-value="showing">Property Showing</div>
+                <div class="select-option" data-value="evaluation">Home Evaluation</div>
+                <div class="select-option" data-value="investor">Investor Services</div>
+              </div>
+              <input type="hidden" name="service" required>
+            </div>
+          </label>
+        </div>
+        
+        <div id="dynamicFields" class="dynamic-fields" style="display: none;">
+          <!-- Buyer/Seller Consultation Fields -->
+          <div id="consultationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Best way to contact</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select contact method</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="call">Call</div>
+                  <div class="select-option" data-value="text">Text</div>
+                  <div class="select-option" data-value="email">Email</div>
+                </div>
+                <input type="hidden" name="contactMethod">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="consultationTimeOption">
+              </div>
+            </label>
+            <label class="form-field" id="consultationCustomTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="consultationCustomTime">
+            </label>
+          </div>
+          
+          <!-- Property Showing Fields -->
+          <div id="showingFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="propertyAddress" placeholder="Enter the property address you'd like to see">
+            </label>
+            <label class="form-field">
+              <span>Preferred Date</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select date</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="today">Today</div>
+                  <div class="select-option" data-value="tomorrow">Tomorrow</div>
+                  <div class="select-option" data-value="future">Future Date</div>
+                </div>
+                <input type="hidden" name="dateOption">
+              </div>
+            </label>
+            <label class="form-field" id="futureDateField" style="display: none;">
+              <span>Select Future Date</span>
+              <input type="date" name="futureDate" min="">
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="timeOption">
+              </div>
+            </label>
+            <label class="form-field" id="customTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="customTime">
+            </label>
+          </div>
+          
+          <!-- Home Evaluation Fields -->
+          <div id="evaluationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="evaluationAddress" placeholder="Enter the property address for evaluation">
+            </label>
+            <label class="form-field">
+              <span>Property Type</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select property type</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="single-family">Single Family Home</div>
+                  <div class="select-option" data-value="condo">Condominium</div>
+                  <div class="select-option" data-value="townhouse">Townhouse</div>
+                  <div class="select-option" data-value="multi-family">Multi-Family</div>
+                  <div class="select-option" data-value="commercial">Commercial</div>
+                </div>
+                <input type="hidden" name="propertyType">
+              </div>
+            </label>
+          </div>
+          
+          <!-- Investor Services Fields -->
+          <div id="investorFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Investment Interest</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select Investment Interest</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="property-management">Property Management</div>
+                  <div class="select-option" data-value="buy-and-hold">Buy & Hold</div>
+                  <div class="select-option" data-value="fix-and-flip">Fix & Flip</div>
+                  <div class="select-option" data-value="wholesale">Wholesale</div>
+                  <div class="select-option" data-value="commercial">Commercial Investment</div>
+                </div>
+                <input type="hidden" name="investmentType">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Budget Range</span>
+              <input type="text" name="budgetRange" placeholder="e.g., $500K - $1M">
+          </label>
+        </div>
+        </div>
+        
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Share details, timelines, or properties you'd like to see"></textarea>
+        </label>
+        <button type="submit" class="btn cta inquire-submit">Send Inquiry</button>
+        <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
+      </form>
+    </div>
+  </section>
 
-    <footer class="site-footer" role="contentinfo">
-      <div class="container">
-        © <span id="year"></span> Real OC · eXp Realty of Southern California · DRE #01901413
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="#hero">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="#inquire">Inquire</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
+        </div>
       </div>
     </footer>
-  </div>
 
   <!-- JS -->
   <script src="js/main.js"></script>

@@ -19,6 +19,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   if (!header) return;
 
   let lastY = window.scrollY;
+  let hideTimeout = null;
 
   function onScroll() {
     const y = window.scrollY;
@@ -37,14 +38,41 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     lastY = y;
   }
 
+  function hideHeader() {
+    // Only hide if we're scrolled down past 40px
+    if (window.scrollY > 40) {
+      header.classList.add('hidden');
+    }
+  }
+
+  function showHeader() {
+    // Clear any pending hide timeout
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    header.classList.remove('hidden');
+  }
+
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // Hover at the very top reveals the header
   if (revealZone) {
-    revealZone.addEventListener('mouseenter', () =>
-      header.classList.remove('hidden')
-    );
+    revealZone.addEventListener('mouseenter', showHeader);
+    
+    // When mouse leaves the reveal zone, hide header after 1 second
+    revealZone.addEventListener('mouseleave', () => {
+      hideTimeout = setTimeout(hideHeader, 1000);
+    });
   }
+
+  // Also hide header when mouse leaves the header itself
+  header.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(hideHeader, 1000);
+  });
+
+  // Show header when mouse enters the header
+  header.addEventListener('mouseenter', showHeader);
 })();
 
 /* --------------------------------------
@@ -495,6 +523,278 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     computeStep();
   }
 
-  // Don’t replace your existing DOMContentLoaded—just add another
+  // Don't replace your existing DOMContentLoaded—just add another
   document.addEventListener('DOMContentLoaded', initFeaturedCarousel);
 })();
+
+/* --------------------------------------
+   Custom Select Dropdowns
+-------------------------------------- */
+(function customSelect() {
+  // Initialize all custom selects
+  function initCustomSelects() {
+    const customSelects = document.querySelectorAll('.custom-select');
+    
+    customSelects.forEach(select => {
+      const trigger = select.querySelector('.select-trigger');
+      const options = select.querySelector('.select-options');
+      const hiddenInput = select.querySelector('input[type="hidden"]');
+      const valueSpan = select.querySelector('.select-value');
+      
+      if (!trigger || !options || !hiddenInput) return;
+      
+      // Toggle dropdown
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        select.classList.toggle('open');
+        
+        // Close other dropdowns
+        customSelects.forEach(other => {
+          if (other !== select) {
+            other.classList.remove('open');
+          }
+        });
+      });
+      
+      // Handle option selection
+      options.addEventListener('click', (e) => {
+        const option = e.target.closest('.select-option');
+        if (!option) return;
+        
+        const value = option.getAttribute('data-value');
+        const text = option.textContent;
+        
+        // Update display
+        valueSpan.textContent = text;
+        hiddenInput.value = value;
+        
+        // Update selected state
+        options.querySelectorAll('.select-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        option.classList.add('selected');
+        
+        // Close dropdown
+        select.classList.remove('open');
+        
+        // Trigger change event for dynamic fields
+        if (hiddenInput.name === 'service') {
+          showDynamicFields(value);
+        }
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+      customSelects.forEach(select => {
+        select.classList.remove('open');
+      });
+    });
+  }
+  
+  // Show/hide dynamic fields based on service selection
+  function showDynamicFields(serviceValue) {
+    const dynamicFields = document.getElementById('dynamicFields');
+    const consultationFields = document.getElementById('consultationFields');
+    const showingFields = document.getElementById('showingFields');
+    const evaluationFields = document.getElementById('evaluationFields');
+    const investorFields = document.getElementById('investorFields');
+    
+    if (!dynamicFields) return;
+    
+    // Hide all service fields first
+    [consultationFields, showingFields, evaluationFields, investorFields].forEach(field => {
+      if (field) field.style.display = 'none';
+    });
+    
+    // Show dynamic fields container
+    dynamicFields.style.display = 'block';
+    
+    // Show specific fields based on selection
+    switch(serviceValue) {
+      case 'consultation':
+        if (consultationFields) {
+          consultationFields.style.display = 'grid';
+          setTimeout(handleConsultationSelection, 100);
+        }
+        break;
+      case 'showing':
+        if (showingFields) {
+          showingFields.style.display = 'grid';
+          setTimeout(handleDateSelection, 100);
+        }
+        break;
+      case 'evaluation':
+        if (evaluationFields) {
+          evaluationFields.style.display = 'grid';
+          setTimeout(handleEvaluationSelection, 100);
+        }
+        break;
+      case 'investor':
+        if (investorFields) {
+          investorFields.style.display = 'grid';
+          setTimeout(handleInvestorSelection, 100);
+        }
+        break;
+      default:
+        dynamicFields.style.display = 'none';
+    }
+  }
+  
+  // Handle date selection for property showing
+  function handleDateSelection() {
+    const dateSelect = document.querySelector('#showingFields .custom-select');
+    const futureDateField = document.getElementById('futureDateField');
+    const futureDateInput = document.querySelector('input[name="futureDate"]');
+    
+    if (!dateSelect || !futureDateField || !futureDateInput) return;
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    futureDateInput.setAttribute('min', today);
+    
+    // Clone and replace to ensure event listeners work
+    const newDateSelect = dateSelect.cloneNode(true);
+    dateSelect.parentNode.replaceChild(newDateSelect, dateSelect);
+    
+    // Add event listener to new select
+    const trigger = newDateSelect.querySelector('.select-trigger');
+    const options = newDateSelect.querySelector('.select-options');
+    
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      newDateSelect.classList.toggle('open');
+    });
+    
+    options.addEventListener('click', (e) => {
+      const option = e.target.closest('.select-option');
+      if (!option) return;
+      
+      const value = option.getAttribute('data-value');
+      const text = option.textContent;
+      
+      newDateSelect.querySelector('.select-value').textContent = text;
+      newDateSelect.querySelector('input[type="hidden"]').value = value;
+      
+      // Show/hide future date field
+      if (value === 'future') {
+        futureDateField.style.display = 'flex';
+      } else {
+        futureDateField.style.display = 'none';
+      }
+      
+      newDateSelect.classList.remove('open');
+    });
+  }
+  
+  // Handle consultation selection
+  function handleConsultationSelection() {
+    const timeSelect = document.querySelector('#consultationFields .custom-select:last-of-type');
+    const customTimeField = document.getElementById('consultationCustomTimeField');
+    
+    if (!timeSelect || !customTimeField) return;
+    
+    // Clone and replace to ensure event listeners work
+    const newTimeSelect = timeSelect.cloneNode(true);
+    timeSelect.parentNode.replaceChild(newTimeSelect, timeSelect);
+    
+    // Add event listener to new select
+    const trigger = newTimeSelect.querySelector('.select-trigger');
+    const options = newTimeSelect.querySelector('.select-options');
+    
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      newTimeSelect.classList.toggle('open');
+    });
+    
+    options.addEventListener('click', (e) => {
+      const option = e.target.closest('.select-option');
+      if (!option) return;
+      
+      const value = option.getAttribute('data-value');
+      const text = option.textContent;
+      
+      newTimeSelect.querySelector('.select-value').textContent = text;
+      newTimeSelect.querySelector('input[type="hidden"]').value = value;
+      
+      // Show/hide custom time field
+      if (value === 'custom') {
+        customTimeField.style.display = 'flex';
+      } else {
+        customTimeField.style.display = 'none';
+      }
+      
+      newTimeSelect.classList.remove('open');
+    });
+  }
+  
+  // Handle investor selection
+  function handleInvestorSelection() {
+    const investorSelect = document.querySelector('#investorFields .custom-select');
+    
+    if (!investorSelect) return;
+    
+    // Clone and replace to ensure event listeners work
+    const newInvestorSelect = investorSelect.cloneNode(true);
+    investorSelect.parentNode.replaceChild(newInvestorSelect, investorSelect);
+    
+    // Add event listener to new select
+    const trigger = newInvestorSelect.querySelector('.select-trigger');
+    const options = newInvestorSelect.querySelector('.select-options');
+    
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      newInvestorSelect.classList.toggle('open');
+    });
+    
+    options.addEventListener('click', (e) => {
+      const option = e.target.closest('.select-option');
+      if (!option) return;
+      
+      const value = option.getAttribute('data-value');
+      const text = option.textContent;
+      
+      newInvestorSelect.querySelector('.select-value').textContent = text;
+      newInvestorSelect.querySelector('input[type="hidden"]').value = value;
+      
+      newInvestorSelect.classList.remove('open');
+    });
+  }
+  
+  // Handle evaluation selection
+  function handleEvaluationSelection() {
+    const evaluationSelect = document.querySelector('#evaluationFields .custom-select');
+    
+    if (!evaluationSelect) return;
+    
+    // Clone and replace to ensure event listeners work
+    const newEvaluationSelect = evaluationSelect.cloneNode(true);
+    evaluationSelect.parentNode.replaceChild(newEvaluationSelect, evaluationSelect);
+    
+    // Add event listener to new select
+    const trigger = newEvaluationSelect.querySelector('.select-trigger');
+    const options = newEvaluationSelect.querySelector('.select-options');
+    
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      newEvaluationSelect.classList.toggle('open');
+    });
+    
+    options.addEventListener('click', (e) => {
+      const option = e.target.closest('.select-option');
+      if (!option) return;
+      
+      const value = option.getAttribute('data-value');
+      const text = option.textContent;
+      
+      newEvaluationSelect.querySelector('.select-value').textContent = text;
+      newEvaluationSelect.querySelector('input[type="hidden"]').value = value;
+      
+      newEvaluationSelect.classList.remove('open');
+    });
+  }
+  
+  // Initialize on DOM ready
+  document.addEventListener('DOMContentLoaded', initCustomSelects);
+})();
+
