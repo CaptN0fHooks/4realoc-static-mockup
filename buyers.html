@@ -13,36 +13,14 @@
   <!-- Preload Backgrounds -->
   <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/footer-bg.webp">
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
   <style>
-    :root {
-      --navy: #0D1B2A;
-      --ivory: #F8F8F6;
-      --gold: #C9A66B;
-      --glass: rgba(255,255,255,0.25);
-      --glass-stroke: rgba(255,255,255,0.4);
-      --shadow: 0 10px 30px rgba(0,0,0,0.25);
-      --radius: 22px;
-      --radius-lg: 28px;
-      --maxw: 1200px;
-    }
-
-    body { margin: 0; font-family: Lato, sans-serif; background: #0B1A28; color: var(--ivory); }
-    h1,h2,h3 { font-family: "Calisto MT", serif; margin: 0 0 0.5em; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(100% - 40px, var(--maxw)); margin: 0 auto; }
-
-    header.site-header { position: fixed; inset: 0 0 auto 0; height: 76px; display: flex; align-items: center; z-index: 50;
-      background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); transition: background 300ms ease; padding:0 20px; }
-    header.site-header.scrolled { background: rgba(8,19,32,0.9); }
-    .brand { display:flex; align-items:center; gap:10px; }
-    .brand img { height:40px; }
-    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
-    nav a { padding: 8px 12px; border-radius: 12px; transition: background 200ms ease; }
-    nav a:hover { background: rgba(255,255,255,0.1); }
-    .cta-btn { background: var(--gold); color: #0B1A28; padding: 10px 16px; border-radius: 16px; font-weight: 700; }
-
+    /* Page-specific styles only - header styles come from main CSS */
     .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
     .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
     .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
@@ -50,16 +28,474 @@
     .hero-inner h1 { font-size: 2.5rem; }
     .hero-inner p { font-size: 1.1rem; margin: 10px 0 20px; }
 
+    /* Hero section specific styles for buyers page */
+    .hero-buyers { 
+      position: relative; 
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+    .hero-buyers .hero-gradient { background: linear-gradient(135deg, rgba(13,27,42,0.7) 0%, rgba(13,27,42,0.4) 100%); }
+    .hero-buyers .hero-content { 
+      position: relative; 
+      z-index: 2; 
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      isolation: isolate;
+    }
+    .hero-buyers .hero-text { 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 3;
+    }
+    .hero-buyers .hero-text h1 { 
+      color: #ffffff; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 0;
+      line-height: 1.1;
+    }
+    .hero-buyers .hero-text p { 
+      color: #f8f9fa; 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      margin-bottom: 0;
+    }
+    
+    /* Hero buttons - match header styling exactly */
+    .hero-buyers .hero-ctas { 
+      display: flex !important; 
+      gap: 20px; 
+      margin: 16px 0 16px 0; 
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      visibility: visible !important;
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    .hero-buyers .hero-reveal {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    .hero-buyers .btn { 
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.4px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      min-width: 160px;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    .hero-buyers .btn.primary { 
+      background: linear-gradient(135deg, rgba(15,24,38,0.9), rgba(7,13,22,0.9));
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #f7f9fb;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .hero-buyers .btn.secondary { 
+      background: linear-gradient(135deg, #d8b68a, #b88952);
+      border: 1px solid #8B6914;
+      color: #0B0E11;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .hero-buyers .btn:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3), 0 3px 6px rgba(0,0,0,0.2);
+    }
+    .hero-buyers .btn.primary:hover {
+      border-color: rgba(255,255,255,0.5);
+    }
+    .hero-buyers .btn.secondary:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 20px 48px rgba(186,137,82,0.45);
+    }
+    
+    /* Process panels - Clean and Simple */
+    .hero-buyers .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-buyers .process-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 400px;
+      position: relative;
+    }
+    
+    .hero-buyers .process-step {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      animation: none !important;
+    }
+    
+    .hero-buyers .process-step:hover {
+      transform: scale(1.3);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+      height: 400px;
+      width: 200%;
+      z-index: 10;
+    }
+    
+    .hero-buyers .step-number {
+      background: linear-gradient(135deg, #d8b68a, #b88952);
+      color: #0B0E11;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0 auto 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(216, 182, 138, 0.3);
+    }
+    
+    .hero-buyers .process-step:hover .step-number {
+      transform: scale(1.2);
+      box-shadow: 0 8px 20px rgba(216, 182, 138, 0.5);
+    }
+    
+    .hero-buyers .process-step h3 {
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .hero-buyers .process-step:hover h3 {
+      color: #d8b68a;
+      transform: translateY(-3px);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .hero-buyers .step-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero-buyers .short-text {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      margin: 0;
+      transition: all 0.4s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .hero-buyers .detailed-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 40px);
+      padding: 24px 32px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+    }
+    
+    .hero-buyers .detailed-text p {
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1.8;
+      margin: 0 0 12px;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      text-align: left;
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    .hero-buyers .detailed-text p::before {
+      content: "•";
+      color: #d8b68a;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    
+    .hero-buyers .detailed-text p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .hero-buyers .process-step:hover .short-text {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-30px) scale(0.8);
+    }
+    
+    .hero-buyers .process-step:hover .detailed-text {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .hero-buyers .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+      .hero-buyers .hero-ctas {
+        justify-content: center;
+      }
+      .hero-buyers .process-preview {
+        max-width: 100%;
+        gap: 16px;
+      }
+      .hero-buyers .process-step {
+        padding: 20px;
+        height: 140px;
+      }
+      .hero-buyers .process-step:hover {
+        height: 350px;
+        width: 180%;
+        transform: scale(1.2);
+      }
+      .hero-buyers .detailed-text p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      
+      .process-steps {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 0 20px;
+      }
+      .step {
+        min-height: 160px;
+        padding: 16px 18px;
+      }
+      .step h3 {
+        font-size: 1.1rem;
+      }
+      .step p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+      
+      .benefits {
+        grid-template-columns: repeat(2, minmax(260px, 1fr));
+        gap: 20px;
+        padding: 0 20px;
+      }
+      .benefit {
+        min-height: 160px;
+        padding: 16px 18px;
+      }
+      .benefit h3 {
+        font-size: 1.1rem;
+      }
+      .benefit p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .benefits {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+
     section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
     section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
     .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
 
-    .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; position:relative; z-index:2; }
-    .step { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-    .step-number { background: var(--gold); color: var(--navy); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; margin-bottom: 16px; }
+    .process-steps { 
+      display: grid; 
+      grid-template-columns: repeat(2, minmax(280px, 1fr)); 
+      justify-content: center; 
+      align-items: stretch; 
+      margin: 0 auto; 
+      gap: 22px;
+      position: relative; 
+      z-index: 2; 
+      max-width: 1200px; 
+    }
+    .step { 
+      background: var(--glass);
+      border: 1px solid var(--glass-stroke);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 8px;
+      min-height: 180px; 
+      padding: 20px 22px;
+      text-align: center; 
+      line-height: 1.45;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+    .step:hover {
+      transform: translateY(-8px) scale(1.02);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    .step-number { 
+      background: var(--gold); 
+      color: var(--navy); 
+      width: 48px; 
+      height: 48px; 
+      border-radius: 50%; 
+      display: grid; 
+      place-items: center; 
+      font-weight: 700; 
+      font-size: 1.2rem;
+      margin-bottom: 8px; 
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .step:hover .step-number {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(216, 182, 138, 0.4);
+    }
+    .step h3 {
+      margin: 0; 
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      transition: all 0.3s ease;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .step:hover h3 {
+      color: rgba(201, 166, 107, 1);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .step p {
+      margin: 0; 
+      opacity: 0.95;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .step:hover p {
+      opacity: 1;
+      color: rgba(255, 255, 255, 0.95);
+    }
 
-    .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; position:relative; z-index:2; }
-    .benefit { background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 24px; border: 1px solid rgba(255,255,255,0.1); }
+    .benefits { 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(280px, 1fr)); 
+      justify-content: center; 
+      align-items: stretch; 
+      margin: 0 auto; 
+      gap: 22px;
+      position: relative; 
+      z-index: 2; 
+      max-width: 1200px; 
+    }
+    .benefit { 
+      background: var(--glass);
+      border: 1px solid var(--glass-stroke);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 8px;
+      min-height: 180px; 
+      padding: 20px 22px;
+      text-align: center; 
+      line-height: 1.45;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+    .benefit:hover {
+      transform: translateY(-8px) scale(1.02);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    .benefit h3 {
+      margin: 0; 
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      transition: all 0.3s ease;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .benefit:hover h3 {
+      color: rgba(201, 166, 107, 1);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .benefit p {
+      margin: 0; 
+      opacity: 0.95;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    .benefit:hover p {
+      opacity: 1;
+      color: rgba(255, 255, 255, 0.95);
+    }
 
     .cta-strip { text-align: center; padding: 60px 20px; color: var(--ivory); position:relative; z-index:2; }
 
@@ -76,26 +512,160 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand"><img src="assets/logo-icon.png" alt="Real OC" /><span>Real OC</span></div>
-    <nav>
-      <ul>
-        <li><a href="buyers.html">Buyers</a></li>
-        <li><a href="sellers.html">Sellers</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="why-us.html">Why Us</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a class="cta-btn" href="contact.html">Book a Call ▸</a></li>
-      </ul>
-    </nav>
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="Real OC home">
+        <div class="brand-logo">
+          <img src="assets/logo-icon.png" alt="Real OC logo" />
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
+        </div>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-ctas">
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <video src="assets/maincut.mp4" autoplay muted loop playsinline preload="metadata" poster="assets/backgrounds/placeholder-bg.webp" aria-hidden="true"></video>
-    <div class="hero-inner">
-      <h1>Buy with Clarity</h1>
-      <p>Expert guidance through every step of your home buying journey</p>
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero-buyers" style="background: url('assets/backgrounds/buyer-hero-bg.webp') center/cover no-repeat;">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
+      <div class="hero-gradient"></div>
+    </div>
+    
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1 class="hero-headline">
+          <span class="hero-line-1">Buy</span>
+          <span class="hero-line-2">with Clarity</span>
+        </h1>
+        <div class="hero-ctas">
+          <a class="btn primary" href="#process">View Our Process</a>
+          <a class="btn secondary" href="contact.html">Start Your Search</a>
+        </div>
+        <div class="hero-reveal">
+          <p class="hero-byline">Expert guidance through every step of your home buying journey</p>
+          <p class="hero-tagline">From first-time buyers to luxury investors</p>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="process-preview">
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <h3>Strategy</h3>
+            <div class="step-content">
+              <p class="short-text">Define your goals</p>
+              <div class="detailed-text">
+                <p>Understand your goals and financial picture</p>
+                <p>Line up the best lenders for pre-approval</p>
+                <p>Set clear buying parameters to ensure long-term affordability</p>
+              </div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <h3>Search</h3>
+            <div class="step-content">
+              <p class="short-text">Find your perfect home</p>
+              <div class="detailed-text">
+                <p>Explore every option—on and off the market</p>
+                <p>Tailored property tours that fit your schedule</p>
+                <p>Focused searches designed around your lifestyle and priorities</p>
+              </div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <h3>Negotiate</h3>
+            <div class="step-content">
+              <p class="short-text">Secure the best deal</p>
+              <div class="detailed-text">
+                <p>Craft winning offers with a smart strategy</p>
+                <p>Handle counteroffers seamlessly and discreetly</p>
+                <p>Secure the best price, rate, and terms on your behalf</p>
+              </div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <h3>Close</h3>
+            <div class="step-content">
+              <p class="short-text">Move in with confidence</p>
+              <div class="detailed-text">
+                <p>Navigate escrow step-by-step with full clarity</p>
+                <p>Stay informed with timelines, updates, and guidance</p>
+                <p>Move from accepted offer to keys in hand with confidence</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -109,28 +679,28 @@
         <div class="step">
           <div class="step-number">1</div>
           <h3>Strategy Session</h3>
-          <p>We'll discuss your goals, timeline, and financial picture to create a personalized buying strategy.</p>
+          <p>Your journey starts with clarity. We'll define your goals, timeline, and financial position, then craft a personalized buying roadmap. From connecting you with top lenders for competitive pre-approvals to setting smart parameters for affordability, this session ensures every step that follows is strategic, focused, and tailored to you.</p>
         </div>
         <div class="step">
           <div class="step-number">2</div>
           <h3>Market Analysis</h3>
-          <p>Deep dive into current market conditions, pricing trends, and opportunities in your target areas.</p>
+          <p>Knowledge is power in real estate. We'll analyze current market conditions, price trends, and neighborhood insights to position you for success. By identifying opportunities early—often before they're widely available—you'll have the advantage of making informed decisions backed by data, not guesswork.</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
           <h3>Property Search</h3>
-          <p>Access to exclusive listings and off-market opportunities before they hit the public market.</p>
+          <p>Your dream home shouldn't be left to chance. With access to both on-market listings and exclusive off-market opportunities, we'll curate a selection that matches your lifestyle, budget, and long-term goals. Showings are scheduled around your availability, giving you a seamless, personalized search experience.</p>
         </div>
         <div class="step">
           <div class="step-number">4</div>
           <h3>Negotiation & Closing</h3>
-          <p>Strategic negotiation backed by data, ensuring you get the best possible terms and price.</p>
+          <p>Once we've found the right property, we move decisively. Every offer is crafted with strategy, protecting your privacy while maximizing leverage. From negotiation to escrow, we manage deadlines, documents, and communications on your behalf. You'll stay fully informed at each stage, with the confidence of knowing every detail is handled until the keys are in your hand.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="benefits">
+  <section id="benefits" style="background: url('assets/backgrounds/WhyBuyersChoose-bg.webp') center/cover no-repeat;">
     <div class="container">
       <div class="section-head">
         <h2>Why Buyers Choose Real OC</h2>
@@ -139,42 +709,284 @@
       <div class="benefits">
         <div class="benefit">
           <h3>Local Market Mastery</h3>
-          <p>Six years of living and working in Orange County's coastal communities gives us insider knowledge of neighborhoods, schools, and market trends.</p>
+          <p>Years of living and working in Orange County's coastal communities provide insider knowledge of neighborhoods, schools, and market dynamics. We help you spot value and opportunity that others may overlook.</p>
         </div>
         <div class="benefit">
           <h3>Data-Driven Decisions</h3>
-          <p>We provide comprehensive market analysis, comparable sales, and ROI projections to ensure you make informed decisions.</p>
+          <p>Every move is backed by numbers. From market analysis and pricing trends to ROI projections, we equip you with the insights you need to make confident, informed decisions.</p>
         </div>
         <div class="benefit">
           <h3>Buyer Advocacy</h3>
-          <p>We represent your interests exclusively, not the seller's. Our goal is to get you the best possible deal.</p>
+          <p>Your interests come first—always. We negotiate exclusively on your behalf to secure the best possible terms, ensuring you never feel pressured or compromised.</p>
         </div>
         <div class="benefit">
           <h3>Network Access</h3>
-          <p>Access to our network of trusted lenders, inspectors, and contractors to streamline your buying process.</p>
+          <p>Tap into our curated network of trusted lenders, inspectors, and contractors. We streamline the buying process by connecting you with vetted professionals at every step.</p>
+        </div>
+        <div class="benefit">
+          <h3>Streamlined Process</h3>
+          <p>Buying a home doesn't have to be stressful. Our proven step-by-step system keeps you organized, informed, and confident from start to finish. No surprises—just results.</p>
+        </div>
+        <div class="benefit">
+          <h3>Trusted Guidance</h3>
+          <p>We combine Marine discipline with local expertise, delivering reliable, no-nonsense guidance. You'll always know what to expect, why it matters, and how it moves you closer to your dream home.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="bottom-bg">
-    <section class="cta-strip" id="contact">
-      <div class="container">
-        <h2>Ready to start your home buying journey?</h2>
-        <p>Let's create your personalized strategy in 15 minutes.</p>
-        <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
-        <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+  <!-- ===== INQUIRE SECTION ===== -->
+  <section id="inquire" class="section inquire-section" aria-labelledby="inquire-title">
+    <div class="inquire-inner container">
+      <div class="inquire-copy">
+        <h2 id="inquire-title">Ready to Buy in Orange County?</h2>
+        <p>Let's build your plan in 15 minutes.</p>
+        <div class="quick-actions">
+          <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+          <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
+        </div>
+      </div>
+      <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+        <input type="hidden" name="_subject" value="New inquiry from Real OC">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span>Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+          </label>
+          <label class="form-field">
+            <span>I'm looking for</span>
+            <div class="custom-select">
+              <div class="select-trigger">
+                <span class="select-value">Select option</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="select-options">
+                <div class="select-option" data-value="consultation">Buyer/Seller Consultation</div>
+                <div class="select-option" data-value="showing">Property Showing</div>
+                <div class="select-option" data-value="evaluation">Home Evaluation</div>
+                <div class="select-option" data-value="investor">Investor Services</div>
+              </div>
+              <input type="hidden" name="service" required>
+            </div>
+          </label>
+        </div>
+        
+        <div id="dynamicFields" class="dynamic-fields" style="display: none;">
+          <!-- Buyer/Seller Consultation Fields -->
+          <div id="consultationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Best way to contact</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select contact method</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="call">Call</div>
+                  <div class="select-option" data-value="text">Text</div>
+                  <div class="select-option" data-value="email">Email</div>
+                </div>
+                <input type="hidden" name="contactMethod">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="consultationTimeOption">
+              </div>
+            </label>
+            <label class="form-field" id="consultationCustomTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="consultationCustomTime">
+            </label>
+          </div>
+          
+          <!-- Property Showing Fields -->
+          <div id="showingFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="propertyAddress" placeholder="Enter the property address you'd like to see">
+            </label>
+            <label class="form-field">
+              <span>Preferred Date</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select date</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="today">Today</div>
+                  <div class="select-option" data-value="tomorrow">Tomorrow</div>
+                  <div class="select-option" data-value="future">Future Date</div>
+                </div>
+                <input type="hidden" name="dateOption">
+              </div>
+            </label>
+            <label class="form-field" id="futureDateField" style="display: none;">
+              <span>Select Future Date</span>
+              <input type="date" name="futureDate" min="">
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="timeOption">
+              </div>
+            </label>
+            <label class="form-field" id="customTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="customTime">
+            </label>
+          </div>
+          
+          <!-- Home Evaluation Fields -->
+          <div id="evaluationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="evaluationAddress" placeholder="Enter the property address for evaluation">
+            </label>
+            <label class="form-field">
+              <span>Property Type</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select property type</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="single-family">Single Family Home</div>
+                  <div class="select-option" data-value="condo">Condominium</div>
+                  <div class="select-option" data-value="townhouse">Townhouse</div>
+                  <div class="select-option" data-value="multi-family">Multi-Family</div>
+                  <div class="select-option" data-value="commercial">Commercial</div>
+                </div>
+                <input type="hidden" name="propertyType">
+              </div>
+            </label>
+          </div>
+          
+          <!-- Investor Services Fields -->
+          <div id="investorFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Investment Interest</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select Investment Interest</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="property-management">Property Management</div>
+                  <div class="select-option" data-value="buy-and-hold">Buy & Hold</div>
+                  <div class="select-option" data-value="fix-and-flip">Fix & Flip</div>
+                  <div class="select-option" data-value="wholesale">Wholesale</div>
+                  <div class="select-option" data-value="commercial">Commercial Investment</div>
+                </div>
+                <input type="hidden" name="investmentType">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Budget Range</span>
+              <input type="text" name="budgetRange" placeholder="e.g., $500K - $1M">
+          </label>
+        </div>
+        </div>
+        
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Share details, timelines, or properties you'd like to see"></textarea>
+        </label>
+        <button type="submit" class="btn cta inquire-submit">Send Inquiry</button>
+        <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
+      </form>
       </div>
     </section>
 
-    <footer>
-      <div class="container">© <span id="year"></span> Real OC · eXp Realty of Southern California · DRE #01901413</div>
-    </footer>
-  </div>
+  <div class="bottom-bg">
 
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html#inquire">Inquire</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <!-- JS -->
+  <script src="js/main.js"></script>
   <script>
-    const header=document.querySelector('header.site-header');
-    window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>8)});
+    // Navigation highlighting removed - only hover effects
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 </body>

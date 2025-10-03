@@ -24,15 +24,80 @@
   </style>
 </head>
 <body>
-  <!-- Reuses your sticky header styles -->
-  <header id="header">
-    <div class="logo"><img src="assets/profile-icon.png" alt="Real OC Logo"/></div>
-    <nav>
-      <ul>
-        <li><a id="backLink" href="index.html#featured">Back to Listings</a></li>
-        <li><a href="index.html#inquire">Contact</a></li>
-      </ul>
-    </nav>
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="Real OC home">
+        <div class="brand-logo">
+          <img src="assets/logo-icon.png" alt="Real OC logo" />
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
+        </div>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-ctas">
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
   </header>
 
   <!-- Hero banner -->
@@ -74,11 +139,60 @@
     </div>
   </section>
 
-  <footer id="footer">
-    <p>&copy; 2025 Michael R. Jacquez · DRE #01901413 · eXp Realty of Southern California</p>
-  </footer>
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html#inquire">Inquire</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
+        </div>
+      </div>
+    </footer>
 
+  <!-- JS -->
+  <script src="js/main.js"></script>
   <script>
+    // Navigation highlighting removed - only hover effects
+
     // 1) Tiny dataset (you can swap images later in /assets/listings/)
     const LISTINGS = {
   "hb-ocean-view": {

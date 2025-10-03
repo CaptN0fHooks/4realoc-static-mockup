@@ -1,255 +1,352 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Real OC | Coastal & Luxury Homes</title>
-<meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
+  <title>About | Real OC | Coastal & Luxury Homes</title>
+  <meta name="description" content="Learn about Michael R. Jacquez, your trusted Orange County real estate expert with Marine discipline and local expertise." />
+  <meta name="theme-color" content="#0D1B2A" />
+
+  <!-- Favicon -->
 <link rel="icon" href="assets/profile-icon.png" />
-<!-- Calisto MT is system-installed on many Windows machines; provide graceful fallbacks -->
-<style>
-  @font-face { font-family: "Calisto MT"; src: local("Calisto MT"); font-display: swap; }
-  :root {
-    --bg: #f7f5f1;            /* Nakashima-inspired soft paper tone */
-    --ink: #1f2937;           /* rich charcoal for text */
-    --muted: #6b7280;         /* cool gray for subtext */
-    --glass: rgba(255, 255, 255, 0.55);
-    --glass-border: rgba(255, 255, 255, 0.35);
-    --accent: #1f3d5b;        /* deep ocean blue */
-    --accent-2: #8fb1c7;      /* seafoam */
-    --shadow: 0 10px 30px rgba(31, 61, 91, 0.12);
-    --radius: 22px;
-    --pad: clamp(14px, 2.4vw, 28px);
-    --section: clamp(48px, 8vw, 96px);
-  }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: radial-gradient(1200px 800px at 80% -10%, #ffffff 0%, var(--bg) 55%, #efece6 100%);
-    color: var(--ink);
-    font-family: "Calisto MT", "Bookman Old Style", Georgia, "Times New Roman", serif;
-    -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
 
-  /* Glassmorphism utility */
-  .glass {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    border-radius: var(--radius);
-  }
+  <!-- Preload media for smoother UX -->
+  <link rel="preload" as="image" href="assets/backgrounds/about-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/contact-bg.webp">
 
-  /* Header */
-  header.site-header {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 8px clamp(12px, 4vw, 32px);
-    display: flex; align-items: center; justify-content: space-between;
-    transition: transform 380ms ease, background 280ms ease;
-    transform: translateY(0);
-    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.35));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-  }
-  header.site-header.hidden { transform: translateY(-120%); }
-  header .brand { display: flex; align-items: center; gap: 12px; }
-  header .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; }
-  header .brand .title { font-weight: 700; letter-spacing: 0.4px; font-size: 18px; }
-  nav ul { list-style: none; display: flex; gap: clamp(10px, 2vw, 26px); margin: 0; padding: 0; }
-  nav a { padding: 8px 10px; border-radius: 12px; }
-  nav a:hover { background: rgba(255,255,255,0.6); text-decoration: none; }
-
-  /* Top reveal zone for header */
-  .top-reveal-zone {
-    position: fixed; top: 0; left: 0; right: 0; height: 20px;
-    z-index: 999;
-  }
-
-  /* Hero */
-  .hero {
-    position: relative; min-height: 100vh; overflow: hidden;
-    display: grid; place-items: center;
-  }
-  .hero video, .hero iframe {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; border: 0;
-  }
-  .hero-overlay {
-    position: relative; z-index: 2; text-align: center; padding: var(--pad);
-  }
-  .hero-badge {
-    display: inline-block; padding: 8px 14px; font-size: 12px; letter-spacing: 1px;
-    text-transform: uppercase; color: #fff; background: rgba(31,61,91,0.55);
-    border: 1px solid rgba(255,255,255,0.35); border-radius: 999px;
-  }
-  .hero h1 {
-    margin: 14px auto 10px; font-size: clamp(34px, 6vw, 78px); line-height: 1.04;
-    color: #fff; text-shadow: 0 10px 26px rgba(0,0,0,0.35);
-  }
-  .hero p.sub {
-    margin: 0 auto; max-width: 760px; color: #eef5fb; font-size: clamp(14px, 1.6vw, 18px);
-  }
-
-  .cta-row { margin-top: 22px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 12px 16px; border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
-    border: 1px solid rgba(255,255,255,0.7);
-    box-shadow: var(--shadow);
-    color: var(--ink); font-weight: 600;
-  }
-  .btn:hover { transform: translateY(-1px); }
-
-  /* Sections */
-  section { padding: var(--section) clamp(16px, 6vw, 72px); }
-  .section-title { margin: 0 0 14px; font-size: clamp(24px, 3.6vw, 48px); }
-  .section-sub { color: var(--muted); margin-bottom: 22px; }
-
-  /* Featured listings carousel (simple) */
-  .carousel { position: relative; }
-  .carousel-track {
-    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 1fr);
-    gap: 18px; overflow: hidden;
-  }
-  .carousel .card {
-    min-height: 300px; display: grid; grid-template-rows: 1fr auto; overflow: hidden;
-  }
-  .carousel .media {
-    background: #dfe7ee; display: grid; place-items: center; color: #345;
-    font-weight: 600; letter-spacing: 0.3px;
-  }
-  .carousel .meta { padding: 12px; }
-  .carousel .controls {
-    position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; pointer-events: none;
-  }
-  .carousel button {
-    pointer-events: auto; border: 0; border-radius: 999px; width: 44px; height: 44px;
-    background: rgba(255,255,255,0.8); display: grid; place-items: center; box-shadow: var(--shadow);
-  }
-
-  /* Property search teaser */
-  .search-teaser form, .contact form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-  .field { display: grid; gap: 6px; }
-  .input, select, textarea {
-    padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(31,61,91,0.15);
-    background: rgba(255,255,255,0.9);
-  }
-  textarea { min-height: 120px; }
-
-  /* Results grid */
-  .grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-
-  /* About split */
-  .about-split { display: grid; gap: 26px; grid-template-columns: 1.1fr 0.9fr; align-items: center; }
-  @media (max-width: 900px) { .about-split { grid-template-columns: 1fr; } }
-
-  /* Footer */
-  footer {
-    margin-top: var(--section);
-    padding: var(--section) clamp(16px, 6vw, 72px);
-    background: linear-gradient(0deg, rgba(31,61,91,0.06), rgba(31,61,91,0.0));
-  }
-  .footer-grid { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr 1fr; }
-  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
-  .social-row { display: flex; gap: 12px; align-items: center; }
-  .affiliations { display: flex; gap: 10px; flex-wrap: wrap; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px;
-    background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.8);
-  }
-
-  /* Page intro block */
-  .page-intro { margin-top: 90px; } /* space under fixed header */
-</style>
-<link rel="stylesheet" href="css/styles.css" />
-<script defer src="js/main.js"></script>
-
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-<div class="top-reveal-zone"></div>
-<header class="site-header glass" id="siteHeader">
-  <div class="brand">
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="Real OC home">
+        <div class="brand-logo">
     <img src="assets/logo-icon.png" alt="Real OC logo" />
-    <div class="title">Real OC | Coastal &amp; Luxury Homes</div>
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
   </div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="buyers.html">Buyers</a></li>
-      <li><a href="sellers.html">Sellers</a></li>
-      <li><a href="search.html">Property Search</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
     </ul>
   </nav>
-</header>
 
-<main class="page-intro">
-  <section class="glass" style="padding:var(--pad)">
-    <h1 class="section-title">Michael R. Jacquez</h1>
-    <div class="about-split">
-      <div>
-        <p class="section-sub"><strong>Real Estate for Real People</strong></p>
-        <p>Michael’s story in real estate began the hard way — not in a boardroom, but in the aftermath of the 2008 financial crisis. As a young assistant in Sacramento, he wasn’t chasing commissions. He was helping families who were underwater on their mortgages escape foreclosure, guiding them through short sales when the world seemed upside down. That’s where he learned what truly matters in this industry: protecting people, not chasing paychecks.</p>
-        <p>In 2011, Michael earned his license and joined a top-tier firm in Downtown Sacramento, quickly making his mark as a trusted buyer’s agent. From Elk Grove to El Dorado Hills, he represented clients across the region with tireless commitment. But as the years passed, he saw too much of the industry’s underbelly — the hypocrisy, the games, the greed. Refusing to compromise his ethics, he stepped away in 2017.</p>
-        <p>For a time, he traded real estate for heavy equipment work in the Bay Area. Still, he never stopped helping friends, family, and associates navigate their own real estate transactions, ensuring they got a fair deal when no one else would.</p>
-        <p>In 2020, during the height of COVID, Michael moved to Huntington Beach and fell in love with Orange County. That move reignited his passion for real estate. In 2021, he formed a real estate enterprise company, serving both commercial investors and private individuals. And in 2024, he returned full-time to the residential market with a sharpened mission: represent buyers, sellers, and investors with discipline, ethics, and an unshakable standard of professionalism.</p>
-        <p>Today, Michael has already closed deals and is building toward his ambitious goal of 100 sales a year. More importantly, he has earned a reputation for trustworthiness — not just with clients, but with fellow agents who know he deals straight.</p>
-        <p>Michael’s background is unique: a U.S. Marine veteran who served in Iraq from 2008–2009, a crisis-tested real estate professional who cut his teeth in one of the toughest markets in history, and a fierce advocate for his clients.</p>
-        <p>To work with Michael is to work with someone who has walked away from shortcuts and schemes — and come back stronger, with a clear focus on one thing: delivering results without compromise.</p>
+      <div class="nav-ctas">
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
       </div>
-      <div>
-        <img src="assets/headshot.webp" alt="Michael headshot" style="width:100%; border-radius: var(--radius); box-shadow: var(--shadow)" />
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero-about">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-particles"></div>
+      <div class="hero-gradient"></div>
+    </div>
+    
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1 class="hero-headline">
+          <span class="hero-line-1">About</span>
+          <span class="hero-line-2">Michael R. Jacquez</span>
+        </h1>
+        <div class="hero-reveal">
+          <p class="hero-byline">Marine Discipline · Local Expertise</p>
+          <p class="hero-tagline">Your Trusted Orange County Real Estate Expert</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">500+</span>
+              <span class="stat-label">Homes Sold</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Client Satisfaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card">
+          <div class="card-content">
+            <div class="card-icon">🏠</div>
+            <h3>Orange County Expert</h3>
+            <p>Deep local knowledge of every neighborhood</p>
+          </div>
+        </div>
+        <div class="floating-card delay-1">
+          <div class="card-content">
+            <div class="card-icon">⚓</div>
+            <h3>Marine Precision</h3>
+            <p>Disciplined approach to every transaction</p>
+          </div>
+        </div>
+        <div class="floating-card delay-2">
+          <div class="card-content">
+            <div class="card-icon">🎯</div>
+            <h3>Results Driven</h3>
+            <p>Strategic guidance for maximum value</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-</main>
-<footer>
-  <div class="footer-grid">
-    <div>
-      <h3 class="section-title">Get in touch</h3>
-      <p class="section-sub">Real estate for real people—serving Orange County with care and precision.</p>
-      <div class="chip">
-        <img src="assets/profile-icon.png" alt="Profile icon" style="width:24px;height:24px;border-radius:999px;object-fit:cover" />
-        <div>
-          <strong>Michael R. Jacquez</strong><br/>
-          DRE# 01901413
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section id="about" class="section section-img">
+    <div class="container">
+      <header class="section-head">
+        <h2>Marine Discipline Meets Real Estate Excellence</h2>
+        <p>Built on integrity, driven by results, proven by trust</p>
+      </header>
+
+      <div class="about">
+        <figure class="about-photo">
+          <img src="assets/headshot.jpg" alt="Michael R. Jacquez">
+        </figure>
+        <div class="about-copy glass">
+          <h3>From Combat to Coastal Real Estate</h3>
+          <p>I'm Michael Jacquez, a U.S. Marine veteran turned buyer's advocate. I cut my teeth helping families escape foreclosure after the 2008 crisis and have since represented clients across California —from Sacramento to the Bay, and now here in Orange County. I don't chase deals; I fight for people. My approach is simple: professionalism, ethics, and results. Whether you're buying, selling, or investing, I bring discipline, local knowledge, and a reputation built on trust.</p>
+          
+          <h3>Why Orange County?</h3>
+          <p>Orange County isn't just where I work—it's where I've chosen to build my life and business. The coastal lifestyle, the diverse communities, the endless opportunities for growth and investment. I understand the nuances of each neighborhood, from the luxury estates of Newport Coast to the family-friendly communities of Irvine. This local expertise, combined with my military discipline and real estate experience, gives my clients a distinct advantage in today's competitive market.</p>
+          
+          <a class="btn cta" href="contact.html">Work with Michael</a>
         </div>
       </div>
-      <p style="margin-top:8px;line-height:1.6">
-        <a href="tel:+18884732562">(888) 4-REAL-OC</a> &nbsp;|&nbsp; 
-        <a href="mailto:Mike@4realoc.com">Mike@4realoc.com</a><br/>
-        <a href="https://www.4realoc.com" target="_blank" rel="noopener">www.4realoc.com</a>
-      </p>
-      <div class="social-row">
-        <!-- Simple glass icons (SVG) -->
-        <a class="chip" aria-label="X / Twitter" href="#" title="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> X</a>
-        <a class="chip" aria-label="Instagram" href="#" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="black" stroke-opacity=".8" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="black" fill-opacity=".6"/><circle cx="12" cy="12" r="4" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> IG</a>
-        <a class="chip" aria-label="LinkedIn" href="#" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="black" stroke-opacity=".8" stroke-width="2"/><rect x="6" y="10" width="3" height="8" fill="black" fill-opacity=".7"/><circle cx="7.5" cy="7.5" r="1.5" fill="black" fill-opacity=".7"/><path d="M12 18v-4.5a2.5 2.5 0 015 0V18" stroke="black" stroke-opacity=".8" stroke-width="2"/></svg> LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- ===== VALUES SECTION ===== -->
+  <section id="values" class="section">
+    <div class="container">
+      <header class="section-head">
+        <h2>Core Values</h2>
+        <p>The principles that guide every client interaction</p>
+      </header>
+
+      <div class="grid reasons">
+        <div class="reason glass">
+          <h3>Integrity First</h3>
+          <p>I left the industry when I saw fraud. Now I protect clients at all costs with complete transparency and honest communication.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Client Advocacy</h3>
+          <p>I don't work for the transaction—I work for you. Every decision is made with your best interests as the top priority.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Local Expertise</h3>
+          <p>Deep knowledge of Orange County neighborhoods, market trends, and hidden opportunities that only come from living and working here.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Results-Driven</h3>
+          <p>From helping families escape foreclosure to closing luxury deals, my track record speaks for itself. I deliver what I promise.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Military Discipline</h3>
+          <p>Combat-tested discipline translates to meticulous attention to detail, strategic planning, and unwavering commitment to your success.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Continuous Learning</h3>
+          <p>Real estate markets evolve. I stay ahead through constant education, market analysis, and adapting strategies to current conditions.</p>
+        </div>
       </div>
     </div>
-    <div>
-      <h4>Affiliations</h4>
-      <div class="affiliations">
-        <span class="chip">eXp Realty</span>
-        <span class="chip">NAR</span>
-        <span class="chip">CRMLS</span>
-        <span class="chip">CAR</span>
+  </section>
+
+  <!-- ===== STATS SECTION ===== -->
+  <section id="stats" class="section section-img">
+    <div class="container">
+      <header class="section-head">
+        <h2>Proven Results</h2>
+        <p>Numbers that tell the story of success</p>
+      </header>
+
+      <div class="grid reasons">
+        <div class="reason glass">
+          <h3>100+</h3>
+          <p>Families Helped Through Foreclosure Crisis</p>
+        </div>
+        <div class="reason glass">
+          <h3>15+</h3>
+          <p>Years of Real Estate Experience</p>
+        </div>
+        <div class="reason glass">
+          <h3>3</h3>
+          <p>California Markets Served</p>
+        </div>
+        <div class="reason glass">
+          <h3>100%</h3>
+          <p>Client-First Approach</p>
+        </div>
+        <div class="reason glass">
+          <h3>24/7</h3>
+          <p>Availability for Clients</p>
+        </div>
+        <div class="reason glass">
+          <h3>∞</h3>
+          <p>Commitment to Excellence</p>
+        </div>
       </div>
     </div>
-    <div>
-      <h4>Compliance</h4>
-      <p class="section-sub" style="margin:0">eXp Realty of Southern California<br/>DRE# 01901413</p>
-      <p style="font-size:12px;color:var(--muted)">All information deemed reliable but not guaranteed.</p>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section id="cta" class="section inquire-section">
+    <div class="inquire-inner container">
+      <div class="inquire-copy">
+        <h2>Ready to Work with a Real Estate Expert?</h2>
+        <p>Let's discuss your real estate goals and create a strategy that works for you.</p>
+        <div class="quick-actions">
+          <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+          <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
+        </div>
+      </div>
+      <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+        <input type="hidden" name="_subject" value="New inquiry from About page">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span>Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+          </label>
+        </div>
+        
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Tell me about your real estate goals and how I can help"></textarea>
+        </label>
+        <button type="submit" class="btn cta inquire-submit">Send Message</button>
+        <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
     </div>
   </div>
-  <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--muted)">&copy; <span id="year"></span> Real OC. All rights reserved.</p>
 </footer>
 
+  <!-- JS -->
+  <script src="js/main.js"></script>
+  <script>
+    // Navigation highlighting removed - only hover effects
+  </script>
 </body>
 </html>

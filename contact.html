@@ -1,225 +1,295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Real OC | Coastal & Luxury Homes</title>
-<meta name="description" content="Real estate for real people. Orange County coastal & luxury homes." />
+  <title>Contact | Real OC | Coastal & Luxury Homes</title>
+  <meta name="description" content="Get in touch with Michael R. Jacquez for expert Orange County real estate guidance. Schedule your consultation today." />
+  <meta name="theme-color" content="#0D1B2A" />
+
+  <!-- Favicon -->
 <link rel="icon" href="assets/profile-icon.png" />
-<!-- Calisto MT is system-installed on many Windows machines; provide graceful fallbacks -->
-<style>
-  @font-face { font-family: "Calisto MT"; src: local("Calisto MT"); font-display: swap; }
-  :root {
-    --bg: #f7f5f1;            /* Nakashima-inspired soft paper tone */
-    --ink: #1f2937;           /* rich charcoal for text */
-    --muted: #6b7280;         /* cool gray for subtext */
-    --glass: rgba(255, 255, 255, 0.55);
-    --glass-border: rgba(255, 255, 255, 0.35);
-    --accent: #1f3d5b;        /* deep ocean blue */
-    --accent-2: #8fb1c7;      /* seafoam */
-    --shadow: 0 10px 30px rgba(31, 61, 91, 0.12);
-    --radius: 22px;
-    --pad: clamp(14px, 2.4vw, 28px);
-    --section: clamp(48px, 8vw, 96px);
-  }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    background: radial-gradient(1200px 800px at 80% -10%, #ffffff 0%, var(--bg) 55%, #efece6 100%);
-    color: var(--ink);
-    font-family: "Calisto MT", "Bookman Old Style", Georgia, "Times New Roman", serif;
-    -webkit-font-smoothing: antialiased;  -moz-osx-font-smoothing: grayscale;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
 
-  /* Glassmorphism utility */
-  .glass {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    border-radius: var(--radius);
-  }
+  <!-- Preload media for smoother UX -->
+  <link rel="preload" as="image" href="assets/backgrounds/contact-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
 
-  /* Header */
-  header.site-header {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 8px clamp(12px, 4vw, 32px);
-    display: flex; align-items: center; justify-content: space-between;
-    transition: transform 380ms ease, background 280ms ease;
-    transform: translateY(0);
-    background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.35));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-  }
-  header.site-header.hidden { transform: translateY(-120%); }
-  header .brand { display: flex; align-items: center; gap: 12px; }
-  header .brand img { width: 38px; height: 38px; border-radius: 12px; object-fit: cover; }
-  header .brand .title { font-weight: 700; letter-spacing: 0.4px; font-size: 18px; }
-  nav ul { list-style: none; display: flex; gap: clamp(10px, 2vw, 26px); margin: 0; padding: 0; }
-  nav a { padding: 8px 10px; border-radius: 12px; }
-  nav a:hover { background: rgba(255,255,255,0.6); text-decoration: none; }
-
-  /* Top reveal zone for header */
-  .top-reveal-zone {
-    position: fixed; top: 0; left: 0; right: 0; height: 20px;
-    z-index: 999;
-  }
-
-  /* Hero */
-  .hero {
-    position: relative; min-height: 100vh; overflow: hidden;
-    display: grid; place-items: center;
-  }
-  .hero video, .hero iframe {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; border: 0;
-  }
-  .hero-overlay {
-    position: relative; z-index: 2; text-align: center; padding: var(--pad);
-  }
-  .hero-badge {
-    display: inline-block; padding: 8px 14px; font-size: 12px; letter-spacing: 1px;
-    text-transform: uppercase; color: #fff; background: rgba(31,61,91,0.55);
-    border: 1px solid rgba(255,255,255,0.35); border-radius: 999px;
-  }
-  .hero h1 {
-    margin: 14px auto 10px; font-size: clamp(34px, 6vw, 78px); line-height: 1.04;
-    color: #fff; text-shadow: 0 10px 26px rgba(0,0,0,0.35);
-  }
-  .hero p.sub {
-    margin: 0 auto; max-width: 760px; color: #eef5fb; font-size: clamp(14px, 1.6vw, 18px);
-  }
-
-  .cta-row { margin-top: 22px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; padding: 12px 16px; border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
-    border: 1px solid rgba(255,255,255,0.7);
-    box-shadow: var(--shadow);
-    color: var(--ink); font-weight: 600;
-  }
-  .btn:hover { transform: translateY(-1px); }
-
-  /* Sections */
-  section { padding: var(--section) clamp(16px, 6vw, 72px); }
-  .section-title { margin: 0 0 14px; font-size: clamp(24px, 3.6vw, 48px); }
-  .section-sub { color: var(--muted); margin-bottom: 22px; }
-
-  /* Featured listings carousel (simple) */
-  .carousel { position: relative; }
-  .carousel-track {
-    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 1fr);
-    gap: 18px; overflow: hidden;
-  }
-  .carousel .card {
-    min-height: 300px; display: grid; grid-template-rows: 1fr auto; overflow: hidden;
-  }
-  .carousel .media {
-    background: #dfe7ee; display: grid; place-items: center; color: #345;
-    font-weight: 600; letter-spacing: 0.3px;
-  }
-  .carousel .meta { padding: 12px; }
-  .carousel .controls {
-    position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: center; pointer-events: none;
-  }
-  .carousel button {
-    pointer-events: auto; border: 0; border-radius: 999px; width: 44px; height: 44px;
-    background: rgba(255,255,255,0.8); display: grid; place-items: center; box-shadow: var(--shadow);
-  }
-
-  /* Property search teaser */
-  .search-teaser form, .contact form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-  .field { display: grid; gap: 6px; }
-  .input, select, textarea {
-    padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(31,61,91,0.15);
-    background: rgba(255,255,255,0.9);
-  }
-  textarea { min-height: 120px; }
-
-  /* Results grid */
-  .grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-
-  /* About split */
-  .about-split { display: grid; gap: 26px; grid-template-columns: 1.1fr 0.9fr; align-items: center; }
-  @media (max-width: 900px) { .about-split { grid-template-columns: 1fr; } }
-
-  /* Footer */
-  footer {
-    margin-top: var(--section);
-    padding: var(--section) clamp(16px, 6vw, 72px);
-    background: linear-gradient(0deg, rgba(31,61,91,0.06), rgba(31,61,91,0.0));
-  }
-  .footer-grid { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr 1fr; }
-  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; } }
-  .social-row { display: flex; gap: 12px; align-items: center; }
-  .affiliations { display: flex; gap: 10px; flex-wrap: wrap; }
-  .chip {
-    display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px;
-    background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.8);
-  }
-
-  /* Page intro block */
-  .page-intro { margin-top: 90px; } /* space under fixed header */
-</style>
-<link rel="stylesheet" href="css/styles.css" />
-<script defer src="js/main.js"></script>
-
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-<div class="top-reveal-zone"></div>
-<header class="site-header glass" id="siteHeader">
-  <div class="brand">
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="Real OC home">
+        <div class="brand-logo">
     <img src="assets/logo-icon.png" alt="Real OC logo" />
-    <div class="title">Real OC | Coastal &amp; Luxury Homes</div>
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
   </div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="buyers.html">Buyers</a></li>
-      <li><a href="sellers.html">Sellers</a></li>
-      <li><a href="search.html">Property Search</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
     </ul>
   </nav>
-</header>
 
-<main class="page-intro">
-  <!-- Hero Section with Contact Background -->
-  <section class="hero" style="background: linear-gradient(rgba(31, 61, 91, 0.4), rgba(31, 61, 91, 0.4)), url('assets/backgrounds/contact-bg.webp') center/cover no-repeat;">
-    <div class="hero-overlay">
-      <div class="hero-badge">Get In Touch</div>
-      <h1>Contact Us</h1>
-      <p class="sub">Ready to find your dream home or sell your property? Let's start the conversation.</p>
-      <div class="cta-row">
-        <a href="#contact-form" class="btn">Send Message</a>
-        <a href="tel:+1-949-555-0123" class="btn">Call Now</a>
+      <div class="nav-ctas">
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero-contact">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-connections">
+        <div class="connection connection-1"></div>
+        <div class="connection connection-2"></div>
+        <div class="connection connection-3"></div>
+        <div class="connection connection-4"></div>
+      </div>
+      <div class="hero-gradient"></div>
+    </div>
+    
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1 class="hero-headline">
+          <span class="hero-line-1">Ready to Make</span>
+          <span class="hero-line-2">Your Move?</span>
+        </h1>
+        <div class="hero-reveal">
+          <p class="hero-byline">Let's discuss your real estate goals</p>
+          <p class="hero-tagline">Your next chapter starts with a conversation</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#contact">Get in Touch</a>
+            <a class="btn secondary" href="tel:+18554732562">Call Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="contact-methods">
+          <div class="method">
+            <div class="method-icon">📞</div>
+            <h3>Call</h3>
+            <p>(855) 4-REAL-OC</p>
+          </div>
+          <div class="method">
+            <div class="method-icon">✉️</div>
+            <h3>Email</h3>
+            <p>michaelrichard.re@gmail.com</p>
+          </div>
+          <div class="method">
+            <div class="method-icon">💬</div>
+            <h3>Message</h3>
+            <p>Quick response guaranteed</p>
+          </div>
+        </div>
+        <div class="hero-pulse">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring delay-1"></div>
+          <div class="pulse-ring delay-2"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="contact-form">
-    <h1 class="section-title">Contact Us</h1>
-    <p class="section-sub">Drop a note—quick replies, clear next steps.</p>
-    <form class="glass" style="padding:var(--pad)">
-      <div class="field"><label>First name</label><input class="input" name="first_name" /></div>
-      <div class="field"><label>Last name</label><input class="input" name="last_name" /></div>
-      <div class="field"><label>Email</label><input class="input" type="email" name="email" /></div>
-      <div class="field"><label>Phone</label><input class="input" type="tel" name="phone" /></div>
-      <div class="field"><label>I'm a</label><select name="role"><option>Buyer</option><option>Seller</option><option>Investor</option></select></div>
-      <div class="field" style="grid-column: 1/-1"><label>Message</label><textarea name="message" placeholder="Send a property inquiry or message"></textarea></div>
-      <div class="field" style="grid-column: 1/-1"><button class="btn" type="submit">Send</button></div>
+  <!-- ===== CONTACT SECTION ===== -->
+  <section id="contact" class="section section-img">
+    <div class="container">
+      <header class="section-head">
+        <h2>Get in Touch</h2>
+        <p>Ready to buy, sell, or invest in Orange County? Let's build your plan together.</p>
+      </header>
+
+      <div class="about">
+        <div class="about-copy glass">
+          <h3>Direct Contact</h3>
+          <div class="contact-info">
+            <div class="contact-item">
+              <h4>Phone</h4>
+              <p><a href="tel:+17146552923">(714) 655-2923</a></p>
+            </div>
+            <div class="contact-item">
+              <h4>Email</h4>
+              <p><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></p>
+            </div>
+            <div class="contact-item">
+              <h4>Office</h4>
+              <p>Orange County, CA</p>
+            </div>
+            <div class="contact-item">
+              <h4>Brokerage</h4>
+              <p>eXp Realty of Southern California<br>CA DRE #01901413</p>
+            </div>
+          </div>
+          
+          <h3>Why Work with Michael?</h3>
+          <ul>
+            <li>Marine discipline and attention to detail</li>
+            <li>15+ years of real estate experience</li>
+            <li>Deep local knowledge of Orange County</li>
+            <li>Client-first approach with complete transparency</li>
+            <li>Proven track record of successful transactions</li>
+          </ul>
+        </div>
+        
+        <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+          <input type="hidden" name="_subject" value="New inquiry from Contact page">
+          <input type="hidden" name="_template" value="table">
+          <div class="form-grid">
+            <label class="form-field">
+              <span>First name</span>
+              <input type="text" name="firstName" autocomplete="given-name" required>
+            </label>
+            <label class="form-field">
+              <span>Last name</span>
+              <input type="text" name="lastName" autocomplete="family-name" required>
+            </label>
+            <label class="form-field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label class="form-field">
+              <span>Phone</span>
+              <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+            </label>
+            <label class="form-field">
+              <span>I'm looking for</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select option</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="consultation">Buyer/Seller Consultation</div>
+                  <div class="select-option" data-value="showing">Property Showing</div>
+                  <div class="select-option" data-value="evaluation">Home Evaluation</div>
+                  <div class="select-option" data-value="investor">Investor Services</div>
+                </div>
+                <input type="hidden" name="service" required>
+              </div>
+            </label>
+          </div>
+          
+          <label class="form-field">
+            <span>Message</span>
+            <textarea name="message" rows="4" placeholder="Tell me about your real estate goals and how I can help"></textarea>
+          </label>
+          <button type="submit" class="btn cta inquire-submit">Send Message</button>
+          <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
     </form>
+      </div>
+    </div>
   </section>
-</main>
-<footer>
-  <div class="container">© <span id="year"></span> Real OC · eXp Realty of Southern California · DRE #01901413</div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
+        </div>
+      </div>
 </footer>
 
+  <!-- JS -->
+  <script src="js/main.js"></script>
+  <script>
+    // Navigation highlighting removed - only hover effects
+  </script>
 </body>
 </html>

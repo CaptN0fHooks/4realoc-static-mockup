@@ -49,8 +49,8 @@
       <nav class="main-nav" aria-label="Primary">
         <ul class="nav-links">
           <li class="nav-item">
-            <a href="search.html" class="nav-link">
-              <span class="nav-text">Homes</span>
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
               <span class="nav-underline"></span>
             </a>
           </li>
@@ -462,13 +462,7 @@
   <!-- JS -->
   <script src="js/main.js"></script>
   <script>
-    // Highlight current page in nav
-    (function () {
-      const here = location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.nav-links a').forEach(a => {
-        if (a.getAttribute('href') === here) a.classList.add('active');
-      });
-    })();
+    // Navigation highlighting removed - only hover effects
   </script>
 </body>
 </html>

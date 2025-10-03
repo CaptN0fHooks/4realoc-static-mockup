@@ -15,34 +15,11 @@
   <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/footer-bg.webp">
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
   <style>
-    :root {
-      --navy: #0D1B2A;
-      --ivory: #F8F8F6;
-      --gold: #C9A66B;
-      --glass: rgba(255,255,255,0.25);
-      --glass-stroke: rgba(255,255,255,0.4);
-      --shadow: 0 10px 30px rgba(0,0,0,0.25);
-      --radius: 22px;
-      --radius-lg: 28px;
-      --maxw: 1200px;
-    }
-
-    body { margin: 0; font-family: Lato, sans-serif; background: #0B1A28; color: var(--ivory); }
-    h1,h2,h3 { font-family: "Calisto MT", serif; margin: 0 0 0.5em; }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(100% - 40px, var(--maxw)); margin: 0 auto; }
-
-    header.site-header { position: fixed; inset: 0 0 auto 0; height: 76px; display: flex; align-items: center; z-index: 50;
-      background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); transition: background 300ms ease; padding:0 20px; }
-    header.site-header.scrolled { background: rgba(8,19,32,0.9); }
-    .brand { display:flex; align-items:center; gap:10px; }
-    .brand img { height:40px; }
-    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
-    nav a { padding: 8px 12px; border-radius: 12px; transition: background 200ms ease; }
-    nav a:hover { background: rgba(255,255,255,0.1); }
-    .cta-btn { background: var(--gold); color: #0B1A28; padding: 10px 16px; border-radius: 16px; font-weight: 700; }
-
+    /* Page-specific styles only - header styles come from main CSS */
     .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
     .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
     .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
@@ -102,20 +79,131 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand"><img src="assets/logo-icon.png" alt="Real OC" /><span>Real OC</span></div>
-    <nav>
-      <ul>
-        <li><a href="buyers.html">Buyers</a></li>
-        <li><a href="sellers.html">Sellers</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="why-us.html">Why Us</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a class="cta-btn" href="contact.html">Book a Call ▸</a></li>
-      </ul>
-    </nav>
+  <!-- Reveal zone (hover near top to show header) -->
+  <div class="top-reveal-zone" aria-hidden="true"></div>
+
+  <!-- ===== MINIMAL PREMIUM HEADER ===== -->
+  <header id="siteHeader" class="site-header" role="banner">
+    <div class="container header-row">
+      <a class="brand" href="index.html" aria-label="Real OC home">
+        <div class="brand-logo">
+          <img src="assets/logo-icon.png" alt="Real OC logo" />
+          <div class="brand-glow"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Real OC</span>
+          <span class="brand-tagline">Coastal & Luxury Homes</span>
+        </div>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <input id="nav-toggle" type="checkbox" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-text">Home</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="buyers.html" class="nav-link">
+              <span class="nav-text">Buyers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="sellers.html" class="nav-link">
+              <span class="nav-text">Sellers</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="why-us.html" class="nav-link">
+              <span class="nav-text">Why Us</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">
+              <span class="nav-text">About</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">
+              <span class="nav-text">Contact</span>
+              <span class="nav-underline"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-ctas">
+        <a class="btn secondary" href="search.html">Search Properties</a>
+        <a class="btn primary" href="contact.html">
+          <span>Book Consultation</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
   </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero-search">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid">
+        <div class="grid-line grid-line-1"></div>
+        <div class="grid-line grid-line-2"></div>
+        <div class="grid-line grid-line-3"></div>
+        <div class="grid-line grid-line-4"></div>
+      </div>
+      <div class="hero-gradient"></div>
+    </div>
+    
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1 class="hero-headline">
+          <span class="hero-line-1">Find Your</span>
+          <span class="hero-line-2">Dream Home</span>
+        </h1>
+        <div class="hero-reveal">
+          <p class="hero-byline">Discover Orange County's finest properties</p>
+          <p class="hero-tagline">From coastal gems to luxury estates</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#featured">Browse Properties</a>
+            <a class="btn secondary" href="contact.html">Get Notifications</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="search-preview">
+          <div class="search-filters">
+            <div class="filter active">All Properties</div>
+            <div class="filter">Homes for Sale</div>
+            <div class="filter">Luxury Homes</div>
+            <div class="filter">New Construction</div>
+          </div>
+          <div class="property-count">
+            <span class="count-number">247</span>
+            <span class="count-label">Properties Available</span>
+          </div>
+        </div>
+        <div class="floating-icons">
+          <div class="icon icon-1">🏠</div>
+          <div class="icon icon-2">🌊</div>
+          <div class="icon icon-3">🏔️</div>
+          <div class="icon icon-4">🌴</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Featured properties (above IDX) -->
   <section class="featured-on-search">
@@ -176,14 +264,59 @@
       </div>
     </section>
 
-    <footer>
-      <div class="container">© <span id="year"></span> Real OC · eXp Realty of Southern California · DRE #01901413</div>
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer lux-footer" role="contentinfo">
+      <div class="footer-surface">
+        <div class="container footer-primary">
+          <div class="footer-brand">
+            <img src="assets/logo-icon.png" alt="Real OC logo" class="footer-logo">
+            <p class="footer-tagline">Marine discipline. Bespoke guidance. Orange County real estate tailored to your next move.</p>
+          </div>
+          <div class="footer-contact">
+            <h4>Visit &amp; Contact</h4>
+            <ul class="footer-list">
+              <li><span>Phone</span><a href="tel:+18554732562">1 (855) 4-REAL-OC</a></li>
+              <li><span>Email</span><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></li>
+              <li><span>Office</span><address>Orange County, CA</address></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Explore</h4>
+            <ul class="footer-list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="search.html">Homes</a></li>
+              <li><a href="buyers.html">Buyers</a></li>
+              <li><a href="sellers.html">Sellers</a></li>
+              <li><a href="why-us.html">Why Us</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html#inquire">Inquire</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-legal">
+            <h4>Brokerage</h4>
+            <p>Brokered by eXp Realty of Southern California</p>
+            <p>CA DRE #01901413</p>
+            <p class="legal-note">Equal Housing Opportunity. Information deemed reliable but not guaranteed. Independently owned and operated.</p>
+            <a class="btn ghost footer-consult" href="contact.html">Schedule a Private Consultation</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container footer-bottom-row">
+          <p>&copy; <span id="year"></span> Real OC. All rights reserved.</p>
+          <div class="footer-meta">
+            <span>Licensed in the State of California</span>
+            <span>Fair Housing &amp; ADA compliant</span>
+          </div>
+        </div>
+      </div>
     </footer>
-  </div>
 
+  <!-- JS -->
+  <script src="js/main.js"></script>
   <script>
-    const header=document.querySelector('header.site-header');
-    window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>8)});
+    // Navigation highlighting removed - only hover effects
     document.getElementById('year').textContent=new Date().getFullYear();
   </script>
 </body>
