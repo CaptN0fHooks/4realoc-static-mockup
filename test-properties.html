@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .property { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 8px; }
+        .property img { width: 200px; height: 150px; object-fit: cover; border-radius: 4px; }
+        .error { color: red; background: #ffe6e6; padding: 10px; border-radius: 4px; }
+        .success { color: green; background: #e6ffe6; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Property API Test</h1>
+    <div id="status">Loading...</div>
+    <div id="properties"></div>
+
+    <script src="js/property-api.js"></script>
+    <script>
+        async function testPropertyAPI() {
+            const status = document.getElementById('status');
+            const properties = document.getElementById('properties');
+            
+            try {
+                // Initialize Property API
+                window.propertyAPI = new PropertyAPI();
+                status.innerHTML = '<div class="success">✅ PropertyAPI initialized successfully</div>';
+                
+                // Test getting featured properties
+                status.innerHTML += '<div>🔄 Fetching featured properties...</div>';
+                const response = await window.propertyAPI.getFeaturedProperties(5);
+                
+                if (response && response.listings && response.listings.length > 0) {
+                    status.innerHTML += `<div class="success">✅ Found ${response.listings.length} properties</div>`;
+                    
+                    // Display properties
+                    response.listings.forEach((property, index) => {
+                        const formatted = window.propertyAPI.formatPropertyForUI(property);
+                        const propertyDiv = document.createElement('div');
+                        propertyDiv.className = 'property';
+                        propertyDiv.innerHTML = `
+                            <h3>Property ${index + 1}</h3>
+                            <img src="${formatted.image}" alt="${formatted.address}" onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'">
+                            <p><strong>Address:</strong> ${formatted.address}</p>
+                            <p><strong>Price:</strong> ${formatted.price}</p>
+                            <p><strong>Beds:</strong> ${formatted.beds} | <strong>Baths:</strong> ${formatted.baths} | <strong>Sqft:</strong> ${formatted.sqft}</p>
+                            <p><strong>Type:</strong> ${formatted.propertyType}</p>
+                            <p><strong>City:</strong> ${formatted.city}</p>
+                        `;
+                        properties.appendChild(propertyDiv);
+                    });
+                } else {
+                    status.innerHTML += '<div class="error">❌ No properties returned</div>';
+                }
+                
+            } catch (error) {
+                status.innerHTML += `<div class="error">❌ Error: ${error.message}</div>`;
+                console.error('Property API Test Error:', error);
+            }
+        }
+        
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', testPropertyAPI);
+    </script>
+</body>
+</html>
+
+

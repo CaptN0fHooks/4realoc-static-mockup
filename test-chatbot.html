@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Chatbot Test</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .chatbot-demo {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 Custom Chatbot Test</h1>
+        
+        <div class="test-section">
+            <h2>Homepage Chatbot Demo</h2>
+            <p>This chatbot helps users search for properties and redirects to search.html with parameters:</p>
+            <div class="chatbot-demo">
+                <div class="chatbot-container" id="homepageChatbot" role="region" aria-label="AI Property Search Assistant">
+                    <div class="chatbot-interface">
+                        <div class="chatbot-header">
+                            <div class="chatbot-icon" aria-hidden="true">🤖</div>
+                            <h4>AI Property Assistant</h4>
+                        </div>
+                        
+                        <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite">
+                            <div class="message bot-message">
+                                <div class="message-content">
+                                    Hi! I'm here to help you find your perfect home in Orange County. What are you looking for?
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chatbot-input-container">
+                            <input 
+                                type="text" 
+                                id="chatbotInput" 
+                                placeholder="Ask me about properties..." 
+                                aria-label="Type your property search question"
+                                autocomplete="off"
+                            >
+                            <button id="chatbotSend" class="btn cta" aria-label="Send message">
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                        
+                        <div class="chatbot-status" role="status" aria-live="polite">
+                            <span class="status-indicator" aria-hidden="true"></span>
+                            <span>Ready to help you find properties</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-search-examples">
+                    <h4>Try asking:</h4>
+                    <div class="example-chips">
+                        <span class="chip">"3 bed homes under $1.5M"</span>
+                        <span class="chip">"Newport Beach condos"</span>
+                        <span class="chip">"Luxury homes with pool"</span>
+                        <span class="chip">"Investment properties"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Search Refinement Chatbot Demo</h2>
+            <p>This chatbot helps users refine their search on the search page:</p>
+            <div class="chatbot-demo">
+                <div class="chatbot-container" id="searchChatbot" role="region" aria-label="AI Search Refinement Assistant">
+                    <div class="chatbot-interface">
+                        <div class="chatbot-header">
+                            <div class="chatbot-icon" aria-hidden="true">🤖</div>
+                            <h4>AI Search Assistant</h4>
+                        </div>
+                        
+                        <div class="chatbot-messages" id="searchChatbotMessages" role="log" aria-live="polite">
+                            <div class="message bot-message">
+                                <div class="message-content">
+                                    I can help you refine your search! Try asking me to adjust your criteria.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chatbot-input-container">
+                            <input 
+                                type="text" 
+                                id="searchChatbotInput" 
+                                placeholder="Refine your search..." 
+                                aria-label="Type your search refinement"
+                                autocomplete="off"
+                            >
+                            <button id="searchChatbotSend" class="btn cta" aria-label="Send message">
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                        
+                        <div class="chatbot-status" role="status" aria-live="polite">
+                            <span class="status-indicator" aria-hidden="true"></span>
+                            <span>Ready to refine your search</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-filters">
+                    <h4>Quick Filters</h4>
+                    <div class="filter-chips">
+                        <span class="chip" data-filter="price_under_1m">Under $1M</span>
+                        <span class="chip" data-filter="price_1m_to_2m">$1M - $2M</span>
+                        <span class="chip" data-filter="price_over_2m">Over $2M</span>
+                        <span class="chip" data-filter="newport_beach">Newport Beach</span>
+                        <span class="chip" data-filter="laguna_beach">Laguna Beach</span>
+                        <span class="chip" data-filter="with_pool">With Pool</span>
+                        <span class="chip" data-filter="waterfront">Waterfront</span>
+                        <span class="chip" data-filter="new_construction">New Construction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Examples</h2>
+            <p>Try these example phrases to test the chatbot's parameter extraction:</p>
+            <ul>
+                <li><strong>"3 bedroom homes under $2M in Newport Beach"</strong> - Should extract: beds=3, price_max=2000000, city=Newport Beach</li>
+                <li><strong>"Show me condos with pool"</strong> - Should extract: property_type=condo, features=pool</li>
+                <li><strong>"Luxury homes over $3M"</strong> - Should extract: price_min=3000000</li>
+                <li><strong>"2.5 bath townhouse in Irvine"</strong> - Should extract: baths=2.5, property_type=townhouse, city=Irvine</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/chatbot-handler.js"></script>
+    <script>
+        // Initialize both chatbots for testing
+        document.addEventListener('DOMContentLoaded', () => {
+            window.chatbotHandler.initializeHomepageChatbot();
+            window.chatbotHandler.initializeSearchChatbot();
+        });
+    </script>
+</body>
+</html>
+
+

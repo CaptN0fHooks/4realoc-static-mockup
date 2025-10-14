@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Property Search - Test Flow</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+          crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+</head>
+<body>
+    <div class="container" style="padding: 40px 20px;">
+        <h1>🧪 AI Property Search System - Test Flow</h1>
+        
+        <div class="test-section">
+            <h2>1. Property API Test</h2>
+            <button id="testAPI" class="btn cta">Test Repliers API</button>
+            <div id="apiResults" class="test-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Mock Data Test</h2>
+            <button id="testMock" class="btn cta">Test Mock Data</button>
+            <div id="mockResults" class="test-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Map Integration Test</h2>
+            <button id="testMap" class="btn cta">Test Map Loading</button>
+            <div id="mapTest" style="height: 300px; margin-top: 20px; border: 1px solid #ccc; border-radius: 8px;"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. URL Parameter Test</h2>
+            <button id="testURL" class="btn cta">Test URL Parsing</button>
+            <div id="urlResults" class="test-results"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. Navigation Test</h2>
+            <a href="index.html" class="btn cta">Go to Homepage</a>
+            <a href="search.html" class="btn ghost">Go to Search</a>
+            <a href="search.html?beds=3&city=Newport+Beach&price_max=2000000" class="btn ghost">Search with Filters</a>
+        </div>
+
+        <div class="test-section">
+            <h2>6. Console Logs</h2>
+            <p>Open browser console (F12) to see detailed logs</p>
+            <div id="consoleLogs" class="test-results"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/property-api.js"></script>
+    <script src="js/map-handler.js"></script>
+    <script src="js/chatbot-handler.js"></script>
+    <script src="js/search-handler.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+            crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        // Test Property API
+        document.getElementById('testAPI').addEventListener('click', async () => {
+            const results = document.getElementById('apiResults');
+            results.innerHTML = '<p>Testing Repliers API...</p>';
+            
+            try {
+                const response = await window.propertyAPI.getFeaturedProperties(3);
+                results.innerHTML = `
+                    <h3>✅ API Test Results</h3>
+                    <p><strong>Status:</strong> Success</p>
+                    <p><strong>Properties Found:</strong> ${response.listings.length}</p>
+                    <p><strong>Total Available:</strong> ${response.total}</p>
+                    <div class="property-preview">
+                        ${response.listings.map(prop => `
+                            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 8px;">
+                                <strong>${prop.address}</strong><br>
+                                ${prop.price} • ${prop.beds} bed • ${prop.baths} bath
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <h3>⚠️ API Test Results</h3>
+                    <p><strong>Status:</strong> Error (Expected - CORS issue)</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Fallback:</strong> Mock data should be used</p>
+                `;
+            }
+        });
+
+        // Test Mock Data
+        document.getElementById('testMock').addEventListener('click', async () => {
+            const results = document.getElementById('mockResults');
+            results.innerHTML = '<p>Testing Mock Data...</p>';
+            
+            try {
+                const mockData = window.propertyAPI.getMockFeaturedProperties(5);
+                results.innerHTML = `
+                    <h3>✅ Mock Data Test Results</h3>
+                    <p><strong>Status:</strong> Success</p>
+                    <p><strong>Properties Generated:</strong> ${mockData.listings.length}</p>
+                    <div class="property-preview">
+                        ${mockData.listings.map(prop => `
+                            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 8px;">
+                                <strong>${prop.address}</strong><br>
+                                ${prop.price} • ${prop.beds} bed • ${prop.baths} bath • ${prop.propertyType}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <h3>❌ Mock Data Test Results</h3>
+                    <p><strong>Status:</strong> Error</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `;
+            }
+        });
+
+        // Test Map
+        document.getElementById('testMap').addEventListener('click', () => {
+            const mapContainer = document.getElementById('mapTest');
+            mapContainer.innerHTML = '<p>Initializing map...</p>';
+            
+            try {
+                const success = window.mapHandler.initializeMap('mapTest');
+                if (success) {
+                    // Add some test properties
+                    const testProperties = [
+                        { id: '1', address: '123 Test St, Newport Beach, CA', price: '$1.5M', latitude: 33.6189, longitude: -117.9289 },
+                        { id: '2', address: '456 Test Ave, Laguna Beach, CA', price: '$2.1M', latitude: 33.5422, longitude: -117.7833 }
+                    ];
+                    window.mapHandler.addProperties(testProperties);
+                    mapContainer.innerHTML = '<p>✅ Map loaded successfully with test markers</p>';
+                } else {
+                    mapContainer.innerHTML = '<p>❌ Map failed to load</p>';
+                }
+            } catch (error) {
+                mapContainer.innerHTML = `<p>❌ Map error: ${error.message}</p>`;
+            }
+        });
+
+        // Test URL Parameters
+        document.getElementById('testURL').addEventListener('click', () => {
+            const results = document.getElementById('urlResults');
+            const testURL = 'search.html?beds=3&city=Newport+Beach&price_max=2000000&property_type=Single+Family';
+            
+            try {
+                const url = new URL(testURL, window.location.origin);
+                const params = new URLSearchParams(url.search);
+                
+                const parsedParams = {};
+                for (const [key, value] of params) {
+                    parsedParams[key] = value;
+                }
+                
+                results.innerHTML = `
+                    <h3>✅ URL Parameter Test Results</h3>
+                    <p><strong>Test URL:</strong> ${testURL}</p>
+                    <p><strong>Parsed Parameters:</strong></p>
+                    <pre>${JSON.stringify(parsedParams, null, 2)}</pre>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <h3>❌ URL Parameter Test Results</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `;
+            }
+        });
+
+        // Log console messages
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            document.getElementById('consoleLogs').innerHTML += '<p style="color: #333;">LOG: ' + args.join(' ') + '</p>';
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            document.getElementById('consoleLogs').innerHTML += '<p style="color: red;">ERROR: ' + args.join(' ') + '</p>';
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            document.getElementById('consoleLogs').innerHTML += '<p style="color: orange;">WARN: ' + args.join(' ') + '</p>';
+        };
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Test page loaded successfully');
+            console.log('PropertyAPI available:', typeof window.propertyAPI);
+            console.log('MapHandler available:', typeof window.mapHandler);
+            console.log('ChatbotHandler available:', typeof window.chatbotHandler);
+            console.log('SearchHandler available:', typeof window.searchHandler);
+        });
+    </script>
+
+    <style>
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        
+        .test-results {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .property-preview {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</body>
+</html>

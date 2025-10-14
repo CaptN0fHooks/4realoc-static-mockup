@@ -18,6 +18,15 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
 
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+  <!-- Leaflet MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
   <style>
     /* Page-specific styles only - header styles come from main CSS */
     .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
@@ -170,87 +179,346 @@
     <div class="container hero-content">
       <div class="hero-text">
         <h1 class="hero-headline">
-          <span class="hero-line-1">Find Your</span>
-          <span class="hero-line-2">Dream Home</span>
+          <span class="hero-line-1">Property Search</span>
+          <span class="hero-line-2">Top 5 Results</span>
         </h1>
         <div class="hero-reveal">
-          <p class="hero-byline">Discover Orange County's finest properties</p>
-          <p class="hero-tagline">From coastal gems to luxury estates</p>
+          <p class="hero-byline" id="searchSummary">Property Search</p>
+          <p class="hero-tagline" id="resultCount">Top 5 Results</p>
+          
+          <!-- Top 5 Results in Hero -->
+          <div class="hero-top5" id="heroTop5">
+            <div class="top5-container">
+              <!-- Top 5 properties will be loaded here by JavaScript -->
+              <div class="top5-card loading">...</div>
+              <div class="top5-card loading">...</div>
+              <div class="top5-card loading">...</div>
+              <div class="top5-card loading">...</div>
+              <div class="top5-card loading">...</div>
+            </div>
+          </div>
+          
           <div class="hero-ctas">
-            <a class="btn primary" href="#featured">Browse Properties</a>
-            <a class="btn secondary" href="contact.html">Get Notifications</a>
+            <a class="btn primary" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">
+              <span class="btn-icon">🏠</span>
+              View Real MLS Listings
+            </a>
+            <a class="btn secondary" href="#mapChatbot">Explore Map</a>
+            <a class="btn secondary" href="#top10Listings">View Top 10</a>
           </div>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="search-preview">
-          <div class="search-filters">
-            <div class="filter active">All Properties</div>
-            <div class="filter">Homes for Sale</div>
-            <div class="filter">Luxury Homes</div>
-            <div class="filter">New Construction</div>
-          </div>
-          <div class="property-count">
-            <span class="count-number">247</span>
-            <span class="count-label">Properties Available</span>
-          </div>
-        </div>
-        <div class="floating-icons">
-          <div class="icon icon-1">🏠</div>
-          <div class="icon icon-2">🌊</div>
-          <div class="icon icon-3">🏔️</div>
-          <div class="icon icon-4">🌴</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Featured properties (above IDX) -->
-  <section class="featured-on-search">
-    <div class="section-head">
-      <h2>Featured Properties</h2>
-      <p>Live from MLS — curated coastal homes</p>
-    </div>
-    <div id="featuredTiles" class="featured-tiles" aria-live="polite">
-      <div class="featured-card"><div class="media" style="background-image:url('assets/backgrounds/featured-bg.webp')"></div><div class="body">Loading featured listings…</div></div>
-    </div>
-    <div class="featured-actions"><a href="search.html">View All ▸</a></div>
-  </section>
 
-  <!-- Full-viewport IDX embed -->
-  <section class="idx-container">
-    <!-- Selected property banner; appears only if ?mls= is present -->
-    <div id="sel" style="display:none; max-width:1200px; margin:0 auto 12px; padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25); color:#fff;">
-      <strong id="selLabel"></strong>
-      <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
-        <a class="btn cta" href="mailto:michaelrichard.re@gmail.com?subject=Book a Showing">Book a Showing</a>
-        <a class="btn ghost" href="#idx">Open in Full Search</a>
+  <!-- ===== MAP AND CHATBOT SECTION ===== -->
+  <section id="mapChatbot" class="section map-chatbot-section">
+    <div class="container">
+      <!-- Two-Column Layout: Map + Chatbot -->
+      <div class="search-layout">
+        <!-- Left Column: Interactive Map (65% width) -->
+        <div class="map-column">
+          <div class="map-header">
+            <h3>Property Map</h3>
+            <p>Click markers to view property details</p>
+          </div>
+          
+          <!-- Map Container -->
+          <div class="map-container" id="propertyMap" role="application" aria-label="Interactive Property Map">
+            <!-- Leaflet map will be initialized here -->
+            <div class="map-placeholder">
+              <div class="map-icon" aria-hidden="true">🗺️</div>
+              <h4>Interactive Property Map</h4>
+              <p>Loading map with property locations...</p>
+              <div class="map-status" role="status" aria-live="polite">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <span>Map will load when properties are found</span>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Map Controls -->
+          <div class="map-controls">
+            <button class="map-btn" id="centerMap">Center Map</button>
+            <button class="map-btn" id="toggleClusters">Toggle Clusters</button>
+            <button class="map-btn" id="fullscreenMap">Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- Right Column: AI Chatbot (35% width) -->
+        <div class="chatbot-column">
+          <div class="chatbot-header">
+            <h3>Refine Your Search</h3>
+            <p>Ask me to adjust your criteria</p>
+          </div>
+          
+          <!-- Chatbot Container -->
+          <div class="chatbot-container" id="searchChatbot" role="region" aria-label="AI Search Refinement Assistant">
+            <!-- Custom Interactive Chatbot -->
+            <div class="chatbot-interface">
+              <div class="chatbot-messages" id="searchChatbotMessages" role="log" aria-live="polite">
+                <div class="message bot-message">
+                  <div class="message-content">
+                    I can help you refine your search! Try asking me to adjust your criteria.
+                  </div>
+                </div>
+                <div class="message bot-message">
+                  <div class="message-content">
+                    💡 <strong>For real listings:</strong> Click "View Real MLS Listings" above to access live MLS data with current prices and availability.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chatbot-input-container">
+                <input 
+                  type="text" 
+                  id="searchChatbotInput" 
+                  placeholder="Refine your search..." 
+                  aria-label="Type your search refinement"
+                  autocomplete="off"
+                >
+                <button id="searchChatbotSend" class="btn cta" aria-label="Send message">
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+              
+              <div class="chatbot-status" role="status" aria-live="polite">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <span>Ready to refine your search</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="quick-filters">
+            <h4>Quick Filters</h4>
+            <div class="filter-chips">
+              <span class="chip" data-filter="price_under_1m">Under $1M</span>
+              <span class="chip" data-filter="price_1m_to_2m">$1M - $2M</span>
+              <span class="chip" data-filter="price_over_2m">Over $2M</span>
+              <span class="chip" data-filter="newport_beach">Newport Beach</span>
+              <span class="chip" data-filter="laguna_beach">Laguna Beach</span>
+              <span class="chip" data-filter="with_pool">With Pool</span>
+              <span class="chip" data-filter="waterfront">Waterfront</span>
+              <span class="chip" data-filter="new_construction">New Construction</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="idx" class="idx-wrap" style="position:relative;width:100%;height:100%;">
-      <iframe id="idxFrame" src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" width="100%" height="100%" frameborder="0" marginwidth="0" marginheight="0" title="Property Search" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+  </section>
+
+  <!-- ===== MAIN SEARCH CONTENT ===== -->
+  <section id="mainSearch" class="section main-search-section">
+    <div class="container">
+      <!-- Two-Column Layout: Map + Chatbot -->
+      <div class="search-layout">
+        <!-- Left Column: Interactive Map (65% width) -->
+        <div class="map-column">
+          <div class="map-header">
+            <h3>Property Map</h3>
+            <p>Click markers to view property details</p>
+          </div>
+          
+                <!-- Map Container -->
+                <div class="map-container" id="propertyMap" role="application" aria-label="Interactive Property Map">
+                  <!-- Leaflet map will be initialized here -->
+                  <div class="map-placeholder">
+                    <div class="map-icon" aria-hidden="true">🗺️</div>
+                    <h4>Interactive Property Map</h4>
+                    <p>Loading map with property locations...</p>
+                    <div class="map-status" role="status" aria-live="polite">
+                      <span class="status-indicator" aria-hidden="true"></span>
+                      <span>Map will load when properties are found</span>
+                    </div>
+                  </div>
+                </div>
+          
+          <!-- Map Controls -->
+          <div class="map-controls">
+            <button class="map-btn" id="centerMap">Center Map</button>
+            <button class="map-btn" id="toggleClusters">Toggle Clusters</button>
+            <button class="map-btn" id="fullscreenMap">Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- Right Column: AI Chatbot (35% width) -->
+        <div class="chatbot-column">
+          <div class="chatbot-header">
+            <h3>Refine Your Search</h3>
+            <p>Ask me to adjust your criteria</p>
+          </div>
+          
+                <!-- Chatbot Container -->
+                <div class="chatbot-container" id="searchChatbot" role="region" aria-label="AI Search Refinement Assistant">
+                  <!-- Custom Interactive Chatbot -->
+                  <div class="chatbot-interface">
+                    <div class="chatbot-messages" id="searchChatbotMessages" role="log" aria-live="polite">
+                      <div class="message bot-message">
+                        <div class="message-content">
+                          I can help you refine your search! Try asking me to adjust your criteria.
+                        </div>
+                      </div>
+                      <div class="message bot-message">
+                        <div class="message-content">
+                          💡 <strong>For real listings:</strong> Click "View Real MLS Listings" above to access live MLS data with current prices and availability.
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="chatbot-input-container">
+                      <input 
+                        type="text" 
+                        id="searchChatbotInput" 
+                        placeholder="Refine your search..." 
+                        aria-label="Type your search refinement"
+                        autocomplete="off"
+                      >
+                      <button id="searchChatbotSend" class="btn cta" aria-label="Send message">
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                    
+                    <div class="chatbot-status" role="status" aria-live="polite">
+                      <span class="status-indicator" aria-hidden="true"></span>
+                      <span>Ready to refine your search</span>
+                    </div>
+                  </div>
+                </div>
+
+          <!-- Quick Filters -->
+          <div class="quick-filters">
+            <h4>Quick Filters</h4>
+            <div class="filter-chips">
+              <span class="chip" data-filter="price_under_1m">Under $1M</span>
+              <span class="chip" data-filter="price_1m_to_2m">$1M - $2M</span>
+              <span class="chip" data-filter="price_over_2m">Over $2M</span>
+              <span class="chip" data-filter="newport_beach">Newport Beach</span>
+              <span class="chip" data-filter="laguna_beach">Laguna Beach</span>
+              <span class="chip" data-filter="with_pool">With Pool</span>
+              <span class="chip" data-filter="waterfront">Waterfront</span>
+              <span class="chip" data-filter="new_construction">New Construction</span>
+            </div>
+          </div>
+        </div>
+    </div>
     </div>
   </section>
 
-  <script>
-  (function(){
-    function getParam(name){ return new URLSearchParams(location.search).get(name); }
-    const DETAILS_URL_PREFIX = null; // set later if provider gives a direct detail link
-    document.addEventListener('DOMContentLoaded', function(){
-      const mls = getParam('mls');
-      if (!mls) return;
-      const box = document.getElementById('sel');
-      const label = document.getElementById('selLabel');
-      const frame = document.getElementById('idxFrame');
-      box.style.display = 'block';
-      label.textContent = `Selected MLS#: ${mls} — scroll/search below for full details.`;
-      if (DETAILS_URL_PREFIX && frame) {
-        frame.src = DETAILS_URL_PREFIX + encodeURIComponent(mls);
-        label.textContent = `Showing MLS#: ${mls} in IDX.`;
-      }
-    });
-  })();
-  </script>
+  <!-- ===== TOP 10 LISTINGS ===== -->
+  <section id="top10Listings" class="section top10-section">
+    <div class="container">
+      <header class="section-head">
+        <h2>Top 10 Listings</h2>
+        <p>Best properties from your search results</p>
+      </header>
+      
+      <!-- Top 10 Grid -->
+      <div class="top10-grid" id="top10Grid">
+        <!-- Top 10 properties will be loaded here by JavaScript -->
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+        <div class="property-card loading">
+          <div class="property-image"></div>
+          <div class="property-details">
+            <div class="property-price">Loading...</div>
+            <div class="property-address">Fetching top listings...</div>
+            <div class="property-features">Please wait</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- View All Results Button -->
+      <div class="view-all-container">
+        <a class="btn cta" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">
+          <span class="btn-icon">🏠</span>
+          View All Real Listings
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IDX FALLBACK ===== -->
+  <section class="idx-fallback">
+    <div class="container">
+      <div class="fallback-content">
+        <h3>Prefer the Full MLS Search?</h3>
+        <p>Access the complete CRMLS IDX system with advanced filters and detailed property information.</p>
+        <a class="btn cta" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">Open Full IDX Search</a>
+      </div>
+    </div>
+  </section>
 
   
 
@@ -259,6 +527,10 @@
       <div class="container">
         <h2>Need help finding your perfect home?</h2>
         <p>Let our experts guide you through the search process.</p>
+        <a class="cta-btn primary" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">
+          <span class="btn-icon">🏠</span>
+          View Real MLS Listings
+        </a>
         <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
         <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
       </div>
@@ -315,9 +587,423 @@
 
   <!-- JS -->
   <script src="js/main.js"></script>
+  <script src="js/property-api.js"></script>
+  <script src="js/map-handler.js"></script>
+  <script src="js/chatbot-handler.js"></script>
+  <script src="js/search-handler.js"></script>
+  
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  
+  <!-- Leaflet MarkerCluster JavaScript -->
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script>
+    // Initialize Property API
+    window.propertyAPI = new PropertyAPI();
+    
     // Navigation highlighting removed - only hover effects
     document.getElementById('year').textContent=new Date().getFullYear();
+    
+    // Search page functionality is now handled by SearchHandler
+    // The SearchHandler will automatically initialize when the page loads
+    
+    // Update search summary in hero section
+    function updateSearchSummary(filters) {
+      const searchSummary = document.getElementById('searchSummary');
+      const activeFilters = document.getElementById('activeFilters');
+      
+      if (Object.keys(filters).length === 0) {
+        searchSummary.textContent = 'Showing all available properties';
+        return;
+      }
+      
+      const summaryParts = [];
+      if (filters.city) summaryParts.push(`in ${filters.city}`);
+      if (filters.beds) summaryParts.push(`${filters.beds}+ bedrooms`);
+      if (filters.price_min || filters.price_max) {
+        const priceRange = formatPriceRange(filters.price_min, filters.price_max);
+        summaryParts.push(priceRange);
+      }
+      
+      searchSummary.textContent = summaryParts.length > 0 
+        ? `Properties ${summaryParts.join(', ')}`
+        : 'Matching your search criteria';
+      
+      // Update active filters display
+      updateActiveFiltersDisplay(filters, activeFilters);
+    }
+    
+    // Format price range for display
+    function formatPriceRange(min, max) {
+      if (min && max) {
+        return `$${formatPrice(min)} - $${formatPrice(max)}`;
+      } else if (min) {
+        return `over $${formatPrice(min)}`;
+      } else if (max) {
+        return `under $${formatPrice(max)}`;
+      }
+      return '';
+    }
+    
+    // Format price for display
+    function formatPrice(price) {
+      if (price >= 1000000) {
+        return `${(price / 1000000).toFixed(1)}M`;
+      } else if (price >= 1000) {
+        return `${(price / 1000).toFixed(0)}K`;
+      }
+      return price.toLocaleString();
+    }
+    
+    // Update active filters display
+    function updateActiveFiltersDisplay(filters, container) {
+      container.innerHTML = '<div class="filter active">All Properties</div>';
+      
+      Object.keys(filters).forEach(key => {
+        if (filters[key]) {
+          const filterDiv = document.createElement('div');
+          filterDiv.className = 'filter';
+          filterDiv.textContent = formatFilterLabel(key, filters[key]);
+          container.appendChild(filterDiv);
+        }
+      });
+    }
+    
+    // Format filter labels
+    function formatFilterLabel(key, value) {
+      switch(key) {
+        case 'beds': return `${value}+ Bedrooms`;
+        case 'baths': return `${value}+ Bathrooms`;
+        case 'city': return value;
+        case 'price_min': return `Over $${formatPrice(value)}`;
+        case 'price_max': return `Under $${formatPrice(value)}`;
+        case 'property_type': return value;
+        default: return `${key}: ${value}`;
+      }
+    }
+    
+    // Load search results
+    async function loadSearchResults(filters) {
+      try {
+        // Show loading state
+        showLoadingState();
+        
+        // Fetch properties from API
+        const response = await window.propertyAPI.searchProperties(filters);
+        const properties = response.listings || [];
+        
+        // Update result count
+        updateResultCount(properties.length);
+        
+        // Display top 5 properties
+        displayTop5Properties(properties.slice(0, 5));
+        
+        // Display all properties
+        displayAllProperties(properties);
+        
+        // Initialize map with properties
+        initializeMap(properties);
+        
+      } catch (error) {
+        console.error('Error loading search results:', error);
+        showErrorState();
+      }
+    }
+    
+    // Show loading state
+    function showLoadingState() {
+      // Loading states are already in HTML
+    }
+    
+    // Show error state
+    function showErrorState() {
+      const top5Track = document.getElementById('top5Track');
+      const allResultsGrid = document.getElementById('allResultsGrid');
+      
+      if (top5Track) {
+        top5Track.innerHTML = `
+          <div class="top5-card error">
+            <div class="card-details">
+              <div class="card-price">Unable to Load</div>
+              <div class="card-address">Please try again later</div>
+              <div class="card-features">Or contact Michael directly</div>
+            </div>
+          </div>
+        `;
+      }
+      
+      if (allResultsGrid) {
+        allResultsGrid.innerHTML = `
+          <div class="property-card error">
+            <div class="property-details">
+              <div class="property-price">Search Error</div>
+              <div class="property-address">Unable to load properties</div>
+              <div class="property-features">Please refresh the page or contact Michael</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+    
+    // Update result count
+    function updateResultCount(count) {
+      const totalResults = document.getElementById('totalResults');
+      const resultCount = document.getElementById('resultCount');
+      
+      if (totalResults) {
+        totalResults.textContent = count;
+      }
+      
+      if (resultCount) {
+        resultCount.textContent = count > 0 
+          ? `Found ${count} properties matching your criteria`
+          : 'No properties found matching your criteria';
+      }
+    }
+    
+    // Display top 5 properties
+    function displayTop5Properties(properties) {
+      const track = document.getElementById('top5Track');
+      if (!track) return;
+      
+      track.innerHTML = '';
+      
+      properties.forEach((property, index) => {
+        const formatted = window.propertyAPI.formatPropertyForUI(property);
+        const card = createTop5Card(formatted, index + 1);
+        track.appendChild(card);
+      });
+    }
+    
+    // Create top 5 card
+    function createTop5Card(property, rank) {
+      const card = document.createElement('div');
+      card.className = 'top5-card';
+      card.innerHTML = `
+        <div class="card-image" style="background-image: url('${property.image}')">
+          <div class="card-rank">#${rank}</div>
+          <div class="card-price">${property.price}</div>
+        </div>
+        <div class="card-details">
+          <div class="card-address">${property.address}</div>
+          <div class="card-features">${property.beds} bed • ${property.baths} bath • ${property.sqft}</div>
+          <div class="card-type">${property.propertyType}</div>
+        </div>
+      `;
+      
+      // Make card clickable
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        window.location.href = property.url;
+      });
+      
+      return card;
+    }
+    
+    // Display all properties
+    function displayAllProperties(properties) {
+      const grid = document.getElementById('allResultsGrid');
+      if (!grid) return;
+      
+      grid.innerHTML = '';
+      
+      properties.forEach(property => {
+        const formatted = window.propertyAPI.formatPropertyForUI(property);
+        const card = createPropertyCard(formatted);
+        grid.appendChild(card);
+      });
+    }
+    
+    // Create property card (reuse from index.html)
+    function createPropertyCard(property) {
+      const card = document.createElement('div');
+      card.className = 'property-card';
+      card.innerHTML = `
+        <div class="property-image" style="background-image: url('${property.image}')">
+          <div class="property-price">${property.price}</div>
+        </div>
+        <div class="property-details">
+          <div class="property-address">${property.address}</div>
+          <div class="property-features">${property.beds} bed • ${property.baths} bath • ${property.sqft}</div>
+          <div class="property-type">${property.propertyType}</div>
+        </div>
+      `;
+      
+      // Make card clickable
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        window.location.href = property.url;
+      });
+      
+      return card;
+    }
+    
+    // Initialize top 5 carousel
+    function initializeTop5Carousel() {
+      const track = document.getElementById('top5Track');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      if (!track || !prevBtn || !nextBtn) return;
+      
+      let currentIndex = 0;
+      const cardWidth = 320; // Approximate card width + gap
+      
+      function updateCarousel() {
+        const translateX = -currentIndex * cardWidth;
+        track.style.transform = `translateX(${translateX}px)`;
+        
+        // Update button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= track.children.length - 3; // Show 3 cards at once
+      }
+      
+      prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < track.children.length - 3) {
+          currentIndex++;
+          updateCarousel();
+        }
+      });
+      
+      // Initialize
+      updateCarousel();
+    }
+    
+    // Initialize quick filters
+    function initializeQuickFilters() {
+      const chips = document.querySelectorAll('.filter-chips .chip');
+      
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const filter = chip.getAttribute('data-filter');
+          applyQuickFilter(filter);
+        });
+      });
+    }
+    
+    // Apply quick filter
+    function applyQuickFilter(filter) {
+      const currentParams = new URLSearchParams(window.location.search);
+      
+      // Clear existing filters
+      currentParams.delete('beds');
+      currentParams.delete('baths');
+      currentParams.delete('price_min');
+      currentParams.delete('price_max');
+      currentParams.delete('city');
+      
+      // Apply new filter
+      switch(filter) {
+        case 'price_under_1m':
+          currentParams.set('price_max', '1000000');
+          break;
+        case 'price_1m_to_2m':
+          currentParams.set('price_min', '1000000');
+          currentParams.set('price_max', '2000000');
+          break;
+        case 'price_over_2m':
+          currentParams.set('price_min', '2000000');
+          break;
+        case 'newport_beach':
+          currentParams.set('city', 'Newport Beach');
+          break;
+        case 'laguna_beach':
+          currentParams.set('city', 'Laguna Beach');
+          break;
+        case 'with_pool':
+          // This would require additional API support
+          break;
+        case 'waterfront':
+          // This would require additional API support
+          break;
+        case 'new_construction':
+          // This would require additional API support
+          break;
+      }
+      
+      // Reload page with new filters
+      window.location.href = `search.html?${currentParams.toString()}`;
+    }
+    
+    // Initialize map (placeholder for now)
+    function initializeMap(properties) {
+      const mapContainer = document.getElementById('propertyMap');
+      if (!mapContainer) return;
+      
+      // Initialize the map handler
+      const success = window.mapHandler.initializeMap('propertyMap');
+      
+      if (success) {
+        // Add properties to the map
+        window.mapHandler.addProperties(properties);
+        
+        // Add click handlers to property cards
+        addPropertyCardClickHandlers(properties);
+      } else {
+        // Show error state
+        mapContainer.innerHTML = `
+          <div class="map-placeholder">
+            <div class="map-icon">⚠️</div>
+            <h4>Map Error</h4>
+            <p>Unable to load the interactive map</p>
+            <div class="map-status">
+              <span class="status-indicator"></span>
+              <span>Please refresh the page or contact support</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+    
+    // Add click handlers to property cards for map interaction
+    function addPropertyCardClickHandlers(properties) {
+      const cards = document.querySelectorAll('.property-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const address = card.querySelector('.property-address');
+          if (address) {
+            // Find matching property
+            const property = properties.find(p => 
+              address.textContent.includes(p.city) || 
+              address.textContent.includes(p.address)
+            );
+            
+            if (property && window.mapHandler.isMapReady()) {
+              window.mapHandler.centerOnProperty(property);
+            }
+          }
+        });
+      });
+    }
+    
+    // Initialize search page chatbot
+    function initializeSearchChatbot() {
+      const chatbotContainer = document.getElementById('searchChatbot');
+      if (!chatbotContainer) return;
+      
+      // Initialize chatbot handler
+      if (window.chatbotHandler) {
+        window.chatbotHandler.initializeSearchChatbot();
+      }
+    }
+    
+    // Initialize chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeSearchChatbot();
+    });
+    
+    // NOTE: All search page functionality is now handled by SearchHandler
+    // The SearchHandler automatically initializes when the page loads
+    // and manages URL parsing, search execution, and UI updates
   </script>
 </body>
 </html>

@@ -140,38 +140,120 @@
     </div>
   </section>
 
-  <!-- ===== FEATURED (IDX embed) ===== -->
-  <section id="featured" class="section section-img idx-bg">
+  <!-- ===== FEATURED (AI Property Search) ===== -->
+  <section id="featured" class="section section-img featured-bg">
     <div class="container">
       <header class="section-head">
         <h2>Discover Your Slice of Orange County</h2>
-        <p>Explore live listings via CRMLS IDX — updated continuously.</p>
+        <p>AI-powered property search with live MLS data — find your perfect home.</p>
       </header>
 
-      <!-- IDX Featured Embed -->
-      <div class="idx-embed">
-        <div class="idx-frame-wrap">
-          <iframe
-            id="idxFeatured"
-            title="Featured Listings (IDX)"
-            src="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648"
-            loading="lazy"
-            allow="fullscreen"
-          ></iframe>
-        </div>
+      <!-- Two-Tile Layout: Property Preview + AI Chatbot -->
+      <div class="featured-tiles">
+              <!-- Left Tile: Property Preview (60% width) -->
+              <div class="property-preview-tile">
+                <div class="tile-header">
+                  <h3>Featured Properties</h3>
+                  <p>Live from MLS</p>
+                </div>
+                
+                <!-- Single Property Carousel -->
+                <div class="featured-carousel" id="featuredCarousel" role="region" aria-label="Featured Properties Carousel">
+                  <div class="carousel-container">
+                    <!-- Single property will be displayed here -->
+                    <div class="featured-property-card" id="currentFeaturedProperty">
+                      <div class="property-image" aria-hidden="true"></div>
+                      <div class="property-details">
+                        <div class="property-price" aria-label="Price loading">Loading...</div>
+                        <div class="property-address" aria-label="Address loading">Fetching properties...</div>
+                        <div class="property-features" aria-label="Features loading">Please wait</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Carousel Indicators -->
+                  <div class="carousel-indicators" role="tablist" aria-label="Featured property indicators">
+                    <button class="indicator active" role="tab" aria-selected="true" aria-label="Property 1"></button>
+                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 2"></button>
+                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 3"></button>
+                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 4"></button>
+                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 5"></button>
+                  </div>
+                </div>
 
-        <div class="idx-actions">
-          <a class="btn cta" href="search.html">Open Full Property Search</a>
-          <small class="mls-attrib">Listing data © CRMLS. Information deemed reliable but not guaranteed.</small>
-        </div>
-
-        <noscript>
-          <p>
-            <a href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=37fc3688" target="_blank" rel="noopener">
-              View Featured Listings on CRMLS
+          <!-- Real Listings Access -->
+          <div class="tile-actions">
+            <a class="btn cta" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">
+              <span class="btn-icon">🏠</span>
+              View Real Listings
             </a>
-          </p>
-        </noscript>
+            <a class="btn ghost" href="search.html">
+              <span class="btn-icon">🤖</span>
+              AI Search Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Tile: AI Chatbot (40% width) -->
+        <div class="chatbot-tile">
+          <div class="tile-header">
+            <h3>AI Property Search</h3>
+            <p>Tell me what you're looking for</p>
+          </div>
+          
+                <!-- Chatbot Container -->
+                <div class="chatbot-container" id="homepageChatbot" role="region" aria-label="AI Property Search Assistant">
+                  <!-- Custom Interactive Chatbot -->
+                  <div class="chatbot-interface">
+                    <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite">
+                      <div class="message bot-message">
+                        <div class="message-content">
+                          Hi! I'm your AI assistant for Orange County real estate. I can help you search for properties and connect you with real listings from the MLS. What are you looking for?
+                        </div>
+                      </div>
+                      <div class="message bot-message">
+                        <div class="message-content">
+                          💡 <strong>For real listings:</strong> Click "View Real Listings" below to access live MLS data with current prices and availability.
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="chatbot-input-container">
+                      <input 
+                        type="text" 
+                        id="chatbotInput" 
+                        placeholder="Ask me about properties..." 
+                        aria-label="Type your property search question"
+                        autocomplete="off"
+                      >
+                      <button id="chatbotSend" class="btn cta" aria-label="Send message">
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                    
+                    <div class="chatbot-status" role="status" aria-live="polite">
+                      <span class="status-indicator" aria-hidden="true"></span>
+                      <span>Ready to help you find properties</span>
+                    </div>
+                  </div>
+                </div>
+
+          <!-- Quick Search Examples -->
+          <div class="quick-search-examples">
+            <h4>Try asking:</h4>
+            <div class="example-chips">
+              <span class="chip">"3 bed homes under $1.5M"</span>
+              <span class="chip">"Newport Beach condos"</span>
+              <span class="chip">"Luxury homes with pool"</span>
+              <span class="chip">"Investment properties"</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MLS Attribution -->
+      <div class="mls-attribution">
+        <small>Listing data © CRMLS. Information deemed reliable but not guaranteed.</small>
       </div>
     </div>
   </section>
@@ -461,8 +543,173 @@
 
   <!-- JS -->
   <script src="js/main.js"></script>
+  <script src="js/property-api.js"></script>
+  <script src="js/chatbot-handler.js"></script>
   <script>
+    // Initialize Property API
+    window.propertyAPI = new PropertyAPI();
+    
     // Navigation highlighting removed - only hover effects
+    
+    // Initialize featured properties carousel on homepage
+    document.addEventListener('DOMContentLoaded', async function() {
+      const carousel = document.getElementById('featuredCarousel');
+      if (!carousel) return;
+      
+      try {
+        // Load featured properties using the Property API
+        const response = await window.propertyAPI.getFeaturedProperties(5);
+        const properties = response.listings || [];
+        
+        // Initialize carousel with properties
+        initializeFeaturedCarousel(properties);
+        
+      } catch (error) {
+        console.error('Error loading featured properties:', error);
+        // Show error state
+        showCarouselError();
+      }
+      
+      // Initialize chatbot
+      initializeHomepageChatbot();
+    });
+    
+    // Initialize featured properties carousel
+    function initializeFeaturedCarousel(properties) {
+      const carouselContainer = document.querySelector('.carousel-container');
+      const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+      
+      if (!carouselContainer || properties.length === 0) {
+        showCarouselError();
+        return;
+      }
+      
+      let currentIndex = 0;
+      let carouselInterval;
+      
+      // Create carousel cards for each property
+      properties.forEach((property, index) => {
+        const formatted = window.propertyAPI ? window.propertyAPI.formatPropertyForUI(property) : property;
+        const card = createFeaturedPropertyCard(formatted, index);
+        carouselContainer.appendChild(card);
+      });
+      
+      // Show first property
+      showProperty(0);
+      
+      // Auto-advance carousel every 4 seconds
+      function startCarousel() {
+        carouselInterval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % properties.length;
+          showProperty(currentIndex);
+        }, 4000);
+      }
+      
+      // Stop carousel on hover
+      carouselContainer.addEventListener('mouseenter', () => {
+        clearInterval(carouselInterval);
+      });
+      
+      // Resume carousel when mouse leaves
+      carouselContainer.addEventListener('mouseleave', () => {
+        startCarousel();
+      });
+      
+      // Add click handlers to indicators
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          currentIndex = index;
+          showProperty(currentIndex);
+          clearInterval(carouselInterval);
+          startCarousel();
+        });
+      });
+      
+      // Start the carousel
+      startCarousel();
+    }
+    
+    // Show specific property in carousel
+    function showProperty(index) {
+      const cards = document.querySelectorAll('.featured-property-card');
+      const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+      
+      // Hide all cards
+      cards.forEach(card => {
+        card.classList.remove('active', 'prev');
+      });
+      
+      // Remove active from all indicators
+      indicators.forEach(indicator => {
+        indicator.classList.remove('active');
+        indicator.setAttribute('aria-selected', 'false');
+      });
+      
+      // Show current card
+      if (cards[index]) {
+        cards[index].classList.add('active');
+      }
+      
+      // Activate current indicator
+      if (indicators[index]) {
+        indicators[index].classList.add('active');
+        indicators[index].setAttribute('aria-selected', 'true');
+      }
+    }
+    
+    // Create featured property card
+    function createFeaturedPropertyCard(property, index) {
+      const card = document.createElement('div');
+      card.className = 'featured-property-card';
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `Featured property ${index + 1}: ${property.address}`);
+      
+      card.innerHTML = `
+        <div class="property-image" style="background-image: url('${property.image}')" aria-hidden="true"></div>
+        <div class="property-details">
+          <div class="property-price" aria-label="Price ${property.price}">${property.price}</div>
+          <div class="property-address">${property.address}</div>
+          <div class="property-features">${property.beds} bed • ${property.baths} bath • ${property.sqft}</div>
+          <div class="property-type">${property.propertyType}</div>
+        </div>
+      `;
+      
+      // Make card clickable
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        window.location.href = property.url;
+      });
+      
+      return card;
+    }
+    
+    // Show carousel error state
+    function showCarouselError() {
+      const carouselContainer = document.querySelector('.carousel-container');
+      if (carouselContainer) {
+        carouselContainer.innerHTML = `
+          <div class="featured-property-card active">
+            <div class="property-image" style="background: rgba(255,255,255,0.1);" aria-hidden="true"></div>
+            <div class="property-details">
+              <div class="property-price">Unable to Load</div>
+              <div class="property-address">Please try again later</div>
+              <div class="property-features">Or contact Michael directly</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+    
+    // Initialize homepage chatbot
+    function initializeHomepageChatbot() {
+      const chatbotContainer = document.getElementById('homepageChatbot');
+      if (!chatbotContainer) return;
+      
+      // Initialize chatbot handler
+      if (window.chatbotHandler) {
+        window.chatbotHandler.initializeHomepageChatbot();
+      }
+    }
   </script>
 </body>
 </html>
