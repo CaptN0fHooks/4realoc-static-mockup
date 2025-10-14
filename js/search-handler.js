@@ -44,7 +44,9 @@ class SearchHandler {
       // Initialize page components
       this.initializeHeroTop5();
       this.initializeTop10Listings();
-      this.initializeTop5Carousel();
+      
+      // No carousel needed - cards fit horizontally
+      
       this.initializeQuickFilters();
       this.initializeMap();
       this.initializeChatbot();
@@ -323,16 +325,17 @@ class SearchHandler {
    */
   createTop5Card(property, rank) {
     const formatted = window.propertyAPI ? window.propertyAPI.formatPropertyForUI(property) : property;
+    const displayRank = rank + 1; // Convert 0-based index to 1-based rank
     
     const card = document.createElement('div');
     card.className = 'top5-card';
     card.setAttribute('role', 'article');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Property ${rank}: ${formatted.address}, ${formatted.price}`);
+    card.setAttribute('aria-label', `Property ${displayRank}: ${formatted.address}, ${formatted.price}`);
     
     card.innerHTML = `
       <div class="card-image" style="background-image: url('${formatted.image}')" aria-hidden="true">
-        <div class="card-rank" aria-label="Rank ${rank}">#${rank}</div>
+        <div class="card-rank" aria-label="Rank ${displayRank}">#${displayRank}</div>
         <div class="card-price" aria-label="Price ${formatted.price}">${formatted.price}</div>
       </div>
       <div class="card-details">
@@ -477,54 +480,27 @@ class SearchHandler {
   }
 
   /**
-   * Initialize Top 5 carousel
+   * Initialize Top 5 carousel - SIMPLIFIED VERSION
    */
   initializeTop5Carousel() {
+    console.log('🎠 initializeTop5Carousel called - SIMPLIFIED');
+    
     const heroTop5 = document.getElementById('heroTop5');
     if (!heroTop5) {
-      console.log('heroTop5 not found');
+      console.log('❌ heroTop5 not found');
       return;
     }
     
     const track = heroTop5.querySelector('.top5-container');
     if (!track) {
-      console.log('top5-container not found');
+      console.log('❌ top5-container not found');
       return;
     }
     
-    console.log('Initializing carousel, track width:', track.scrollWidth, 'client width:', track.clientWidth);
+    console.log('🎠 Track scrollWidth:', track.scrollWidth, 'clientWidth:', track.clientWidth);
     
-    // Add hover scroll behavior
-    let isScrolling = false;
-    let scrollInterval = null;
-    
-    track.addEventListener('mouseenter', () => {
-      console.log('Mouse entered carousel');
-      if (!isScrolling && track.scrollWidth > track.clientWidth) {
-        isScrolling = true;
-        let scrollPosition = track.scrollLeft;
-        const scrollSpeed = 2;
-        
-        scrollInterval = setInterval(() => {
-          if (scrollPosition < track.scrollWidth - track.clientWidth) {
-            scrollPosition += scrollSpeed;
-            track.scrollLeft = scrollPosition;
-          } else {
-            clearInterval(scrollInterval);
-            isScrolling = false;
-          }
-        }, 30);
-      }
-    });
-    
-    track.addEventListener('mouseleave', () => {
-      console.log('Mouse left carousel');
-      isScrolling = false;
-      if (scrollInterval) {
-        clearInterval(scrollInterval);
-        scrollInterval = null;
-      }
-    });
+    // Just let CSS handle the scrolling - no JavaScript interference
+    console.log('✅ CSS will handle scrolling naturally');
   }
 
   /**
