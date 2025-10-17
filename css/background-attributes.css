@@ -1,0 +1,95 @@
+/*
+  Reusable background helpers for fixed-image sections across the site.
+  Apply these classes alongside page-specific styling so background imagery
+  stays pinned while the foreground content scrolls.
+*/
+
+.bg-fixed {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.bg-fixed-overlay {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-fixed-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  z-index: -1;
+  opacity: var(--bg-overlay-opacity, 1);
+}
+
+/* Hero background assignments */
+.hero-search.bg-fixed {
+  background-image: url('../assets/backgrounds/search_hero_bg.webp');
+}
+
+.hero-about.bg-fixed {
+  background-image: url('../assets/backgrounds/about-bg.webp');
+}
+
+.hero-buyers.bg-fixed {
+  background-image: url('../assets/backgrounds/buyer-hero-bg.webp');
+}
+
+.hero-sellers.bg-fixed {
+  background-image: url('../assets/backgrounds/seller-hero-bg.webp');
+}
+
+.hero-why-us.bg-fixed {
+  background-image: url('../assets/backgrounds/WhyBuyersChoose-bg.webp');
+}
+
+.hero-contact.bg-fixed {
+  background-image: url('../assets/backgrounds/contact-bg.webp');
+}
+
+/* Section overlay backgrounds */
+.map-chatbot-section {
+  --bg-overlay-opacity: 0.1;
+}
+
+.map-chatbot-section.bg-fixed-overlay::before {
+  background-image: url('../assets/backgrounds/search_results_bg.webp');
+}
+
+.top10-section {
+  --bg-overlay-opacity: 0.08;
+}
+
+.top10-section.bg-fixed-overlay::before {
+  background-image: url('../assets/backgrounds/top10_bg.webp');
+}
+
+#process.bg-fixed {
+  background-image: url('../assets/backgrounds/featured-bg.webp');
+}
+
+#benefits.bg-fixed {
+  background-image: url('../assets/backgrounds/WhyBuyersChoose-bg.webp');
+}
+
+#services.bg-fixed {
+  background-image: url('../assets/backgrounds/selling-services-bg.webp');
+}
+
+#advantages.bg-fixed {
+  background-image: url('../assets/backgrounds/featured-bg.webp');
+}
+
+#testimonials.bg-fixed {
+  background-image: url('../assets/backgrounds/kitchen-bg.webp');
+}
+
+#lp-hero.bg-fixed {
+  background-image: url('../assets/backgrounds/search-bg.webp');
+}

@@ -1626,9 +1626,9 @@
   }
   
   /* Individual section backgrounds - Fixed paths */
-  #featured { background: url('../assets/backgrounds/featured-bg.webp') center/cover no-repeat; }
-  #reasons { background: url('../assets/backgrounds/reasons-bg.webp') center/cover no-repeat; }
-  #about   { background: url('../assets/backgrounds/about-bg.webp') center/cover no-repeat; }
+  #featured { background-image: url('../assets/backgrounds/featured-bg.webp'); }
+  #reasons { background-image: url('../assets/backgrounds/reasons-bg.webp'); }
+  #about   { background-image: url('../assets/backgrounds/about-bg.webp'); }
   
   .bottom-bg {
     background: url('../assets/backgrounds/footer-bg.webp') center/cover no-repeat;
@@ -1763,7 +1763,7 @@
 
 /* ===== Featured IDX Section with Background ===== */
 #featured.idx-bg {
-  background: url("../assets/backgrounds/featured-bg.webp") center/cover no-repeat;
+  background-image: url("../assets/backgrounds/featured-bg.webp");
     position: relative;
   color: #fff;
 }
@@ -1888,7 +1888,7 @@
   .inquire-section {
     position: relative;
     padding: 96px 0;
-    background: url('../assets/backgrounds/inquire-bg.webp') center/cover no-repeat;
+    background-image: url('../assets/backgrounds/inquire-bg.webp');
     color: #f7f9fb;
     overflow: hidden;
   }
@@ -2623,8 +2623,8 @@
 
   /* Individual section backgrounds - Fixed paths */
 
-  #reasons { background: url('../assets/backgrounds/reasons-bg.webp') center/cover no-repeat; }
-  #about   { background: url('../assets/backgrounds/about-bg.webp') center/cover no-repeat; }
+  #reasons { background-image: url('../assets/backgrounds/reasons-bg.webp'); }
+  #about   { background-image: url('../assets/backgrounds/about-bg.webp'); }
   
 
   .bottom-bg {
@@ -2825,7 +2825,7 @@
 
   #featured.idx-bg {
 
-    background: url("../assets/backgrounds/featured-bg.webp") center/cover no-repeat;
+    background-image: url("../assets/backgrounds/featured-bg.webp");
     position: relative;
 
     color: #fff;
@@ -3036,11 +3036,7 @@
 
 /* Featured section background */
 .featured-bg {
-  background: linear-gradient(135deg, rgba(11,26,40,0.95) 0%, rgba(27,38,59,0.9) 100%);
-  background-image: url('../assets/backgrounds/featured-bg.webp');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-image: linear-gradient(135deg, rgba(11,26,40,0.95) 0%, rgba(27,38,59,0.9) 100%), url('../assets/backgrounds/featured-bg.webp');
 }
 
         /* Two-tile layout container */
@@ -4080,21 +4076,6 @@
   overflow: hidden;
 }
 
-.map-chatbot-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('../assets/backgrounds/search_results_bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  opacity: 0.1;
-  z-index: -1;
-}
-
 .search-layout {
   display: grid;
   grid-template-columns: 1fr 0.54fr; /* 65% / 35% ratio */
@@ -4186,21 +4167,6 @@
   overflow: hidden;
 }
 
-.top10-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('../assets/backgrounds/top10_bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  opacity: 0.08;
-  z-index: -1;
-}
-
 .top10-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -4258,11 +4224,7 @@
 
 /* Search page hero section */
 .hero-search {
-  background: linear-gradient(135deg, rgba(11,26,40,0.95) 0%, rgba(27,38,59,0.9) 100%);
-  background-image: url('../assets/backgrounds/search_hero_bg.webp');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-image: linear-gradient(135deg, rgba(11,26,40,0.95) 0%, rgba(27,38,59,0.9) 100%), url('../assets/backgrounds/search_hero_bg.webp');
   padding-top: 150px; /* Account for fixed header */
 }
 
