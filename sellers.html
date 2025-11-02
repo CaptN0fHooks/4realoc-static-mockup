@@ -11,49 +11,16 @@
   <link rel="icon" href="assets/profile-icon.png" />
 
   <!-- Preload Backgrounds -->
+  <link rel="preload" as="image" href="assets/backgrounds/seller-hero-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
-  <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.webp">
-  <link rel="preload" as="image" href="assets/backgrounds/footer-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/reasons-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/background-attributes.css" />
-
-  <style>
-    /* Page-specific styles only - header styles come from main CSS */
-    .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
-    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
-    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-inner h1 { font-size: 2.5rem; }
-    .hero-inner p { font-size: 1.1rem; margin: 10px 0 20px; }
-
-    section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
-    section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
-    .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
-
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; position:relative; z-index:2; }
-    .service { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-    .service-icon { background: var(--gold); color: var(--navy); width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; margin-bottom: 16px; }
-
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; position:relative; z-index:2; }
-    .stat { text-align: center; background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 24px; border: 1px solid rgba(255,255,255,0.1); }
-    .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
-
-    .cta-strip { text-align: center; padding: 60px 20px; color: var(--ivory); position:relative; z-index:2; }
-
-    footer{
-      position:relative;z-index:5;isolation:isolate;
-      padding:42px 0;text-align:center;font-size:.98rem;color:#eef3f8;
-      background:transparent;
-      border-top:1px solid rgba(255,255,255,.08);
-      box-shadow:0 -36px 60px rgba(0,0,0,.45) inset;
-    }
-    footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
-    .bottom-bg{position:relative;background:url('assets/backgrounds/footer-bg.webp') center/cover no-repeat}
-    footer::after { content:none !important; }
-  </style>
 </head>
+
 <body>
   <!-- Reveal zone (hover near top to show header) -->
   <div class="top-reveal-zone" aria-hidden="true"></div>
@@ -134,11 +101,6 @@
   <!-- ===== HERO ===== -->
   <section id="hero" class="hero-sellers bg-fixed">
     <div class="hero-bg" aria-hidden="true">
-      <div class="hero-waves">
-        <div class="wave wave-1"></div>
-        <div class="wave wave-2"></div>
-        <div class="wave wave-3"></div>
-      </div>
       <div class="hero-gradient"></div>
     </div>
     
@@ -148,17 +110,13 @@
           <span class="hero-line-1">Sell</span>
           <span class="hero-line-2">with Confidence</span>
         </h1>
-        <div class="hero-ctas">
-          <a class="btn secondary" href="#services">View Our Process</a>
-          <a class="btn primary" href="contact.html">
-            <span>Book Consultation</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
         <div class="hero-reveal">
           <p class="hero-byline">Strategic marketing and expert negotiation for maximum value</p>
+          <p class="hero-tagline">Proven results that speak for themselves</p>
+          <div class="hero-ctas">
+            <a class="btn cta" href="#services">View Our Process</a>
+            <a class="btn ghost" href="contact.html">Get Free Analysis</a>
+          </div>
         </div>
       </div>
       <div class="hero-visual">
@@ -184,75 +142,272 @@
     </div>
   </section>
 
-  <section id="services" class="section bg-fixed">
+  <!-- ===== SERVICES SECTION ===== -->
+  <section id="services" class="section section-img section-dark bg-fixed">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Our Selling Services</h2>
         <p>Comprehensive support from listing to closing</p>
-      </div>
-      <div class="services-grid">
-        <div class="service">
-          <div class="service-icon">📊</div>
+      </header>
+      <div class="grid reasons">
+        <div class="reason glass">
           <h3>Market Analysis</h3>
-          <p>Comprehensive pricing strategy based on current market conditions, comparable sales, and property-specific factors.</p>
+          <p>Comprehensive pricing strategy based on current market conditions, comparable sales, and property-specific factors. We ensure your home is positioned competitively to attract serious buyers while maximizing your return.</p>
         </div>
-        <div class="service">
-          <div class="service-icon">📸</div>
+        <div class="reason glass">
           <h3>Professional Marketing</h3>
-          <p>High-quality photography, virtual tours, and strategic listing placement across multiple platforms.</p>
+          <p>High-quality photography, virtual tours, and strategic listing placement across multiple platforms. Our marketing approach showcases your home's best features and reaches the right buyers at the right time.</p>
         </div>
-        <div class="service">
-          <div class="service-icon">🤝</div>
+        <div class="reason glass">
           <h3>Negotiation Expertise</h3>
-          <p>Skilled negotiation to maximize your sale price while ensuring smooth transaction terms.</p>
+          <p>Skilled negotiation to maximize your sale price while ensuring smooth transaction terms. We handle all offers, counteroffers, and contract details with your best interests as the top priority.</p>
         </div>
-        <div class="service">
-          <div class="service-icon">📋</div>
+        <div class="reason glass">
           <h3>Transaction Management</h3>
-          <p>Handling all paperwork, inspections, and closing details so you can focus on your next move.</p>
+          <p>Handling all paperwork, inspections, and closing details so you can focus on your next move. From contract to closing, we manage every detail to ensure a seamless selling experience.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Home Staging & Photography</h3>
+          <p>Maximize your home's appeal with expert staging advice and professional photography. We create stunning visuals that captivate buyers online and in person, showcasing your property's best features and lifestyle potential.</p>
+        </div>
+        <div class="reason glass">
+          <h3>Open House & Showings</h3>
+          <p>Strategically planned open houses and private showings to showcase your home's best features. We coordinate optimal timing, create compelling presentations, and ensure maximum exposure to qualified buyers at the right moments.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="results">
+  <!-- ===== RESULTS SECTION ===== -->
+  <section id="results" class="section section-img section-light bg-fixed">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Proven Results</h2>
         <p>Data that speaks for itself</p>
-      </div>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-number">98%</div>
-          <h3>List-to-Sale Ratio</h3>
-          <p>Properties sold vs. listed</p>
+      </header>
+      <div class="grid reasons">
+        <div class="reason glass">
+          <h3>98%</h3>
+          <p>List-to-Sale Ratio - Properties sold vs. listed</p>
         </div>
-        <div class="stat">
-          <div class="stat-number">15</div>
-          <h3>Days Average</h3>
-          <p>Time on market</p>
+        <div class="reason glass">
+          <h3>15</h3>
+          <p>Days Average - Time on market</p>
         </div>
-        <div class="stat">
-          <div class="stat-number">103%</div>
-          <h3>List Price</h3>
-          <p>Average sale vs. list price</p>
+        <div class="reason glass">
+          <h3>103%</h3>
+          <p>List Price - Average sale vs. list price</p>
         </div>
-        <div class="stat">
-          <div class="stat-number">$2.1M</div>
-          <h3>Average Sale</h3>
-          <p>Transaction value</p>
+        <div class="reason glass">
+          <h3>$2.1M</h3>
+          <p>Average Sale - Transaction value</p>
+        </div>
+        <div class="reason glass">
+          <h3>24/7</h3>
+          <p>Client Support - Round-the-clock availability for urgent matters and seamless communication throughout the selling process</p>
+        </div>
+        <div class="reason glass">
+          <h3>100%</h3>
+          <p>Client Satisfaction - Five-star reviews and repeat client referrals, demonstrating our commitment to exceptional service and results</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="bottom-bg">
-    <section class="cta-strip" id="contact">
-      <div class="container">
-        <h2>Ready to maximize your home's value?</h2>
+  <!-- ===== INQUIRE SECTION ===== -->
+  <section id="inquire" class="section inquire-section section-dark bg-fixed" aria-labelledby="inquire-title">
+    <div class="inquire-inner container">
+      <div class="inquire-copy">
+        <h2 id="inquire-title">Ready to maximize your home's value?</h2>
         <p>Get your free market analysis and selling strategy.</p>
-        <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
-        <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+        <div class="quick-actions">
+          <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+          <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
+        </div>
+      </div>
+      <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+        <input type="hidden" name="_subject" value="New inquiry from Real OC">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span>Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+          </label>
+          <label class="form-field">
+            <span>I'm looking for</span>
+            <div class="custom-select">
+              <div class="select-trigger">
+                <span class="select-value">Select option</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="select-options">
+                <div class="select-option" data-value="consultation">Buyer/Seller Consultation</div>
+                <div class="select-option" data-value="showing">Property Showing</div>
+                <div class="select-option" data-value="evaluation">Home Evaluation</div>
+                <div class="select-option" data-value="investor">Investor Services</div>
+              </div>
+              <input type="hidden" name="service" required>
+            </div>
+          </label>
+        </div>
+        
+        <div id="dynamicFields" class="dynamic-fields" style="display: none;">
+          <!-- Buyer/Seller Consultation Fields -->
+          <div id="consultationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Best way to contact</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select contact method</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="call">Call</div>
+                  <div class="select-option" data-value="text">Text</div>
+                  <div class="select-option" data-value="email">Email</div>
+                </div>
+                <input type="hidden" name="contactMethod">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="consultationTimeOption">
+              </div>
+            </label>
+            <label class="form-field" id="consultationCustomTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="consultationCustomTime">
+            </label>
+          </div>
+          
+          <!-- Property Showing Fields -->
+          <div id="showingFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="propertyAddress" placeholder="Enter the property address you'd like to see">
+            </label>
+            <label class="form-field">
+              <span>Preferred Date</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select date</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="today">Today</div>
+                  <div class="select-option" data-value="tomorrow">Tomorrow</div>
+                  <div class="select-option" data-value="future">Future Date</div>
+                </div>
+                <input type="hidden" name="dateOption">
+              </div>
+            </label>
+            <label class="form-field" id="futureDateField" style="display: none;">
+              <span>Select Future Date</span>
+              <input type="date" name="futureDate" min="">
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="timeOption">
+              </div>
+            </label>
+            <label class="form-field" id="customTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="customTime">
+            </label>
+          </div>
+          
+          <!-- Home Evaluation Fields -->
+          <div id="evaluationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="evaluationAddress" placeholder="Enter the property address for evaluation">
+            </label>
+            <label class="form-field">
+              <span>Property Type</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select property type</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="single-family">Single Family Home</div>
+                  <div class="select-option" data-value="condo">Condominium</div>
+                  <div class="select-option" data-value="townhouse">Townhouse</div>
+                  <div class="select-option" data-value="multi-family">Multi-Family</div>
+                  <div class="select-option" data-value="commercial">Commercial</div>
+                </div>
+                <input type="hidden" name="propertyType">
+              </div>
+            </label>
+          </div>
+          
+          <!-- Investor Services Fields -->
+          <div id="investorFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Investment Interest</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select Investment Interest</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="property-management">Property Management</div>
+                  <div class="select-option" data-value="buy-and-hold">Buy & Hold</div>
+                  <div class="select-option" data-value="fix-and-flip">Fix & Flip</div>
+                  <div class="select-option" data-value="wholesale">Wholesale</div>
+                  <div class="select-option" data-value="commercial">Commercial Investment</div>
+                </div>
+                <input type="hidden" name="investmentType">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Budget Range</span>
+              <input type="text" name="budgetRange" placeholder="e.g., $500K - $1M">
+          </label>
+        </div>
+        </div>
+        
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Share details, timelines, or properties you'd like to see"></textarea>
+        </label>
+        <button type="submit" class="btn cta inquire-submit">Send Inquiry</button>
+        <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
+      </form>
       </div>
     </section>
 

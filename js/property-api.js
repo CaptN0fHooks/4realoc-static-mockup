@@ -1,5 +1,5 @@
-/* ==========================================================================
-   Real OC — Property API Integration (Repliers)
+﻿/* ==========================================================================
+   Real OC â€” Property API Integration (Repliers)
    ========================================================================== */
 
 /**
@@ -9,8 +9,6 @@
 
 class PropertyAPI {
   constructor() {
-    this.apiKey = 'I2lzQKMVNIiPksijeGa68HgN74nQur';
-    this.baseURL = 'https://api.repliers.io/v1';
     this.cache = new Map();
     this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
     
@@ -24,22 +22,73 @@ class PropertyAPI {
   }
 
   /**
-   * Make authenticated request to Repliers API
+   * Make request via the local serverless proxy. Only the website_search
+   * product is supported client-side; other endpoints fall back to mock data.
    */
   async makeRequest(endpoint, params = {}) {
-    console.log('Making Repliers API request to:', `${this.baseURL}${endpoint}`, 'with params:', params);
-    const url = new URL(`${this.baseURL}${endpoint}`);
-    
-    // Add query parameters
-    Object.keys(params).forEach(key => {
-      if (params[key] !== null && params[key] !== undefined) {
-        url.searchParams.append(key, params[key]);
-      }
-    });
+    if (endpoint === '/listings') {
+      return this.requestWebsiteSearch(params);
+    }
 
-    const cacheKey = url.toString();
-    
-    // Check cache first
+    if (endpoint.startsWith('/listings/')) {
+      throw new Error('Listing detail endpoint is not available client-side.');
+    }
+
+    if (endpoint.includes('/estimates')) {
+      throw new Error('Estimate endpoint is not available client-side.');
+    }
+
+    throw new Error(`Unsupported endpoint: ${endpoint}`);
+  }
+
+  mapParamsToWebsiteSearch(params = {}) {
+    const filters = {};
+    const limit = Number(params.limit ?? params.pageSize ?? 50) || 50;
+    const offset = Number(params.offset ?? 0);
+
+    filters.pageSize = String(limit);
+    filters.page = String(Math.floor(offset / limit) + 1);
+
+    if (params.price_min) filters.minPrice = String(params.price_min);
+    if (params.price_max) filters.maxPrice = String(params.price_max);
+    if (params.beds) filters.beds = String(params.beds);
+    if (params.baths) filters.baths = String(params.baths);
+    if (params.property_type) filters.propertyType = Array.isArray(params.property_type)
+      ? params.property_type.join(',')
+      : String(params.property_type);
+
+    if (params.lat_min !== undefined && params.lat_max !== undefined &&
+        params.lng_min !== undefined && params.lng_max !== undefined) {
+      const bbox = [params.lng_min, params.lat_min, params.lng_max, params.lat_max]
+        .map(value => Number(value))
+        .filter(value => !Number.isNaN(value));
+      if (bbox.length === 4) {
+        filters.bbox = bbox.join(',');
+      }
+    }
+
+    const locationParts = [params.city, params.state, params.zip]
+      .filter(Boolean)
+      .map(part => String(part).trim());
+
+    if (locationParts.length) {
+      filters.q = locationParts.join(', ');
+    }
+
+    if (params.sort) {
+      const sortMap = {\n      price_desc: "priceDesc",\n      price_asc: "priceAsc",\n      created_desc: "newest",\n      newest: "newest"\n    };
+      const mapped = sortMap[String(params.sort)] ?? params.sort;
+      filters.sort = mapped;
+    }
+
+    return filters;
+  }
+
+  async requestWebsiteSearch(params = {}) {
+    const filters = this.mapParamsToWebsiteSearch(params);
+    const searchParams = new URLSearchParams(filters);
+    const queryString = searchParams.toString();
+    const cacheKey = queryString ? `/api/website_search?${queryString}` : '/api/website_search';
     if (this.cache.has(cacheKey)) {
       const cached = this.cache.get(cacheKey);
       if (Date.now() - cached.timestamp < this.cacheTimeout) {
@@ -48,13 +97,8 @@ class PropertyAPI {
     }
 
     try {
-      const response = await fetch(url.toString(), {
-        method: 'GET',
-        headers: {
-          'REPLIERS-API-KEY': this.apiKey,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+      const response = await fetch(cacheKey, {
+        headers: { Accept: 'application/json' }
       });
 
       if (!response.ok) {
@@ -62,19 +106,22 @@ class PropertyAPI {
       }
 
       const data = await response.json();
-      
-      // Cache the result
+      const normalised = {
+        listings: data.items ?? data.listings ?? [],
+        total: data.total ?? data.count ?? (data.items ? data.items.length : 0),
+        page: data.page ?? Number(filters.page ?? 1),
+        pageSize: data.pageSize ?? Number(filters.pageSize ?? 50)
+      };
+
       this.cache.set(cacheKey, {
-        data: data,
+        data: normalised,
         timestamp: Date.now()
       });
 
-      return data;
+      return normalised;
     } catch (error) {
-      console.error('Repliers API Error:', error);
-      
-      // Return mock data as fallback
-      return this.getMockData(endpoint, params);
+      console.error('Repliers proxy error:', error);
+      return this.getMockData('/listings', params);
     }
   }
 
@@ -116,7 +163,7 @@ class PropertyAPI {
       return await this.makeRequest('/listings', searchParams);
     } catch (error) {
       console.warn('Failed to search properties from Repliers, using mock data.', error);
-      console.log('💡 TIP: If you see CORS errors, try running a local server:');
+      console.log('ðŸ’¡ TIP: If you see CORS errors, try running a local server:');
       console.log('   Windows: double-click serve.bat');
       console.log('   Mac/Linux: run ./serve.sh');
       console.log('   Or: npx http-server -p 8080 --cors');
@@ -144,7 +191,7 @@ class PropertyAPI {
       return await this.makeRequest('/listings', params);
     } catch (error) {
       console.warn('Failed to fetch featured properties from Repliers, using mock data.', error);
-      console.log('💡 TIP: If you see CORS errors, try running a local server:');
+      console.log('ðŸ’¡ TIP: If you see CORS errors, try running a local server:');
       console.log('   Windows: double-click serve.bat');
       console.log('   Mac/Linux: run ./serve.sh');
       console.log('   Or: npx http-server -p 8080 --cors');
@@ -548,3 +595,5 @@ window.PropertyAPI = PropertyAPI;
 
 // Create global instance
 window.propertyAPI = new PropertyAPI();
+
+

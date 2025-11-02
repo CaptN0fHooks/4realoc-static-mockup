@@ -50,7 +50,7 @@
 }
 
 .hero-contact.bg-fixed {
-  background-image: url('../assets/backgrounds/contact-bg.webp');
+  background-image: url('../assets/backgrounds/contact-hero-bg.webp');
 }
 
 /* Section overlay backgrounds */
@@ -86,10 +86,24 @@
   background-image: url('../assets/backgrounds/featured-bg.webp');
 }
 
+#values.bg-fixed {
+  background-image: url('../assets/backgrounds/reasons-bg.webp');
+}
+
+#contact.bg-fixed {
+  background-image: url('../assets/backgrounds/contact-bg.webp');
+}
 #testimonials.bg-fixed {
   background-image: url('../assets/backgrounds/kitchen-bg.webp');
 }
 
 #lp-hero.bg-fixed {
   background-image: url('../assets/backgrounds/search-bg.webp');
+}
+
+#results.bg-fixed {
+  background-image: url('../assets/backgrounds/results-bg.jpg');
+}
+#stats.bg-fixed {
+  background-image: url('../assets/backgrounds/stats-bg.webp');
 }

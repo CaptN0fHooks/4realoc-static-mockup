@@ -325,23 +325,33 @@ class SearchHandler {
    */
   createTop5Card(property, rank) {
     const formatted = window.propertyAPI ? window.propertyAPI.formatPropertyForUI(property) : property;
-    const displayRank = rank + 1; // Convert 0-based index to 1-based rank
     
-    const card = document.createElement('div');
-    card.className = 'top5-card';
-    card.setAttribute('role', 'article');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Property ${displayRank}: ${formatted.address}, ${formatted.price}`);
-    
+    const card = document.createElement('article');
+    card.className = 'property-card';
+    card.tabIndex = 0;
+    card.setAttribute('data-listing-id', property.id);
+
+    const price = formatted.price ? this.formatCurrency(formatted.price) : 'Call for pricing';
+    const meta = [
+      formatted.beds ? `${formatted.beds} bd` : null,
+      formatted.baths ? `${formatted.baths} ba` : null,
+      formatted.sqft ? `${formatted.sqft.toLocaleString()} sqft` : null
+    ].filter(Boolean).join(' • ');
+
+    const dom = formatted.daysOnMarket != null ? `<span class="card-dom">${formatted.daysOnMarket} DOM</span>` : '';
+    const background = formatted.image ? `style="background-image:url('${formatted.image}');"` : '';
+
     card.innerHTML = `
-      <div class="card-image" style="background-image: url('${formatted.image}')" aria-hidden="true">
-        <div class="card-rank" aria-label="Rank ${displayRank}">#${displayRank}</div>
-        <div class="card-price" aria-label="Price ${formatted.price}">${formatted.price}</div>
+      <div class="property-image" ${background} aria-hidden="true">
+        <p class="property-price">${price}</p>
       </div>
-      <div class="card-details">
-        <div class="card-address">${formatted.address}</div>
-        <div class="card-features">${formatted.beds} bed • ${formatted.baths} bath • ${formatted.sqft}</div>
-        <div class="card-type">${formatted.propertyType}</div>
+      <div class="property-details">
+        <h3 class="property-address">${formatted.address || `${formatted.city}, ${formatted.state}`}</h3>
+        ${meta ? `<p class="property-features">${meta}</p>` : ''}
+        <div class="property-meta">
+          ${dom}
+          <a class="property-link" href="${formatted.url || '#'}" target="_blank" rel="noopener">View details</a>
+        </div>
       </div>
     `;
     

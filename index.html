@@ -142,7 +142,7 @@
   </section>
 
   <!-- ===== FEATURED (AI Property Search) ===== -->
-  <section id="featured" class="section section-img featured-bg bg-fixed">
+  <section id="featured" class="section section-img section-dark featured-bg bg-fixed">
     <div class="container">
       <header class="section-head">
         <h2>Discover Your Slice of Orange County</h2>
@@ -202,51 +202,41 @@
             <p>Tell me what you're looking for</p>
           </div>
           
-                <!-- Chatbot Container -->
-                <div class="chatbot-container" id="homepageChatbot" role="region" aria-label="AI Property Search Assistant">
-                  <!-- Custom Interactive Chatbot -->
-                  <div class="chatbot-interface">
-                    <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite">
-                      <div class="message bot-message">
-                        <div class="message-content">
-                          Hi! I'm your AI assistant for Orange County real estate. I can help you search for properties and connect you with real listings from the MLS. What are you looking for?
-                        </div>
-                      </div>
-                      <div class="message bot-message">
-                        <div class="message-content">
-                          💡 <strong>For real listings:</strong> Click "View Real Listings" below to access live MLS data with current prices and availability.
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="chatbot-input-container">
-                      <input 
-                        type="text" 
-                        id="chatbotInput" 
-                        placeholder="Ask me about properties..." 
-                        aria-label="Type your property search question"
-                        autocomplete="off"
-                      >
-                      <button id="chatbotSend" class="btn cta" aria-label="Send message">
-                        <span aria-hidden="true">→</span>
-                      </button>
-                    </div>
-                    
-                    <div class="chatbot-status" role="status" aria-live="polite">
-                      <span class="status-indicator" aria-hidden="true"></span>
-                      <span>Ready to help you find properties</span>
-                    </div>
+      <div class="chatbot-container" id="homepageChatbot" role="region" aria-label="AI property search assistant">
+            <div class="chatbot-interface">
+              <div class="chatbot-messages" id="homepageChatMessages" role="log" aria-live="polite">
+                <div class="message bot-message">
+                  <div class="message-content">
+                    Hi! I'm your AI assistant for Orange County real estate. Describe neighborhoods, price, beds/baths, or must-haves and I'll take you to the results page with those filters applied.
                   </div>
                 </div>
+              </div>
+              <form class="chatbot-input-container" id="homepageChatForm" novalidate>
+                <label class="sr-only" for="homepageChatInput">Describe your ideal property</label>
+                <input
+                  type="text"
+                  id="homepageChatInput"
+                  placeholder="HB or Newport, under 1.2M, 3+ beds, pool"
+                  aria-label="Describe your ideal property"
+                  autocomplete="off"
+                />
+                <button class="btn cta" type="submit" aria-label="Send message">
+                  <span aria-hidden="true">&rarr;</span>
+                </button>
+              </form>
+              <div class="chatbot-status" role="status" aria-live="polite">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <span>We'll carry your preferences straight into the interactive map.</span>
+              </div>
+            </div>
+          </div>
 
-          <!-- Quick Search Examples -->
           <div class="quick-search-examples">
             <h4>Try asking:</h4>
             <div class="example-chips">
-              <span class="chip">"3 bed homes under $1.5M"</span>
-              <span class="chip">"Newport Beach condos"</span>
-              <span class="chip">"Luxury homes with pool"</span>
-              <span class="chip">"Investment properties"</span>
+              <button type="button" class="chip" data-search-example="Laguna Beach condos under 1.5M with ocean view">"Laguna Beach condos under $1.5M"</button>
+              <button type="button" class="chip" data-search-example="HB or Newport, under 1.2M, 3+ beds, pool">"HB or Newport, under 1.2M, 3+ beds, pool"</button>
+              <button type="button" class="chip" data-search-example="Irvine townhomes under 900k with low HOA">"Irvine townhomes under $900k"</button>
             </div>
           </div>
         </div>
@@ -261,7 +251,7 @@
   
 
   <!-- ===== SIX REASONS ===== -->
-  <section id="reasons" class="section section-img bg-fixed">
+  <section id="reasons" class="section section-img section-dark bg-fixed">
     <div class="container">
       <header class="section-head">
         <h2>Six Reasons to Work with Michael</h2>
@@ -280,7 +270,7 @@
   </section>
 
   <!-- ===== ABOUT ===== -->
-  <section id="about" class="section section-img bg-fixed">
+  <section id="about" class="section section-img section-light bg-fixed">
     <div class="container">
       <header class="section-head"><h2>About Michael R. Jacquez</h2></header>
       <div class="about">
@@ -297,7 +287,7 @@
   </section>
 
   <!-- ===== INQUIRE SECTION ===== -->
-  <section id="inquire" class="section inquire-section bg-fixed" aria-labelledby="inquire-title">
+  <section id="inquire" class="section inquire-section section-img section-dark bg-fixed" aria-labelledby="inquire-title">
     <div class="inquire-inner container">
       <div class="inquire-copy">
         <h2 id="inquire-title">Ready to buy, sell or invest in Orange County?</h2>
@@ -545,8 +535,8 @@
   <!-- JS -->
   <script src="js/main.js"></script>
   <script src="js/property-api.js"></script>
-  <script src="js/chatbot-handler.js"></script>
-  <script>
+  <script type="module" src="js/homepage-search.js"></script>
+    <script>
     // Initialize Property API
     window.propertyAPI = new PropertyAPI();
     
@@ -572,7 +562,6 @@
       }
       
       // Initialize chatbot
-      initializeHomepageChatbot();
     });
     
     // Initialize featured properties carousel
@@ -701,16 +690,6 @@
       }
     }
     
-    // Initialize homepage chatbot
-    function initializeHomepageChatbot() {
-      const chatbotContainer = document.getElementById('homepageChatbot');
-      if (!chatbotContainer) return;
-      
-      // Initialize chatbot handler
-      if (window.chatbotHandler) {
-        window.chatbotHandler.initializeHomepageChatbot();
-      }
-    }
   </script>
 </body>
 </html>

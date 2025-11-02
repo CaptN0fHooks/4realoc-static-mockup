@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact | Real OC | Coastal & Luxury Homes</title>
   <meta name="description" content="Get in touch with Michael R. Jacquez for expert Orange County real estate guidance. Schedule your consultation today." />
   <meta name="theme-color" content="#0D1B2A" />
 
   <!-- Favicon -->
-<link rel="icon" href="assets/profile-icon.png" />
+  <link rel="icon" href="assets/profile-icon.png" />
 
-  <!-- Preload media for smoother UX -->
+  <!-- Preload Backgrounds -->
   <link rel="preload" as="image" href="assets/backgrounds/contact-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
 
   <!-- CSS -->
@@ -28,13 +29,13 @@
     <div class="container header-row">
       <a class="brand" href="index.html" aria-label="Real OC home">
         <div class="brand-logo">
-    <img src="assets/logo-icon.png" alt="Real OC logo" />
+          <img src="assets/logo-icon.png" alt="Real OC logo" />
           <div class="brand-glow"></div>
         </div>
         <div class="brand-text">
           <span class="brand-name">Real OC</span>
           <span class="brand-tagline">Coastal & Luxury Homes</span>
-  </div>
+        </div>
       </a>
 
       <!-- Mobile menu toggle -->
@@ -81,8 +82,8 @@
               <span class="nav-underline"></span>
             </a>
           </li>
-    </ul>
-  </nav>
+        </ul>
+      </nav>
 
       <div class="nav-ctas">
         <a class="btn secondary" href="search.html">Search Properties</a>
@@ -99,12 +100,6 @@
   <!-- ===== HERO ===== -->
   <section id="hero" class="hero-contact bg-fixed">
     <div class="hero-bg" aria-hidden="true">
-      <div class="hero-connections">
-        <div class="connection connection-1"></div>
-        <div class="connection connection-2"></div>
-        <div class="connection connection-3"></div>
-        <div class="connection connection-4"></div>
-      </div>
       <div class="hero-gradient"></div>
     </div>
     
@@ -118,40 +113,32 @@
           <p class="hero-byline">Let's discuss your real estate goals</p>
           <p class="hero-tagline">Your next chapter starts with a conversation</p>
           <div class="hero-ctas">
-            <a class="btn primary" href="#contact">Get in Touch</a>
-            <a class="btn secondary" href="tel:+18554732562">Call Now</a>
+            <a class="btn cta" href="#contact">Get in Touch</a>
+            <a class="btn ghost" href="tel:+18554732562">Call Now</a>
           </div>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="contact-methods">
-          <div class="method">
-            <div class="method-icon">📞</div>
-            <h3>Call</h3>
+        <div class="grid reasons">
+          <div class="reason glass">
+            <h3><span class="method-icon">📞</span> Call</h3>
             <p>(855) 4-REAL-OC</p>
           </div>
-          <div class="method">
-            <div class="method-icon">✉️</div>
-            <h3>Email</h3>
+          <div class="reason glass">
+            <h3><span class="method-icon">✉️</span> Email</h3>
             <p>michaelrichard.re@gmail.com</p>
           </div>
-          <div class="method">
-            <div class="method-icon">💬</div>
-            <h3>Message</h3>
+          <div class="reason glass">
+            <h3><span class="method-icon">💬</span> Message</h3>
             <p>Quick response guaranteed</p>
           </div>
-        </div>
-        <div class="hero-pulse">
-          <div class="pulse-ring"></div>
-          <div class="pulse-ring delay-1"></div>
-          <div class="pulse-ring delay-2"></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===== CONTACT SECTION ===== -->
-  <section id="contact" class="section section-img">
+  <section id="contact" class="section section-img section-light bg-fixed">
     <div class="container">
       <header class="section-head">
         <h2>Get in Touch</h2>
@@ -228,13 +215,151 @@
             </label>
           </div>
           
+          <div id="dynamicFields" class="dynamic-fields" style="display: none;">
+            <!-- Buyer/Seller Consultation Fields -->
+            <div id="consultationFields" class="service-fields" style="display: none;">
+              <label class="form-field">
+                <span>Best way to contact</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select contact method</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="call">Call</div>
+                    <div class="select-option" data-value="text">Text</div>
+                    <div class="select-option" data-value="email">Email</div>
+                  </div>
+                  <input type="hidden" name="contactMethod">
+                </div>
+              </label>
+              <label class="form-field">
+                <span>Preferred Time</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select time</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                    <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                    <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                    <div class="select-option" data-value="custom">Custom Time</div>
+                  </div>
+                  <input type="hidden" name="consultationTimeOption">
+                </div>
+              </label>
+              <label class="form-field" id="consultationCustomTimeField" style="display: none;">
+                <span>Custom Time</span>
+                <input type="time" name="consultationCustomTime">
+              </label>
+            </div>
+            
+            <!-- Property Showing Fields -->
+            <div id="showingFields" class="service-fields" style="display: none;">
+              <label class="form-field">
+                <span>Property Address</span>
+                <input type="text" name="propertyAddress" placeholder="Enter the property address you'd like to see">
+              </label>
+              <label class="form-field">
+                <span>Preferred Date</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select date</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="today">Today</div>
+                    <div class="select-option" data-value="tomorrow">Tomorrow</div>
+                    <div class="select-option" data-value="future">Future Date</div>
+                  </div>
+                  <input type="hidden" name="dateOption">
+                </div>
+              </label>
+              <label class="form-field" id="futureDateField" style="display: none;">
+                <span>Select Future Date</span>
+                <input type="date" name="futureDate" min="">
+              </label>
+              <label class="form-field">
+                <span>Preferred Time</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select time</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                    <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                    <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                    <div class="select-option" data-value="custom">Custom Time</div>
+                  </div>
+                  <input type="hidden" name="timeOption">
+                </div>
+              </label>
+              <label class="form-field" id="customTimeField" style="display: none;">
+                <span>Custom Time</span>
+                <input type="time" name="customTime">
+              </label>
+            </div>
+            
+            <!-- Home Evaluation Fields -->
+            <div id="evaluationFields" class="service-fields" style="display: none;">
+              <label class="form-field">
+                <span>Property Address</span>
+                <input type="text" name="evaluationAddress" placeholder="Enter the property address for evaluation">
+              </label>
+              <label class="form-field">
+                <span>Property Type</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select property type</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="single-family">Single Family Home</div>
+                    <div class="select-option" data-value="condo">Condominium</div>
+                    <div class="select-option" data-value="townhouse">Townhouse</div>
+                    <div class="select-option" data-value="multi-family">Multi-Family</div>
+                    <div class="select-option" data-value="commercial">Commercial</div>
+                  </div>
+                  <input type="hidden" name="propertyType">
+                </div>
+              </label>
+            </div>
+            
+            <!-- Investor Services Fields -->
+            <div id="investorFields" class="service-fields" style="display: none;">
+              <label class="form-field">
+                <span>Investment Interest</span>
+                <div class="custom-select">
+                  <div class="select-trigger">
+                    <span class="select-value">Select Investment Interest</span>
+                    <span class="select-arrow">▼</span>
+                  </div>
+                  <div class="select-options">
+                    <div class="select-option" data-value="property-management">Property Management</div>
+                    <div class="select-option" data-value="buy-and-hold">Buy & Hold</div>
+                    <div class="select-option" data-value="fix-and-flip">Fix & Flip</div>
+                    <div class="select-option" data-value="wholesale">Wholesale</div>
+                    <div class="select-option" data-value="commercial">Commercial Investment</div>
+                  </div>
+                  <input type="hidden" name="investmentType">
+                </div>
+              </label>
+              <label class="form-field">
+                <span>Budget Range</span>
+                <input type="text" name="budgetRange" placeholder="e.g., $500K - $1M">
+            </label>
+          </div>
+          </div>
+          
           <label class="form-field">
             <span>Message</span>
             <textarea name="message" rows="4" placeholder="Tell me about your real estate goals and how I can help"></textarea>
           </label>
           <button type="submit" class="btn cta inquire-submit">Send Message</button>
           <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
-    </form>
+        </form>
       </div>
     </div>
   </section>
@@ -285,12 +410,22 @@
           </div>
         </div>
       </div>
-</footer>
+    </footer>
 
   <!-- JS -->
   <script src="js/main.js"></script>
   <script>
     // Navigation highlighting removed - only hover effects
+    document.getElementById('year').textContent=new Date().getFullYear();
+    
+    // Show hero reveal content immediately for subpages
+    document.addEventListener('DOMContentLoaded', function() {
+      const heroReveal = document.querySelector('.hero-reveal');
+      if (heroReveal) {
+        heroReveal.classList.add('show');
+        heroReveal.classList.add('show-2');
+      }
+    });
   </script>
 </body>
 </html>

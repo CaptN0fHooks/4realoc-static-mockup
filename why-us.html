@@ -11,54 +11,16 @@
   <link rel="icon" href="assets/profile-icon.png" />
 
   <!-- Preload Backgrounds -->
+  <link rel="preload" as="image" href="assets/backgrounds/WhyBuyersChoose-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/featured-bg.webp">
   <link rel="preload" as="image" href="assets/backgrounds/kitchen-bg.webp">
-  <link rel="preload" as="image" href="assets/backgrounds/footer-bg.webp">
+  <link rel="preload" as="image" href="assets/backgrounds/inquire-bg.webp">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/background-attributes.css" />
-
-  <style>
-    /* Page-specific styles only - header styles come from main CSS */
-    .hero { position: relative; height: 60vh; min-height: 400px; display: grid; place-items: center; text-align: center; }
-    .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
-    .hero::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-inner h1 { font-size: 2.5rem; }
-    .hero-inner p { font-size: 1.1rem; margin: 10px 0 20px; }
-
-    section { padding: 80px 0; position: relative; background-size: cover; background-position: center; }
-    section::after { content:""; position:absolute; bottom:-40px; left:0; width:100%; height:40px; background:linear-gradient(to bottom, rgba(11,26,40,0.8), rgba(11,26,40,0)); z-index:1; }
-    .section-head { margin-bottom: 26px; text-align: center; position:relative; z-index:2; }
-
-    .advantages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; position:relative; z-index:2; }
-    .advantage { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-    .advantage-icon { background: var(--gold); color: var(--navy); width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; font-size: 28px; margin-bottom: 20px; }
-
-    .values { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; position:relative; z-index:2; }
-    .value { text-align: center; background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 24px; border: 1px solid rgba(255,255,255,0.1); }
-    .value-number { font-size: 3rem; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
-
-    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; position:relative; z-index:2; }
-    .testimonial { background: var(--glass); border: 1px solid var(--glass-stroke); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
-    .testimonial-text { font-style: italic; margin-bottom: 16px; line-height: 1.6; }
-    .testimonial-author { font-weight: 600; color: var(--gold); }
-
-    .cta-strip { text-align: center; padding: 60px 20px; color: var(--ivory); position:relative; z-index:2; }
-
-    footer{
-      position:relative;z-index:5;isolation:isolate;
-      padding:42px 0;text-align:center;font-size:.98rem;color:#eef3f8;
-      background:transparent;
-      border-top:1px solid rgba(255,255,255,.08);
-      box-shadow:0 -36px 60px rgba(0,0,0,.45) inset;
-    }
-    footer::before{content:"";position:absolute;inset:0;background:rgba(5,10,16,.62);pointer-events:none}
-    .bottom-bg{position:relative;background:url('assets/backgrounds/footer-bg.webp') center/cover no-repeat}
-    footer::after { content:none !important; }
-  </style>
 </head>
+
 <body>
   <!-- Reveal zone (hover near top to show header) -->
   <div class="top-reveal-zone" aria-hidden="true"></div>
@@ -139,12 +101,6 @@
   <!-- ===== HERO ===== -->
   <section id="hero" class="hero-why-us bg-fixed">
     <div class="hero-bg" aria-hidden="true">
-      <div class="hero-geometry">
-        <div class="geo geo-1"></div>
-        <div class="geo geo-2"></div>
-        <div class="geo geo-3"></div>
-        <div class="geo geo-4"></div>
-      </div>
       <div class="hero-gradient"></div>
     </div>
     
@@ -158,142 +114,316 @@
           <p class="hero-byline">Marine discipline meets local expertise for exceptional results</p>
           <p class="hero-tagline">The difference is in the details</p>
           <div class="hero-ctas">
-            <a class="btn primary" href="#advantages">Our Advantages</a>
-            <a class="btn secondary" href="contact.html">Schedule Consultation</a>
+            <a class="btn cta" href="#advantages">Our Advantages</a>
+            <a class="btn ghost" href="contact.html">Schedule Consultation</a>
           </div>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="advantage-preview">
-          <div class="advantage-item">
-            <div class="advantage-icon">⚓</div>
-            <h3>Marine Discipline</h3>
-            <p>Precision in every detail</p>
+        <div class="grid reasons hero-metrics">
+          <div class="reason glass">
+            <h3>Strategic Prep & Staging</h3>
+            <p>Curated, data-backed preparation plans that spotlight your property's strongest selling points before the first showing.</p>
           </div>
-          <div class="advantage-item">
-            <div class="advantage-icon">🏠</div>
-            <h3>Local Expertise</h3>
-            <p>Deep OC market knowledge</p>
+          <div class="reason glass">
+            <h3>Negotiation Built on Intel</h3>
+            <p>Six-layer market analyses fuel negotiations that consistently deliver above-list outcomes for our clients.</p>
           </div>
-          <div class="advantage-item">
-            <div class="advantage-icon">🎯</div>
-            <h3>Proven Results</h3>
-            <p>Consistent success stories</p>
+          <div class="reason glass">
+            <h3>Concierge-Level Support</h3>
+            <p>From first consult through closing, our Marine-honed discipline keeps every detail aligned with your goals.</p>
           </div>
-        </div>
-        <div class="hero-badge">
-          <div class="badge-content">
-            <span class="badge-text">Trusted by</span>
-            <span class="badge-number">500+</span>
-            <span class="badge-text">Families</span>
+          <div class="reason glass">
+            <h3>Transparent Tracking</h3>
+            <p>Weekly performance dashboards keep you informed on showings, offers, and next actions so there are zero surprises.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="advantages" class="section bg-fixed">
+  <!-- ===== ADVANTAGES SECTION ===== -->
+  <section id="advantages" class="section section-img section-light bg-fixed">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Our Competitive Advantages</h2>
         <p>What sets us apart in Orange County real estate</p>
-      </div>
-      <div class="advantages-grid">
-        <div class="advantage">
-          <div class="advantage-icon">🏠</div>
+      </header>
+      <div class="grid reasons">
+        <div class="reason glass">
           <h3>Local Market Mastery</h3>
-          <p>Six years of living and working in Orange County's coastal communities gives us insider knowledge that can't be learned from data alone.</p>
+          <p>Six years of living and working in Orange County's coastal communities gives us insider knowledge that can't be learned from data alone. We understand the nuances of each neighborhood, from the luxury estates of Newport Coast to the family-friendly communities of Irvine.</p>
         </div>
-        <div class="advantage">
-          <div class="advantage-icon">🎯</div>
+        <div class="reason glass">
           <h3>Data-Driven Strategy</h3>
-          <p>We combine local insights with comprehensive market analysis to ensure you make informed decisions backed by real data.</p>
+          <p>We combine local insights with comprehensive market analysis to ensure you make informed decisions backed by real data. Every recommendation is supported by current market trends, comparable sales, and future projections.</p>
         </div>
-        <div class="advantage">
-          <div class="advantage-icon">🤝</div>
+        <div class="reason glass">
           <h3>Client-First Approach</h3>
-          <p>We represent your interests exclusively, not the seller's. Our goal is to get you the best possible outcome.</p>
+          <p>We represent your interests exclusively, not the seller's. Our goal is to get you the best possible outcome, whether you're buying, selling, or investing. Your success is our success.</p>
         </div>
-        <div class="advantage">
-          <div class="advantage-icon">🔗</div>
+        <div class="reason glass">
           <h3>Trusted Network</h3>
-          <p>Access to our network of trusted lenders, inspectors, contractors, and other professionals to streamline your process.</p>
+          <p>Access to our network of trusted lenders, inspectors, contractors, and other professionals to streamline your process. We've vetted every professional in our network to ensure quality and reliability.</p>
         </div>
-        <div class="advantage">
-          <div class="advantage-icon">⚡</div>
+        <div class="reason glass">
           <h3>Marine Discipline</h3>
-          <p>Former US Marine bringing duty, clarity, and steady hand to every transaction, especially in high-pressure situations.</p>
+          <p>Former US Marine bringing duty, clarity, and steady hand to every transaction, especially in high-pressure situations. The discipline and attention to detail learned in the military translates directly to real estate excellence.</p>
         </div>
-        <div class="advantage">
-          <div class="advantage-icon">📈</div>
+        <div class="reason glass">
           <h3>Proven Results</h3>
-          <p>Track record of success with 98% list-to-sale ratio and properties selling for 103% of list price on average.</p>
+          <p>Track record of success with 98% list-to-sale ratio and properties selling for 103% of list price on average. Our results speak for themselves and demonstrate our commitment to client success.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="values">
+  <!-- ===== VALUES SECTION ===== -->
+  <section id="values" class="section section-img section-light bg-fixed">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>Our Core Values</h2>
         <p>The principles that guide every interaction</p>
-      </div>
-      <div class="values">
-        <div class="value">
-          <div class="value-number">1</div>
+      </header>
+      <div class="grid reasons">
+        <div class="reason glass">
           <h3>Integrity</h3>
-          <p>Honest, transparent communication in every transaction</p>
+          <p>Honest, transparent communication in every transaction. We believe in doing the right thing, even when it's not the easiest path. Your trust is our most valuable asset.</p>
         </div>
-        <div class="value">
-          <div class="value-number">2</div>
+        <div class="reason glass">
           <h3>Excellence</h3>
-          <p>Commitment to delivering exceptional results for every client</p>
+          <p>Commitment to delivering exceptional results for every client. We don't just meet expectations—we exceed them through attention to detail and relentless pursuit of your goals.</p>
         </div>
-        <div class="value">
-          <div class="value-number">3</div>
+        <div class="reason glass">
           <h3>Service</h3>
-          <p>Putting client needs first, always</p>
+          <p>Putting client needs first, always. Your success is our success, and we're committed to going above and beyond to ensure you achieve your real estate goals.</p>
         </div>
-        <div class="value">
-          <div class="value-number">4</div>
+        <div class="reason glass">
           <h3>Knowledge</h3>
-          <p>Continuous learning and market expertise</p>
+          <p>Continuous learning and market expertise. Real estate markets evolve constantly, and we stay ahead through ongoing education, market analysis, and strategic adaptation.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="testimonials" class="section bg-fixed">
+  <!-- ===== TESTIMONIALS SECTION ===== -->
+  <section id="testimonials" class="section section-img section-dark bg-fixed">
     <div class="container">
-      <div class="section-head">
+      <header class="section-head">
         <h2>What Our Clients Say</h2>
         <p>Real feedback from real people</p>
-      </div>
-      <div class="testimonials">
-        <div class="testimonial">
-          <div class="testimonial-text">"Michael's local knowledge and Marine discipline made our home buying process smooth and successful. He found us the perfect home in Huntington Beach."</div>
-          <div class="testimonial-author">- Sarah & Tom Chen, Huntington Beach</div>
+      </header>
+      <div class="grid reasons">
+        <div class="reason glass">
+          <h3>Sarah & Tom Chen, Huntington Beach</h3>
+          <p>"Michael's local knowledge and Marine discipline made our home buying process smooth and successful. He found us the perfect home in Huntington Beach and guided us through every step with confidence and expertise."</p>
         </div>
-        <div class="testimonial">
-          <div class="testimonial-text">"Selling our Newport Beach home with Real OC exceeded our expectations. We got top dollar and closed in just 12 days."</div>
-          <div class="testimonial-author">- Jennifer Martinez, Newport Beach</div>
+        <div class="reason glass">
+          <h3>Jennifer Martinez, Newport Beach</h3>
+          <p>"Selling our Newport Beach home with Real OC exceeded our expectations. We got top dollar and closed in just 12 days. Michael's marketing strategy and negotiation skills were outstanding."</p>
         </div>
-        <div class="testimonial">
-          <div class="testimonial-text">"The market analysis and negotiation strategy were spot-on. Michael's expertise saved us thousands and got us the home we wanted."</div>
-          <div class="testimonial-author">- David & Lisa Thompson, Laguna Beach</div>
+        <div class="reason glass">
+          <h3>David & Lisa Thompson, Laguna Beach</h3>
+          <p>"The market analysis and negotiation strategy were spot-on. Michael's expertise saved us thousands and got us the home we wanted. His attention to detail and client advocacy made all the difference."</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="bottom-bg">
-    <section class="cta-strip" id="contact">
-      <div class="container">
-        <h2>Ready to experience the Real OC difference?</h2>
+  <!-- ===== INQUIRE SECTION ===== -->
+  <section id="inquire" class="section inquire-section bg-fixed" aria-labelledby="inquire-title">
+    <div class="inquire-inner container">
+      <div class="inquire-copy">
+        <h2 id="inquire-title">Ready to experience the Real OC difference?</h2>
         <p>Let's discuss how we can serve your real estate needs.</p>
-        <a class="cta-btn" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
-        <a class="cta-btn" href="tel:+17146552923">Call (714) 655-2923</a>
+        <div class="quick-actions">
+          <a class="btn cta" href="mailto:michaelrichard.re@gmail.com">Email Michael</a>
+          <a class="btn ghost" href="tel:+17146552923">Call (714) 655-2923</a>
+        </div>
+      </div>
+      <form class="inquire-card" action="https://formsubmit.co/michaelrichard.re@gmail.com" method="post">
+        <input type="hidden" name="_subject" value="New inquiry from Real OC">
+        <input type="hidden" name="_template" value="table">
+        <div class="form-grid">
+          <label class="form-field">
+            <span>First name</span>
+            <input type="text" name="firstName" autocomplete="given-name" required>
+          </label>
+          <label class="form-field">
+            <span>Last name</span>
+            <input type="text" name="lastName" autocomplete="family-name" required>
+          </label>
+          <label class="form-field">
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label class="form-field">
+            <span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" placeholder="(###) ###-####">
+          </label>
+          <label class="form-field">
+            <span>I'm looking for</span>
+            <div class="custom-select">
+              <div class="select-trigger">
+                <span class="select-value">Select option</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="select-options">
+                <div class="select-option" data-value="consultation">Buyer/Seller Consultation</div>
+                <div class="select-option" data-value="showing">Property Showing</div>
+                <div class="select-option" data-value="evaluation">Home Evaluation</div>
+                <div class="select-option" data-value="investor">Investor Services</div>
+              </div>
+              <input type="hidden" name="service" required>
+            </div>
+          </label>
+        </div>
+        
+        <div id="dynamicFields" class="dynamic-fields" style="display: none;">
+          <!-- Buyer/Seller Consultation Fields -->
+          <div id="consultationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Best way to contact</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select contact method</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="call">Call</div>
+                  <div class="select-option" data-value="text">Text</div>
+                  <div class="select-option" data-value="email">Email</div>
+                </div>
+                <input type="hidden" name="contactMethod">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="consultationTimeOption">
+              </div>
+            </label>
+            <label class="form-field" id="consultationCustomTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="consultationCustomTime">
+            </label>
+          </div>
+          
+          <!-- Property Showing Fields -->
+          <div id="showingFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="propertyAddress" placeholder="Enter the property address you'd like to see">
+            </label>
+            <label class="form-field">
+              <span>Preferred Date</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select date</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="today">Today</div>
+                  <div class="select-option" data-value="tomorrow">Tomorrow</div>
+                  <div class="select-option" data-value="future">Future Date</div>
+                </div>
+                <input type="hidden" name="dateOption">
+              </div>
+            </label>
+            <label class="form-field" id="futureDateField" style="display: none;">
+              <span>Select Future Date</span>
+              <input type="date" name="futureDate" min="">
+            </label>
+            <label class="form-field">
+              <span>Preferred Time</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select time</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="morning">Morning (9 AM - 12 PM)</div>
+                  <div class="select-option" data-value="afternoon">Afternoon (12 PM - 5 PM)</div>
+                  <div class="select-option" data-value="evening">Evening (5 PM - 8 PM)</div>
+                  <div class="select-option" data-value="custom">Custom Time</div>
+                </div>
+                <input type="hidden" name="timeOption">
+              </div>
+            </label>
+            <label class="form-field" id="customTimeField" style="display: none;">
+              <span>Custom Time</span>
+              <input type="time" name="customTime">
+            </label>
+          </div>
+          
+          <!-- Home Evaluation Fields -->
+          <div id="evaluationFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Property Address</span>
+              <input type="text" name="evaluationAddress" placeholder="Enter the property address for evaluation">
+            </label>
+            <label class="form-field">
+              <span>Property Type</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select property type</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="single-family">Single Family Home</div>
+                  <div class="select-option" data-value="condo">Condominium</div>
+                  <div class="select-option" data-value="townhouse">Townhouse</div>
+                  <div class="select-option" data-value="multi-family">Multi-Family</div>
+                  <div class="select-option" data-value="commercial">Commercial</div>
+                </div>
+                <input type="hidden" name="propertyType">
+              </div>
+            </label>
+          </div>
+          
+          <!-- Investor Services Fields -->
+          <div id="investorFields" class="service-fields" style="display: none;">
+            <label class="form-field">
+              <span>Investment Interest</span>
+              <div class="custom-select">
+                <div class="select-trigger">
+                  <span class="select-value">Select Investment Interest</span>
+                  <span class="select-arrow">▼</span>
+                </div>
+                <div class="select-options">
+                  <div class="select-option" data-value="property-management">Property Management</div>
+                  <div class="select-option" data-value="buy-and-hold">Buy & Hold</div>
+                  <div class="select-option" data-value="fix-and-flip">Fix & Flip</div>
+                  <div class="select-option" data-value="wholesale">Wholesale</div>
+                  <div class="select-option" data-value="commercial">Commercial Investment</div>
+                </div>
+                <input type="hidden" name="investmentType">
+              </div>
+            </label>
+            <label class="form-field">
+              <span>Budget Range</span>
+              <input type="text" name="budgetRange" placeholder="e.g., $500K - $1M">
+          </label>
+        </div>
+        </div>
+        
+        <label class="form-field">
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Share details, timelines, or properties you'd like to see"></textarea>
+        </label>
+        <button type="submit" class="btn cta inquire-submit">Send Inquiry</button>
+        <p class="inquire-disclaimer">Quick reply within one business day. Prefer a direct line? Email or call anytime.</p>
+      </form>
       </div>
     </section>
 
@@ -351,6 +481,15 @@
   <script>
     // Navigation highlighting removed - only hover effects
     document.getElementById('year').textContent=new Date().getFullYear();
+    
+    // Show hero reveal content immediately for subpages
+    document.addEventListener('DOMContentLoaded', function() {
+      const heroReveal = document.querySelector('.hero-reveal');
+      if (heroReveal) {
+        heroReveal.classList.add('show');
+        heroReveal.classList.add('show-2');
+      }
+    });
   </script>
 </body>
 </html>
