@@ -119,18 +119,26 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="grid reasons">
+        <div class="grid reasons contact-tiles">
           <div class="reason glass">
-            <h3><span class="method-icon">📞</span> Call</h3>
-            <p>(855) 4-REAL-OC</p>
+            <h3>Call Us</h3>
+            <p><a href="tel:+18554732562">(855) 4-REAL-OC</a></p>
+            <p class="tile-subtitle">Available 7 days a week</p>
           </div>
           <div class="reason glass">
-            <h3><span class="method-icon">✉️</span> Email</h3>
-            <p>michaelrichard.re@gmail.com</p>
+            <h3>Email Us</h3>
+            <p><a href="mailto:michaelrichard.re@gmail.com">michaelrichard.re@gmail.com</a></p>
+            <p class="tile-subtitle">Response within 24 hours</p>
           </div>
           <div class="reason glass">
-            <h3><span class="method-icon">💬</span> Message</h3>
-            <p>Quick response guaranteed</p>
+            <h3>Quick Response</h3>
+            <p>Guaranteed reply within one business day</p>
+            <p class="tile-subtitle">Your time matters</p>
+          </div>
+          <div class="reason glass">
+            <h3>Local Expertise</h3>
+            <p>15+ years serving Orange County</p>
+            <p class="tile-subtitle">Deep market knowledge</p>
           </div>
         </div>
       </div>
@@ -425,6 +433,14 @@
         heroReveal.classList.add('show');
         heroReveal.classList.add('show-2');
       }
+      
+      // Remove animation after completion to allow smooth hover transitions
+      const contactTiles = document.querySelectorAll('.hero-contact .contact-tiles .reason');
+      contactTiles.forEach((tile) => {
+        tile.addEventListener('animationend', function() {
+          this.classList.add('animation-complete');
+        }, { once: true });
+      });
     });
   </script>
 </body>
