@@ -1,0 +1,69 @@
+{
+  "results": [
+    {
+      "id": "mock-1",
+      "address": "123 Oceanview Dr",
+      "city": "Laguna Beach",
+      "price": 2850000,
+      "beds": 3,
+      "baths": 3,
+      "lat": 33.542,
+      "lng": -117.785,
+      "image": "assets/backgrounds/laguna-1.jpg",
+      "url": "#",
+      "highlights": ["Ocean view", "Walk to beach", "Modern finishes"]
+    },
+    {
+      "id": "mock-2",
+      "address": "44 Golden Surf Ln",
+      "city": "Newport Coast",
+      "price": 4950000,
+      "beds": 4,
+      "baths": 5,
+      "lat": 33.592,
+      "lng": -117.831,
+      "image": "assets/backgrounds/newport-1.jpg",
+      "url": "#",
+      "highlights": ["Gated community", "Pool & spa", "Coastal canyon views"]
+    },
+    {
+      "id": "mock-3",
+      "address": "890 Harbor Cliffs",
+      "city": "Dana Point",
+      "price": 2250000,
+      "beds": 3,
+      "baths": 3,
+      "lat": 33.467,
+      "lng": -117.706,
+      "image": "assets/backgrounds/danapoint-1.jpg",
+      "url": "#",
+      "highlights": ["Harbor view", "Walk to marina", "Entertainer deck"]
+    },
+    {
+      "id": "mock-4",
+      "address": "17 Palm Crest Ct",
+      "city": "Corona del Mar",
+      "price": 3750000,
+      "beds": 4,
+      "baths": 4,
+      "lat": 33.6,
+      "lng": -117.874,
+      "image": "assets/backgrounds/cdm-1.jpg",
+      "url": "#",
+      "highlights": ["Village location", "Roof deck", "Short walk to sand"]
+    },
+    {
+      "id": "mock-5",
+      "address": "220 Shoreline Way",
+      "city": "Huntington Beach",
+      "price": 1650000,
+      "beds": 3,
+      "baths": 3,
+      "lat": 33.655,
+      "lng": -118.001,
+      "image": "assets/backgrounds/hb-1.jpg",
+      "url": "#",
+      "highlights": ["Pool home", "Near HB Pier", "Updated kitchen"]
+    }
+  ]
+}

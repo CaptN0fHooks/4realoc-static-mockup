@@ -690,6 +690,75 @@
       }
     }
     
-  </script>
+
+<!-- Tiny NL → filters parser -->
+<script src="assets/js/ai-search-parser.js"></script>
+
+<!-- Homepage AI Search: build the URL your search page already understands -->
+<script>
+  (function () {
+    var form  = document.getElementById('homepageChatForm');
+    var input = document.getElementById('homepageChatInput');
+    var chips = document.querySelectorAll('[data-search-example]');
+
+    if (!form || !input) return;
+
+    // Map parser features to your URL flags
+    function featureFlags(features) {
+      var flags = {};
+      if (features.indexOf('ocean_view') !== -1 || features.indexOf('view') !== -1) flags.hasView = 'true';
+      if (features.indexOf('pool') !== -1) flags.hasPool = 'true';
+      if (features.indexOf('gated') !== -1) flags.gated = 'true';
+      if (features.indexOf('beachfront') !== -1) flags.beachfront = 'true';
+      if (features.indexOf('garage') !== -1) flags.hasGarage = 'true';
+      if (features.indexOf('new_construction') !== -1) flags.newBuild = 'true';
+      return flags;
+    }
+
+    function buildUrlFromText(text) {
+      var p = window.parseAiSearchQuery ? window.parseAiSearchQuery(text) : {};
+      var params = new URLSearchParams();
+
+      if (p.maxPrice) params.set('maxPrice', String(Math.round(p.maxPrice)));
+      if (p.minPrice) params.set('minPrice', String(Math.round(p.minPrice)));
+      if (p.minBeds)  params.set('minBeds',  String(p.minBeds));
+
+      if (p.cities && p.cities.length) {
+        params.set('cities', p.cities.map(function (c) {
+          return c.split(' ').map(function (w){return w.charAt(0).toUpperCase()+w.slice(1);}).join(' ');
+        }).join(','));
+      }
+
+      var flags = featureFlags(p.features || []);
+      Object.keys(flags).forEach(function (k){ params.set(k, flags[k]); });
+
+      // keep the raw text for UX/debug
+      if (text && text.trim()) params.set('q', text.trim());
+
+      // defaults your engine likes
+      params.set('page', '1');
+      params.set('sort', 'newest');
+
+      return 'search.html?' + params.toString();
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = (input.value || '').trim();
+      if (!q) { alert("Tell me what you're looking for: city, price, beds, features."); return; }
+      window.location.href = buildUrlFromText(q);
+    });
+
+    // Make the example chips submit too
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var example = chip.getAttribute('data-search-example') || '';
+        if (!example) return;
+        window.location.href = buildUrlFromText(example);
+      });
+    });
+  })();
+</script>
+
 </body>
 </html>
