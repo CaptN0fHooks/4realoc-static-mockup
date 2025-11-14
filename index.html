@@ -21,8 +21,235 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/background-attributes.css" />
-</head>
+  <style>
+    /* === Featured AI Property Search (Homepage) === */
 
+    .featured-ai {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    .featured-ai__header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .featured-ai__header h2 {
+      font-size: 2.4rem;
+      letter-spacing: 0.04em;
+    }
+
+    .featured-ai__header p {
+      opacity: 0.9;
+      font-size: 0.98rem;
+    }
+
+    .featured-ai__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .featured-ai__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .featured-ai__tile {
+      background: rgba(6, 7, 10, 0.82);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      padding: 1.75rem 1.75rem 1.5rem;
+      backdrop-filter: blur(16px);
+    }
+
+    .featured-ai__tile-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .featured-ai__tile-head h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.35rem;
+    }
+
+    .featured-ai__tile-head p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    .featured-ai__badge {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), rgba(10, 10, 15, 0.9));
+      white-space: nowrap;
+    }
+
+    /* Featured property card */
+    .featured-ai__property {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-ai__image {
+      flex: 0 0 160px;
+      height: 120px;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(80, 80, 120, 0.1));
+      overflow: hidden;
+    }
+
+    .featured-ai__property-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.35rem;
+      font-size: 0.92rem;
+    }
+
+    .featured-ai__price {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .featured-ai__address {
+      opacity: 0.85;
+    }
+
+    .featured-ai__meta {
+      font-size: 0.8rem;
+      opacity: 0.75;
+    }
+
+    .featured-ai__meta span + span::before {
+      content: " • ";
+      opacity: 0.7;
+      margin: 0 0.25rem;
+    }
+
+    .featured-ai__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .featured-ai__note {
+      font-size: 0.78rem;
+      opacity: 0.7;
+      margin: 0;
+    }
+
+    /* AI tile specifics */
+
+    .featured-ai__ai-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .featured-ai__chat-intro p {
+      font-size: 0.92rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    .featured-ai__form {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    @media (max-width: 700px) {
+      .featured-ai__form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .featured-ai__form input[type="text"] {
+      flex: 1;
+      min-width: 0;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(8, 9, 14, 0.95);
+      padding: 0.9rem 1.1rem;
+      color: #f7f5f0;
+      font-size: 0.92rem;
+      outline: none;
+      box-shadow: 0 0 0 1px transparent;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .featured-ai__form input[type="text"]::placeholder {
+      color: rgba(220, 218, 210, 0.6);
+    }
+
+    .featured-ai__form input[type="text"]:focus {
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
+      background: rgba(5, 6, 10, 0.98);
+    }
+
+    .featured-ai__submit {
+      white-space: nowrap;
+      border-radius: 999px;
+      padding-inline: 1.4rem;
+      height: 2.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .featured-ai__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .featured-ai__chip {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(12, 13, 18, 0.98);
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      color: inherit;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .featured-ai__chip:hover {
+      background: rgba(26, 27, 34, 0.98);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .featured-ai__status {
+      font-size: 0.8rem;
+      opacity: 0.75;
+      margin: 0;
+    }
+  </style>
+</head>
 <body>
   <!-- Reveal zone (hover near top to show header) -->
   <div class="top-reveal-zone" aria-hidden="true"></div>
@@ -141,114 +368,131 @@
     </div>
   </section>
 
-  <!-- ===== FEATURED (AI Property Search) ===== -->
-  <section id="featured" class="section section-img section-dark featured-bg bg-fixed">
-    <div class="container">
-      <header class="section-head">
-        <h2>Discover Your Slice of Orange County</h2>
-        <p>AI-powered property search with live MLS data — find your perfect home.</p>
-      </header>
+<!-- ===== FEATURED (AI Property Search) ===== -->
+<section id="featured" class="section section-img section-dark featured-bg bg-fixed">
+  <div class="container featured-ai">
+    <!-- Section Header -->
+    <header class="section-head featured-ai__header">
+      <h2>Find Your Place in Orange County</h2>
+      <p>Describe your ideal home in plain language. We’ll match it with live MLS listings.</p>
+    </header>
 
-      <!-- Two-Tile Layout: Property Preview + AI Chatbot -->
-      <div class="featured-tiles">
-              <!-- Left Tile: Property Preview (60% width) -->
-              <div class="property-preview-tile">
-                <div class="tile-header">
-                  <h3>Featured Properties</h3>
-                  <p>Live from MLS</p>
-                </div>
-                
-                <!-- Single Property Carousel -->
-                <div class="featured-carousel" id="featuredCarousel" role="region" aria-label="Featured Properties Carousel">
-                  <div class="carousel-container">
-                    <!-- Single property will be displayed here -->
-                    <div class="featured-property-card" id="currentFeaturedProperty">
-                      <div class="property-image" aria-hidden="true"></div>
-                      <div class="property-details">
-                        <div class="property-price" aria-label="Price loading">Loading...</div>
-                        <div class="property-address" aria-label="Address loading">Fetching properties...</div>
-                        <div class="property-features" aria-label="Features loading">Please wait</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Carousel Indicators -->
-                  <div class="carousel-indicators" role="tablist" aria-label="Featured property indicators">
-                    <button class="indicator active" role="tab" aria-selected="true" aria-label="Property 1"></button>
-                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 2"></button>
-                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 3"></button>
-                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 4"></button>
-                    <button class="indicator" role="tab" aria-selected="false" aria-label="Property 5"></button>
-                  </div>
-                </div>
+    <!-- Two-column layout: Preview + AI search -->
+    <div class="featured-ai__grid">
+      <!-- LEFT: Featured preview / credibility -->
+      <article class="featured-ai__tile featured-ai__tile--preview">
+        <header class="featured-ai__tile-head">
+          <div>
+            <h3>Featured Properties</h3>
+            <p>Handpicked homes across coastal Orange County.</p>
+          </div>
+          <span class="featured-ai__badge">Live MLS Feed</span>
+        </header>
 
-          <!-- Real Listings Access -->
-          <div class="tile-actions">
-            <a class="btn cta" href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=10ac3648" target="_blank" rel="noopener">
-              <span class="btn-icon">🏠</span>
-              View Real Listings
-            </a>
-            <a class="btn ghost" href="search.html">
-              <span class="btn-icon">🤖</span>
-              AI Search Demo
-            </a>
+        <!-- Simple, calm “hero” card instead of a busy carousel -->
+        <div class="featured-ai__property">
+          <div class="featured-ai__image" aria-hidden="true"></div>
+          <div class="featured-ai__property-body">
+            <div class="featured-ai__price">Loading featured property…</div>
+            <div class="featured-ai__address">We’ll showcase a sample listing here.</div>
+            <div class="featured-ai__meta">
+              <span>3–5 Beds</span>
+              <span>OC Coastal · Gated · Pool (example)</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right Tile: AI Chatbot (40% width) -->
-        <div class="chatbot-tile">
-          <div class="tile-header">
+        <div class="featured-ai__actions">
+          <a
+            class="btn cta"
+            href="https://matrix.crmls.org/Matrix/public/IDX.aspx?idx=37fc3688"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="btn-icon">🏠</span>
+            Browse Full MLS
+          </a>
+          <a class="btn ghost" href="search.html">
+            <span class="btn-icon">🗺️</span>
+            Open Map & Results
+          </a>
+        </div>
+
+        <p class="featured-ai__note">
+          Data provided by CRMLS IDX. Information deemed reliable but not guaranteed.
+        </p>
+      </article>
+
+      <!-- RIGHT: AI search input (this is what we’ll wire to search.html) -->
+      <article class="featured-ai__tile featured-ai__tile--ai">
+        <header class="featured-ai__tile-head">
+          <div>
             <h3>AI Property Search</h3>
-            <p>Tell me what you're looking for</p>
+            <p>Tell me what you’re looking for and I’ll take you to the results.</p>
           </div>
-          
-      <div class="chatbot-container" id="homepageChatbot" role="region" aria-label="AI property search assistant">
-            <div class="chatbot-interface">
-              <div class="chatbot-messages" id="homepageChatMessages" role="log" aria-live="polite">
-                <div class="message bot-message">
-                  <div class="message-content">
-                    Hi! I'm your AI assistant for Orange County real estate. Describe neighborhoods, price, beds/baths, or must-haves and I'll take you to the results page with those filters applied.
-                  </div>
-                </div>
-              </div>
-              <form class="chatbot-input-container" id="homepageChatForm" novalidate>
-                <label class="sr-only" for="homepageChatInput">Describe your ideal property</label>
-                <input
-                  type="text"
-                  id="homepageChatInput"
-                  placeholder="HB or Newport, under 1.2M, 3+ beds, pool"
-                  aria-label="Describe your ideal property"
-                  autocomplete="off"
-                />
-                <button class="btn cta" type="submit" aria-label="Send message">
-                  <span aria-hidden="true">&rarr;</span>
-                </button>
-              </form>
-              <div class="chatbot-status" role="status" aria-live="polite">
-                <span class="status-indicator" aria-hidden="true"></span>
-                <span>We'll carry your preferences straight into the interactive map.</span>
-              </div>
-            </div>
+        </header>
+
+        <div class="featured-ai__ai-body">
+          <div class="featured-ai__chat-intro">
+            <p>
+              Try something like <strong>“Newport Coast, 4+ beds, ocean view, under $5M”</strong> and
+              we’ll route you to a curated map plus full MLS matches.
+            </p>
           </div>
 
-          <div class="quick-search-examples">
-            <h4>Try asking:</h4>
-            <div class="example-chips">
-              <button type="button" class="chip" data-search-example="Laguna Beach condos under 1.5M with ocean view">"Laguna Beach condos under $1.5M"</button>
-              <button type="button" class="chip" data-search-example="HB or Newport, under 1.2M, 3+ beds, pool">"HB or Newport, under 1.2M, 3+ beds, pool"</button>
-              <button type="button" class="chip" data-search-example="Irvine townhomes under 900k with low HOA">"Irvine townhomes under $900k"</button>
-            </div>
+          <!-- This form is the core input we’ll hook up in JS -->
+          <form id="aiSearchForm" class="featured-ai__form" novalidate>
+            <label class="sr-only" for="aiSearchInput">Describe your ideal property</label>
+            <input
+              id="aiSearchInput"
+              type="text"
+              autocomplete="off"
+              placeholder="Laguna Beach, under $3M, 3+ beds, ocean view, modern"
+              aria-label="Describe your ideal property"
+              required
+            />
+            <button type="submit" class="btn cta featured-ai__submit">
+              <span>Find Homes</span>
+            </button>
+          </form>
+
+          <div class="featured-ai__chips">
+            <button
+              type="button"
+              class="featured-ai__chip"
+              data-search-example="Laguna Beach condos under $1.5M with ocean view"
+            >
+              Laguna Beach condos · &lt;$1.5M
+            </button>
+            <button
+              type="button"
+              class="featured-ai__chip"
+              data-search-example="Newport Coast homes under $5M with 4+ beds and ocean view"
+            >
+              Newport Coast · 4+ beds · &lt;$5M
+            </button>
+            <button
+              type="button"
+              class="featured-ai__chip"
+              data-search-example="Irvine townhomes under $900k with low HOA"
+            >
+              Irvine townhomes · &lt;$900k
+            </button>
           </div>
+
+          <p class="featured-ai__status">
+            Your preferences will carry over to the search page with a map, curated results, and a full MLS view.
+          </p>
         </div>
-      </div>
-
-      <!-- MLS Attribution -->
-      <div class="mls-attribution">
-        <small>Listing data © CRMLS. Information deemed reliable but not guaranteed.</small>
-      </div>
+      </article>
     </div>
-  </section>
-  
+
+    <!-- MLS Attribution -->
+    <div class="mls-attribution">
+      <small>Listing data © CRMLS. Information deemed reliable but not guaranteed.</small>
+    </div>
+  </div>
+</section>
 
   <!-- ===== SIX REASONS ===== -->
   <section id="reasons" class="section section-img section-dark bg-fixed">
@@ -532,233 +776,12 @@
       </div>
     </footer>
 
-  <!-- JS -->
-  <script src="js/main.js"></script>
-  <script src="js/property-api.js"></script>
-  <script type="module" src="js/homepage-search.js"></script>
-    <script>
-    // Initialize Property API
-    window.propertyAPI = new PropertyAPI();
-    
-    // Navigation highlighting removed - only hover effects
-    
-    // Initialize featured properties carousel on homepage
-    document.addEventListener('DOMContentLoaded', async function() {
-      const carousel = document.getElementById('featuredCarousel');
-      if (!carousel) return;
-      
-      try {
-        // Load featured properties using the Property API
-        const response = await window.propertyAPI.getFeaturedProperties(5);
-        const properties = response.listings || [];
-        
-        // Initialize carousel with properties
-        initializeFeaturedCarousel(properties);
-        
-      } catch (error) {
-        console.error('Error loading featured properties:', error);
-        // Show error state
-        showCarouselError();
-      }
-      
-      // Initialize chatbot
-    });
-    
-    // Initialize featured properties carousel
-    function initializeFeaturedCarousel(properties) {
-      const carouselContainer = document.querySelector('.carousel-container');
-      const indicators = document.querySelectorAll('.carousel-indicators .indicator');
-      
-      if (!carouselContainer || properties.length === 0) {
-        showCarouselError();
-        return;
-      }
-      
-      let currentIndex = 0;
-      let carouselInterval;
-      
-      // Create carousel cards for each property
-      properties.forEach((property, index) => {
-        const formatted = window.propertyAPI ? window.propertyAPI.formatPropertyForUI(property) : property;
-        const card = createFeaturedPropertyCard(formatted, index);
-        carouselContainer.appendChild(card);
-      });
-      
-      // Show first property
-      showProperty(0);
-      
-      // Auto-advance carousel every 4 seconds
-      function startCarousel() {
-        carouselInterval = setInterval(() => {
-          currentIndex = (currentIndex + 1) % properties.length;
-          showProperty(currentIndex);
-        }, 4000);
-      }
-      
-      // Stop carousel on hover
-      carouselContainer.addEventListener('mouseenter', () => {
-        clearInterval(carouselInterval);
-      });
-      
-      // Resume carousel when mouse leaves
-      carouselContainer.addEventListener('mouseleave', () => {
-        startCarousel();
-      });
-      
-      // Add click handlers to indicators
-      indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-          currentIndex = index;
-          showProperty(currentIndex);
-          clearInterval(carouselInterval);
-          startCarousel();
-        });
-      });
-      
-      // Start the carousel
-      startCarousel();
-    }
-    
-    // Show specific property in carousel
-    function showProperty(index) {
-      const cards = document.querySelectorAll('.featured-property-card');
-      const indicators = document.querySelectorAll('.carousel-indicators .indicator');
-      
-      // Hide all cards
-      cards.forEach(card => {
-        card.classList.remove('active', 'prev');
-      });
-      
-      // Remove active from all indicators
-      indicators.forEach(indicator => {
-        indicator.classList.remove('active');
-        indicator.setAttribute('aria-selected', 'false');
-      });
-      
-      // Show current card
-      if (cards[index]) {
-        cards[index].classList.add('active');
-      }
-      
-      // Activate current indicator
-      if (indicators[index]) {
-        indicators[index].classList.add('active');
-        indicators[index].setAttribute('aria-selected', 'true');
-      }
-    }
-    
-    // Create featured property card
-    function createFeaturedPropertyCard(property, index) {
-      const card = document.createElement('div');
-      card.className = 'featured-property-card';
-      card.setAttribute('role', 'article');
-      card.setAttribute('aria-label', `Featured property ${index + 1}: ${property.address}`);
-      
-      card.innerHTML = `
-        <div class="property-image" style="background-image: url('${property.image}')" aria-hidden="true"></div>
-        <div class="property-details">
-          <div class="property-price" aria-label="Price ${property.price}">${property.price}</div>
-          <div class="property-address">${property.address}</div>
-          <div class="property-features">${property.beds} bed • ${property.baths} bath • ${property.sqft}</div>
-          <div class="property-type">${property.propertyType}</div>
-        </div>
-      `;
-      
-      // Make card clickable
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () => {
-        window.location.href = property.url;
-      });
-      
-      return card;
-    }
-    
-    // Show carousel error state
-    function showCarouselError() {
-      const carouselContainer = document.querySelector('.carousel-container');
-      if (carouselContainer) {
-        carouselContainer.innerHTML = `
-          <div class="featured-property-card active">
-            <div class="property-image" style="background: rgba(255,255,255,0.1);" aria-hidden="true"></div>
-            <div class="property-details">
-              <div class="property-price">Unable to Load</div>
-              <div class="property-address">Please try again later</div>
-              <div class="property-features">Or contact Michael directly</div>
-            </div>
-          </div>
-        `;
-      }
-    }
-    
+<script src="js/main.js"></script>
 
-<!-- Tiny NL → filters parser -->
+<!-- Simple NL → filters parser -->
 <script src="assets/js/ai-search-parser.js"></script>
 
-<!-- Homepage AI Search: build the URL your search page already understands -->
-<script>
-  (function () {
-    var form  = document.getElementById('homepageChatForm');
-    var input = document.getElementById('homepageChatInput');
-    var chips = document.querySelectorAll('[data-search-example]');
-
-    if (!form || !input) return;
-
-    // Map parser features to your URL flags
-    function featureFlags(features) {
-      var flags = {};
-      if (features.indexOf('ocean_view') !== -1 || features.indexOf('view') !== -1) flags.hasView = 'true';
-      if (features.indexOf('pool') !== -1) flags.hasPool = 'true';
-      if (features.indexOf('gated') !== -1) flags.gated = 'true';
-      if (features.indexOf('beachfront') !== -1) flags.beachfront = 'true';
-      if (features.indexOf('garage') !== -1) flags.hasGarage = 'true';
-      if (features.indexOf('new_construction') !== -1) flags.newBuild = 'true';
-      return flags;
-    }
-
-    function buildUrlFromText(text) {
-      var p = window.parseAiSearchQuery ? window.parseAiSearchQuery(text) : {};
-      var params = new URLSearchParams();
-
-      if (p.maxPrice) params.set('maxPrice', String(Math.round(p.maxPrice)));
-      if (p.minPrice) params.set('minPrice', String(Math.round(p.minPrice)));
-      if (p.minBeds)  params.set('minBeds',  String(p.minBeds));
-
-      if (p.cities && p.cities.length) {
-        params.set('cities', p.cities.map(function (c) {
-          return c.split(' ').map(function (w){return w.charAt(0).toUpperCase()+w.slice(1);}).join(' ');
-        }).join(','));
-      }
-
-      var flags = featureFlags(p.features || []);
-      Object.keys(flags).forEach(function (k){ params.set(k, flags[k]); });
-
-      // keep the raw text for UX/debug
-      if (text && text.trim()) params.set('q', text.trim());
-
-      // defaults your engine likes
-      params.set('page', '1');
-      params.set('sort', 'newest');
-
-      return 'search.html?' + params.toString();
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var q = (input.value || '').trim();
-      if (!q) { alert("Tell me what you're looking for: city, price, beds, features."); return; }
-      window.location.href = buildUrlFromText(q);
-    });
-
-    // Make the example chips submit too
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        var example = chip.getAttribute('data-search-example') || '';
-        if (!example) return;
-        window.location.href = buildUrlFromText(example);
-      });
-    });
-  })();
-</script>
-
+<!-- Homepage AI flow -->
+<script src="assets/js/ai-search-home.js"></script>
 </body>
 </html>
